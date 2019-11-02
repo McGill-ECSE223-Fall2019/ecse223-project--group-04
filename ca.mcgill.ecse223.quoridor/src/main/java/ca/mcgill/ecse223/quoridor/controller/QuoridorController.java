@@ -7,9 +7,11 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import ca.mcgill.ecse223.quoridor.QuoridorApplication;
 import ca.mcgill.ecse223.quoridor.model.*;
+import ca.mcgill.ecse223.quoridor.model.Game.GameStatus;
 import ca.mcgill.ecse223.quoridor.utilities.*;
 
 import java.sql.Time;
+import java.util.*;
 
 public class QuoridorController {
 
@@ -665,17 +667,39 @@ public class QuoridorController {
 	 * @author Iyatan Atchoro
 	 */
 	public static void rotateWall() throws Exception{
-
-		throw new UnsupportedOperationException();
+		Game curGame = QuoridorApplication.getQuoridor().getCurrentGame();
+//		Player curPlayer = curGame.getBlackPlayer();
+//		if(GameStatus.Running == null)
+//			throw new Exception("Game not running");
+		
+		if(curGame.getWallMoveCandidate()==null) {
+			throw new Exception("No wall Selected");
+		}
+		Direction wallDir = curGame.getWallMoveCandidate().getWallDirection();
+		if(wallDir==Direction.Horizontal) {
+			curGame.getWallMoveCandidate().setWallDirection(Direction.Vertical);
+		}else {
+			curGame.getWallMoveCandidate().setWallDirection(Direction.Horizontal);
+		}
 
 	}
 	/**
 	 * Method used to drop a wall
 	 * @author Iyatan Atchoro
 	 */
-
-	public static void dropWall() {	
-		throw new UnsupportedOperationException();
+	public static void dropWall() throws Exception {
+		// check wall in hand
+		  Quoridor q = QuoridorApplication.getQuoridor();
+		   Move wallMoveCandidate = q.getCurrentGame().getWallMoveCandidate();
+		   int x = wallMoveCandidate.getTargetTile().getRow();
+		   int y = wallMoveCandidate.getTargetTile().getColumn();
+		   if(initializeValidatePosition(x,y)){
+			   q.getCurrentGame().addMove(wallMoveCandidate);
+		       List<Move> curList = new ArrayList<>(q.getCurrentGame().getMoves());
+		       Move lastMoveInTheList = curList.get(curList.size()-1);
+		       lastMoveInTheList.setNextMove(wallMoveCandidate);
+		       wallMoveCandidate.setPrevMove(lastMoveInTheList);
+		   }
 	}
 }
 

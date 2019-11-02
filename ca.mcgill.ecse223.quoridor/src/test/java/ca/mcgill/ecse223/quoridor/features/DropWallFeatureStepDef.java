@@ -75,10 +75,11 @@ public class DropWallFeatureStepDef {
 	/**
      * Testing the dropWall method
      * @param
+	 * @throws Exception 
      */
 
 	@When("I release the wall in my hand")
-	public void i_release_the_wall_in_my_hand() {
+	public void i_release_the_wall_in_my_hand() throws Exception {
 		QuoridorController.dropWall();
 	}
 
