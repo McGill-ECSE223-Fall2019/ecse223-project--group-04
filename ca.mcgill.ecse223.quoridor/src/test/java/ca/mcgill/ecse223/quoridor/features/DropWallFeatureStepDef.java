@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 import ca.mcgill.ecse223.quoridor.QuoridorApplication;
 import ca.mcgill.ecse223.quoridor.controller.QuoridorController;
 import ca.mcgill.ecse223.quoridor.model.Direction;
+import ca.mcgill.ecse223.quoridor.model.Move;
 import ca.mcgill.ecse223.quoridor.model.Player;
 import ca.mcgill.ecse223.quoridor.model.Quoridor;
 import ca.mcgill.ecse223.quoridor.model.Tile;
@@ -35,8 +36,14 @@ public class DropWallFeatureStepDef {
 	@Given("The wall move candidate with {string} at position \\({int}, {int}) is valid")
 	public void the_wall_move_candidate_with_at_position_is_valid(String string, int int1, int int2) {
 		Quoridor q = QuoridorApplication.getQuoridor();
+//	    Move wallMoveCandidate = q.getCurrentGame().getWallMoveCandidate();
+//	    assertEquals(int1,wallMoveCandidate.getTargetTile().getRow());
+//	    assertEquals(int2,wallMoveCandidate.getTargetTile().getRow());
+//
 
-		// Find tile at position
+		
+
+		 //Find tile at position
 		Tile aTile = null;
 		for (Tile t : q.getBoard().getTiles()) {
 			if (t.getRow() == int1 && t.getColumn() == int2)
@@ -82,8 +89,8 @@ public class DropWallFeatureStepDef {
 		// Checking if the wall was properly dropped at the right place
 		Quoridor q = QuoridorApplication.getQuoridor();
 		assertEquals(string, q.getCurrentGame().getWhitePlayer().getWall(0).getMove().getWallDirection().toString().toLowerCase());
-//		assertEquals(q.getCurrentGame().getGameStatus(),"Running");
-
+		assertEquals(int1,q.getBoard().getTile(0).getRow());
+		assertEquals(int1,q.getBoard().getTile(0).getColumn());
 	}
 
 
