@@ -689,17 +689,19 @@ public class QuoridorController {
 	 */
 	public static void dropWall() throws Exception {
 		// check wall in hand
-		  Quoridor q = QuoridorApplication.getQuoridor();
-		   Move wallMoveCandidate = q.getCurrentGame().getWallMoveCandidate();
-		   int x = wallMoveCandidate.getTargetTile().getRow();
-		   int y = wallMoveCandidate.getTargetTile().getColumn();
-		   if(initializeValidatePosition(x,y)){
-			   q.getCurrentGame().addMove(wallMoveCandidate);
-		       List<Move> curList = new ArrayList<>(q.getCurrentGame().getMoves());
-		       Move lastMoveInTheList = curList.get(curList.size()-1);
-		       lastMoveInTheList.setNextMove(wallMoveCandidate);
-		       wallMoveCandidate.setPrevMove(lastMoveInTheList);
-		   }
+		
+		
+//		  Quoridor q = QuoridorApplication.getQuoridor();
+//		   Move wallMoveCandidate = q.getCurrentGame().getWallMoveCandidate();
+//		   int x = wallMoveCandidate.getTargetTile().getRow();
+//		   int y = wallMoveCandidate.getTargetTile().getColumn();
+//		   if(initializeValidatePosition(x,y)){
+//			   q.getCurrentGame().addMove(wallMoveCandidate);
+//		       List<Move> curList = new ArrayList<>(q.getCurrentGame().getMoves());
+//		       Move lastMoveInTheList = curList.get(curList.size()-1);
+//		       lastMoveInTheList.setNextMove(wallMoveCandidate);
+//		       wallMoveCandidate.setPrevMove(lastMoveInTheList);
+//		   }
 	}
 }
 

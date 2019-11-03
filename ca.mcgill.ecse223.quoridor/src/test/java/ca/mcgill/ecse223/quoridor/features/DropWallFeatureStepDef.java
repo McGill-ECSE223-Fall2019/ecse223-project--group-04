@@ -33,7 +33,7 @@ public class DropWallFeatureStepDef {
      */
 
 	@Given("The wall move candidate with {string} at position \\({int}, {int}) is valid")
-	public void the_wall_move_candidate_with_at_position_is_valid(String string, Integer int1, Integer int2) {
+	public void the_wall_move_candidate_with_at_position_is_valid(String string, int int1, int int2) {
 		Quoridor q = QuoridorApplication.getQuoridor();
 
 		// Find tile at position
@@ -60,18 +60,7 @@ public class DropWallFeatureStepDef {
 		}
 
 	}
-	/**
-     * Method to see if the wall move is registered with the right direction , row and column
-     * @param string, int, int
-     */
-
-	@Then("A wall move shall be registered with {string} at position \\({int}, {int})")
-	public void a_wall_move_shall_be_registered_with_at_position(String string, Integer int1, Integer int2) {
-		// Checking if the wall was properly dropped at the right place
-		Quoridor q = QuoridorApplication.getQuoridor();
-		assertEquals(string, q.getCurrentGame().getBlackPlayer().getWall(11).getMove().getWallDirection());
-
-	}
+	
 	/**
      * Testing the dropWall method
      * @param
@@ -82,6 +71,21 @@ public class DropWallFeatureStepDef {
 	public void i_release_the_wall_in_my_hand() throws Exception {
 		QuoridorController.dropWall();
 	}
+	
+	/**
+     * Method to see if the wall move is registered with the right direction , row and column
+     * @param string, int, int
+     */
+
+	@Then("A wall move shall be registered with {string} at position \\({int}, {int})")
+	public void a_wall_move_shall_be_registered_with_at_position(String string, int int1, int int2) {
+		// Checking if the wall was properly dropped at the right place
+		Quoridor q = QuoridorApplication.getQuoridor();
+		assertEquals(string, q.getCurrentGame().getWhitePlayer().getWall(0).getMove().getWallDirection().toString().toLowerCase());
+//		assertEquals(q.getCurrentGame().getGameStatus(),"Running");
+
+	}
+
 
 	/**
      * Method to assert if my moves are completed

@@ -10,8 +10,9 @@ Feature: Drop Wall
       |    7 |    4 | vertical   |
     And It is my turn to move
     And I have a wall in my hand over the board
+
   @DropWallValid
-  Scenario Outline: Valid wall placement 
+  Scenario Outline: Valid wall placement
     Given The wall move candidate with "<dir>" at position (<row>, <col>) is valid
     When I release the wall in my hand
     Then A wall move shall be registered with "<dir>" at position (<row>, <col>)
@@ -23,19 +24,19 @@ Feature: Drop Wall
       | dir        | row | col |
       | horizontal |   3 |   2 |
       | vertical   |   5 |   6 |
-  @DropWallInvalidValid    
+
+  @DropWallInvalidValid
   Scenario Outline: Invalid wall placement
     Given The wall move candidate with "<dir>" at position (<row>, <col>) is invalid
     When I release the wall in my hand
     Then I shall be notified that my wall move is invalid
     And I shall have a wall in my hand over the board
     And It shall be my turn to move
-  	But No wall move shall be registered with "<dir>" at position (<row>, <col>)
-  	
+    But No wall move shall be registered with "<dir>" at position (<row>, <col>)
+
     Examples: 
       | dir        | row | col |
-      | vertical 	 |   1 |   1 |
+      | vertical   |   1 |   1 |
       | horizontal |   1 |   2 |
-  	  | horizontal |   7 |   4 |
-      | vertical 	 |   6 |   6 |
-  	
+      | horizontal |   7 |   4 |
+      | vertical   |   6 |   6 |
