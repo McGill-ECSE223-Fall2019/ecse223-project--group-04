@@ -36,35 +36,9 @@ public class DropWallFeatureStepDef {
 	@Given("The wall move candidate with {string} at position \\({int}, {int}) is valid")
 	public void the_wall_move_candidate_with_at_position_is_valid(String string, int int1, int int2) {
 		Quoridor q = QuoridorApplication.getQuoridor();
-//	    Move wallMoveCandidate = q.getCurrentGame().getWallMoveCandidate();
-//	    assertEquals(int1,wallMoveCandidate.getTargetTile().getRow());
-//	    assertEquals(int2,wallMoveCandidate.getTargetTile().getRow());
-//
-
-		
-
-		 //Find tile at position
-		Tile aTile = null;
-		for (Tile t : q.getBoard().getTiles()) {
-			if (t.getRow() == int1 && t.getColumn() == int2)
-				aTile = t;
-		}
-		if (aTile == null)
-			fail("Error initializing board. No tile found with coordinates.");
-
-		// Get some wall for the black player.
-		Wall aWall = q.getCurrentGame().getBlackPlayer().getWall(0);
-
-		if (string == "vertical") {
-			WallMove aMove = new WallMove(1, 1, q.getCurrentGame().getBlackPlayer(), aTile, q.getCurrentGame(),
-					Direction.Vertical, aWall);
-			aWall.setMove(aMove);
-		}
-		if (string == "horizontal") {
-			WallMove aMove = new WallMove(2, 1, q.getCurrentGame().getBlackPlayer(), aTile, q.getCurrentGame(),
-					Direction.Horizontal, aWall);
-			aWall.setMove(aMove);
-		}
+	    WallMove wallMoveCandidate = q.getCurrentGame().getWallMoveCandidate();
+	    int id = wallMoveCandidate.getWallPlaced().getId();
+	    assertEquals(true,QuoridorController.initiatePosValidation(int1, int2,string,id));
 
 	}
 	
@@ -88,9 +62,18 @@ public class DropWallFeatureStepDef {
 	public void a_wall_move_shall_be_registered_with_at_position(String string, int int1, int int2) {
 		// Checking if the wall was properly dropped at the right place
 		Quoridor q = QuoridorApplication.getQuoridor();
-		assertEquals(string, q.getCurrentGame().getWhitePlayer().getWall(0).getMove().getWallDirection().toString().toLowerCase());
-		assertEquals(int1,q.getBoard().getTile(0).getRow());
-		assertEquals(int1,q.getBoard().getTile(0).getColumn());
+		Player player = q.getCurrentGame().getCurrentPosition().getPlayerToMove();
+		if(player.toString()=="existingWhitePlayer") {
+			assertEquals(string, q.getCurrentGame().getWhitePlayer().getWall(0).getMove().getWallDirection().toString().toLowerCase());
+			assertEquals(int1,q.getBoard().getTile(0).getRow());
+			assertEquals(int1,q.getBoard().getTile(0).getColumn());
+			
+		}else if(player.toString()=="existingBlackPlayer")  {
+			assertEquals(string, q.getCurrentGame().getBlackPlayer().getWall(0).getMove().getWallDirection().toString().toLowerCase());
+			assertEquals(int1,q.getBoard().getTile(0).getRow());
+			assertEquals(int1,q.getBoard().getTile(0).getColumn());
+			
+		}
 	}
 
 
@@ -102,7 +85,7 @@ public class DropWallFeatureStepDef {
 	@Then("My move shall be completed")
 	public void my_move_shall_be_completed() {
 		Quoridor quoridor = QuoridorApplication.getQuoridor();
-		assertEquals(quoridor.getCurrentGame().getGameStatus(),"completed");
+		assertEquals(quoridor.getCurrentGame().getGameStatus().toString(),"completed");
 
 	}
 	/**
@@ -113,8 +96,8 @@ public class DropWallFeatureStepDef {
 	@Then("It shall not be my turn to move")
 	public void it_shall_not_be_my_turn_to_move() {
 		Quoridor quoridor = QuoridorApplication.getQuoridor();
-		Player currentPlayer = quoridor.getCurrentGame().getWhitePlayer();
-		assertNotEquals(currentPlayer, quoridor.getCurrentGame().getMove(11).getPlayer());
+		Player nextPlayer = quoridor.getCurrentGame().getCurrentPosition().getPlayerToMove();
+		assertNotEquals(nextPlayer, quoridor.getCurrentGame().getMove(11).getPlayer());
 	}
 	/**
      * Method to the invalidity of the wall move candidate
@@ -123,25 +106,13 @@ public class DropWallFeatureStepDef {
 
 	@Given("The wall move candidate with {string} at position \\({int}, {int}) is invalid")
 	public void the_wall_move_candidate_with_at_position_is_invalid(String string, Integer int1, Integer int2) {
-Quoridor q = QuoridorApplication.getQuoridor();
+		Quoridor q = QuoridorApplication.getQuoridor();
+	    WallMove wallMoveCandidate = q.getCurrentGame().getWallMoveCandidate();
+	    int id = wallMoveCandidate.getWallPlaced().getId();
+	    assertEquals(false,QuoridorController.initiatePosValidation(int1, int2,string,id));
+
 		
-		// Find tile at position
-		Tile aTile = null;
-		for(Tile t : q.getBoard().getTiles()){
-			if(t.getRow() == int1 && t.getColumn() == int2) aTile = t;
-		}
-		if(aTile==null) fail("Error initializing board. No tile found with coordinates.");
-		
-		Wall aWall = q.getCurrentGame().getBlackPlayer().getWall(0);
-		
-		if(string == "horizontal") {
-			WallMove aMove = new WallMove( 1, 1, q.getCurrentGame().getBlackPlayer(), aTile, q.getCurrentGame(), Direction.Vertical, aWall);
-			aWall.setMove(aMove);
-		}
-		if(string == "vertical") {
-			WallMove aMove = new WallMove( 2, 1, q.getCurrentGame().getBlackPlayer(), aTile, q.getCurrentGame(), Direction.Horizontal, aWall);
-			aWall.setMove(aMove);
-		}
+	
 
 	}
 	/**
@@ -151,8 +122,8 @@ Quoridor q = QuoridorApplication.getQuoridor();
 
 	@Then("I shall be notified that my wall move is invalid")
 	public void i_shall_be_notified_that_my_wall_move_is_invalid() {
-		Quoridor quoridor = QuoridorApplication.getQuoridor();
-		assertEquals(quoridor.getCurrentGame().getMove(11),"invalid");
+		String aString = new String("Invalid");
+		assertEquals(aString, QuoridorController.invalidWallMove());	
 
 	}
 	
@@ -186,16 +157,27 @@ Quoridor q = QuoridorApplication.getQuoridor();
      */
 
 	@Then("No wall move shall be registered with {string} at position \\({int}, {int})")
-	public void no_wall_move_shall_be_registered_with_at_position(String string, Integer int1, Integer int2) {
+	public void no_wall_move_shall_be_registered_with_at_position(String string, int int1, int int2) {
 		Quoridor q = QuoridorApplication.getQuoridor();
-		assertEquals(string, q.getCurrentGame().getBlackPlayer().getWall(0).getMove().getWallDirection());
+		Player player = q.getCurrentGame().getCurrentPosition().getPlayerToMove();
+		if(player.toString()=="existingWhitePlayer") {
+			assertNotEquals(string, q.getCurrentGame().getWhitePlayer().getWall(0).getMove().getWallDirection().toString().toLowerCase());
+			assertNotEquals(int1,q.getBoard().getTile(0).getRow());
+			assertNotEquals(int1,q.getBoard().getTile(0).getColumn());
+			
+		}else if(player.toString()=="existingBlackPlayer") {
+			assertNotEquals(string, q.getCurrentGame().getBlackPlayer().getWall(0).getMove().getWallDirection().toString().toLowerCase());
+			assertNotEquals(int1,q.getBoard().getTile(0).getRow());
+			assertNotEquals(int1,q.getBoard().getTile(0).getColumn());
+			
+		}
 		
 
 	}
 	@Then("I shall not have a wall in my hand")
 	public void i_shall_not_have_a_wall_in_my_hand() {
 		Quoridor q = QuoridorApplication.getQuoridor();
-		assertNotEquals(q.getCurrentGame().getBlackPlayer().getWalls().size(), 0);
+		assertEquals(q.getCurrentGame().getBlackPlayer().getWalls().size(), 0);
 	    
 	}
 

@@ -705,6 +705,97 @@ public class QuoridorController {
 			   throw new Exception("Not a valid position");
 		   }
 	}
+	
+	/**
+	 * Method used to notify invalid Wall move
+	 * @author Iyatan Atchoro
+	 */
+	
+	public static String invalidWallMove() {
+		return "Invalid Wall Move";
+	}
+	/* Remove following method after merge/*
+	/**
+	 * Method that initiates the validation of the position by checking all cases of incorrect position 
+	 * for all placed walls.
+	 * @param row , is the row of the target tile of the WallMove associated to the wall
+	 * @param col , the column of the target tile of the wall move associated to the wall
+	 * @param Walldir , the direction of the WallMove associated with the wall
+	 * @param id , the id of the wall currently checked for validity
+	 * @return true/false true for valid position, false for invalid
+	 * @author Alexander Legouverneur
+	 */
+	public static boolean initiatePosValidation(int row, int col, String Walldir, int id) {
+		Quoridor q = QuoridorApplication.getQuoridor();
+		if(row>=1 && row<=8 && col>=1 && col<=8) {
+
+			Direction dir1;
+			int col1;
+			int row1;
+			for(int i = 0; i<=19; i++){
+				if(id == i) {
+					continue; //don t want to compare the wall with itself
+				}
+				
+				if(i>9) {
+					if(q.getCurrentGame().getBlackPlayer().getWall(i-10).hasMove() == false) {
+						continue;
+					}
+					row1 = q.getCurrentGame().getBlackPlayer().getWall(i-10).getMove().getTargetTile().getRow();
+					col1 = q.getCurrentGame().getBlackPlayer().getWall(i-10).getMove().getTargetTile().getColumn();
+					dir1 = q.getCurrentGame().getBlackPlayer().getWall(i-10).getMove().getWallDirection();
+				}
+				else {
+					if(q.getCurrentGame().getWhitePlayer().getWall(i).hasMove() == false) {
+						continue;
+					}
+					row1 = q.getCurrentGame().getWhitePlayer().getWall(i).getMove().getTargetTile().getRow();
+					col1 = q.getCurrentGame().getWhitePlayer().getWall(i).getMove().getTargetTile().getColumn();
+					dir1 = q.getCurrentGame().getWhitePlayer().getWall(i).getMove().getWallDirection();
+				}
+
+
+				if(dir1 == Direction.Horizontal) {
+					if(Walldir.equals("horizontal")) {
+						if(col1 == col && row1 == row) {
+							return false;
+						}
+						if(col1 ==col+1 && row1 == row) {
+							return false;
+						}
+						if(col1 == col-1 && row1 == row) {
+							return false;
+						}
+					}
+					else {
+						if(col1 == col && row1 == row) {
+							return false;
+						}
+					}
+				}
+				else {
+					if(Walldir.equals("vertical")) {
+						if(row1 == row+1 && col1 == col) {
+							return false;
+						}
+						if( row1 == row-1 && col1 == col) {
+							return false;
+						}
+						if(col1==col && row1 == row) {
+							return false;
+						}
+					}
+					else {
+						if(col1 == col && row1 == row) {
+							return false;
+						}
+					}
+				}
+			}
+			return true;
+		}
+		else return false;
+	}
 }
 
 
