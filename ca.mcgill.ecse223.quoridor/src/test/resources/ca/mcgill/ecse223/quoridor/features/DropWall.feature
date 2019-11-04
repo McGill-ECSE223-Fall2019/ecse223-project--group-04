@@ -23,7 +23,7 @@ Feature: Drop Wall
       | dir        | row | col |
       | horizontal |   3 |   2 |
       | vertical   |   5 |   6 |
-  @DropWallInvalidValid    
+  @DropWallInvalid    
   Scenario Outline: Invalid wall placement
     Given The wall move candidate with "<dir>" at position (<row>, <col>) is invalid
     When I release the wall in my hand

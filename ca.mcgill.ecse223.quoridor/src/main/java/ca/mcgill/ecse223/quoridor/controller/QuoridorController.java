@@ -1139,11 +1139,7 @@ public class QuoridorController {
 	 * @author Iyatan Atchoro
 	 */
 	public static void rotateWall() throws Exception{
-		Game curGame = QuoridorApplication.getQuoridor().getCurrentGame();
-//		Player curPlayer = curGame.getBlackPlayer();
-//		if(GameStatus.Running == null)
-//			throw new Exception("Game not running");
-		
+		Game curGame = QuoridorApplication.getQuoridor().getCurrentGame();	
 		if(curGame.getWallMoveCandidate()==null) {
 			throw new Exception("No wall Selected");
 		}
@@ -1164,10 +1160,13 @@ public class QuoridorController {
 		
 		
 		  Quoridor q = QuoridorApplication.getQuoridor();
-		   Move wallMoveCandidate = q.getCurrentGame().getWallMoveCandidate();
+		   WallMove wallMoveCandidate = q.getCurrentGame().getWallMoveCandidate();
 		   int x = wallMoveCandidate.getTargetTile().getRow();
 		   int y = wallMoveCandidate.getTargetTile().getColumn();
-		   if(initializeValidatePosition(x,y)){
+		   String dir = wallMoveCandidate.getWallDirection().toString();
+		   int id = wallMoveCandidate.getWallPlaced().getId();
+		   
+		   if(initiatePosValidation(x,y,dir,id)){
 			   q.getCurrentGame().addMove(wallMoveCandidate);
 		       List<Move> curList = new ArrayList<>(q.getCurrentGame().getMoves());
 		       Move lastMoveInTheList = curList.get(curList.size()-1);
@@ -1176,6 +1175,8 @@ public class QuoridorController {
 		   }else {
 			   throw new Exception("Not a valid position");
 		   }
+		   
+		   q.getCurrentGame().setGameStatus(GameStatus.Replay);
 	}
 	
 	/**
@@ -1184,6 +1185,6 @@ public class QuoridorController {
 	 */
 	
 	public static String invalidWallMove() {
-		return "Invalid Wall Move";
+		return "Invalid";
 	}
 }
