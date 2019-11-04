@@ -10,6 +10,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JTextPane;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;
@@ -23,6 +24,7 @@ import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -63,6 +65,12 @@ public class MainGameWindow {
 	private boolean WallGrabbed = false;
 	private static int CurrRow;
 	private int CurrCol;
+	private JButton horizontal = new JButton("horizontal");
+	private JButton vertical = new JButton("vertical");
+	JLabel lblPleaseSelectMove = new JLabel("Incorrect Move");
+	private int wallIndex;
+	private int tileLength = 87;
+	private int tileWidth = 45;
 
 	/**
 	 * Launch the application.
@@ -118,6 +126,8 @@ public class MainGameWindow {
 		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.Y_AXIS));
 
 
+
+
 		txtWhitePlayer = new JTextField();
 		txtWhitePlayer.setEditable(false);
 		txtWhitePlayer.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -159,9 +169,9 @@ public class MainGameWindow {
 		wallsOnBoardWhitePlayer.setEditable(false);
 		panel_5.add(wallsOnBoardWhitePlayer);
 		wallsOnBoardWhitePlayer.setColumns(10);
-		
 
-		JLabel lblPleaseSelectMove = new JLabel("Please Select Move Mode First");
+
+
 		lblPleaseSelectMove.setBackground(Color.RED);
 		lblPleaseSelectMove.setForeground(Color.RED);
 		lblPleaseSelectMove.setFont(new Font("Tahoma", Font.BOLD, 25));
@@ -169,18 +179,25 @@ public class MainGameWindow {
 		frmQuoridorPlay.getContentPane().add(lblPleaseSelectMove);
 		lblPleaseSelectMove.setVisible(false);
 
+
 		JPanel panel_10 = new JPanel();
 		panel_2.add(panel_10);
 		panel_10.setLayout(null);
 
 		JPanel centerPanel = new JPanel();
 		frmQuoridorPlay.getContentPane().add(centerPanel, BorderLayout.CENTER);
-		centerPanel.setLayout(new GridLayout(9, 9, 10, 10));
+		centerPanel.setLayout(null);
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (int) ((dimension.getWidth() - centerPanel.getWidth()) / 2);
+		int y = (int) ((dimension.getHeight() - centerPanel.getHeight()) / 2);
+		centerPanel.setLocation(x, y);
+
+
 
 		for(int row = 0; row < TOTAL_ROWS; row++) {
 			for(int col = 0; col < TOTAL_COLS; col ++) {
-				CurrRow = row;
-				CurrCol = col;
+
+
 				lblPleaseSelectMove.setVisible(false);
 				JButton button = new JButton();
 				btnArray[row][col] = new JButtonWrapper(row, col, button);
@@ -212,15 +229,15 @@ public class MainGameWindow {
 						if(WallGrabbed == false) {
 
 							if(btnArray[CurrRow][CurrCol].getButton().getBackground().equals(Color.GREEN)) {
-								
+
 								//TODO implement pawn move
 
 							}
 							else {
-								
+
 								lblPleaseSelectMove.setVisible(true);
 								SwingUtilities.updateComponentTreeUI(frmQuoridorPlay);
-								
+
 							}
 
 						}
@@ -349,7 +366,7 @@ public class MainGameWindow {
 				wallArray[i].addMouseListener(new MouseAdapter() {
 
 					public void mouseReleased(MouseEvent e) {
-						
+
 						lblPleaseSelectMove.setVisible(false);
 						// TODO call the method that specifies what happens to the wall once it is grabbed
 						// TODO call the method for rotate wall in here
@@ -367,7 +384,7 @@ public class MainGameWindow {
 				wallArray[i].addMouseListener(new MouseAdapter() {
 
 					public void mouseReleased(MouseEvent e) {
-						
+
 						lblPleaseSelectMove.setVisible(false);
 						// TODO call the method that specifies what happens to the wall once it is grabbed
 						// TODO call the method for rotate wall in here

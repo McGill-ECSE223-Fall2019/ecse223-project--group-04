@@ -570,6 +570,7 @@ public class QuoridorController {
 
 
 				if(i>9) {
+
 					if(q.getCurrentGame().getBlackPlayer().getWall(i-10).hasMove() == false) {
 						continue;
 					}
@@ -775,25 +776,37 @@ public class QuoridorController {
 	 * @param aWall 	wall to be moved 
 	 * @param player	player to whom the wall belongs
 	 */
-	public static void wallMove(int row, int col, Direction dir, Wall aWall,Player player) {
+	public static boolean wallMove(int row, int col, String dir, Wall aWall,Player player) {
 
 		Quoridor q = QuoridorApplication.getQuoridor();
 		boolean pos;
 		Tile aTile = new Tile(row, col, q.getBoard());
 
-		if(dir.equals(Direction.Vertical)) {
+		if(dir.equals("vertical")) {
 			pos = initiatePosValidation(row, col, "vertical", aWall.getId());
+
+			if(aWall.hasMove() == false && pos == true) {
+				moveNumber++;
+				new WallMove(moveNumber,1,player,aTile,q.getCurrentGame(), Direction.Vertical, aWall);
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 		else {
 			pos = initiatePosValidation(row, col, "horizontal", aWall.getId());
+
+			if(aWall.hasMove() == false && pos == true) {
+				moveNumber++;
+				new WallMove(moveNumber,1,player,aTile,q.getCurrentGame(), Direction.Horizontal, aWall);
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
-		if(pos == false) {
-			illegalWallMove();
-		}
-		if(aWall.hasMove() == false && pos == true) {
-			moveNumber++;
-			new WallMove(moveNumber,1,player,aTile,q.getCurrentGame(), dir, aWall);
-		}
+
 	}
 	/**
 	 * Method - saveGamePosition(String filename, Game game)

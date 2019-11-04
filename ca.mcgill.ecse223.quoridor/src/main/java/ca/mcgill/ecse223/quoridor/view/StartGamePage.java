@@ -79,12 +79,12 @@ public class StartGamePage {
 		frame.getContentPane().setLayout(null);
 		model_1 = new DefaultComboBoxModel(QuoridorController.getUsers(" ").toArray());
 		model_2 = new DefaultComboBoxModel(QuoridorController.getUsers(" ").toArray());
-		
+
 
 		// global settings
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setTitle("Quoridor - Start New Game");
-		
+
 				// Content title
 				QuoridorTitleField = new JTextPane();
 				QuoridorTitleField.setLocation(50, 50);
@@ -95,7 +95,7 @@ public class StartGamePage {
 				QuoridorTitleField.setFont(new Font("Monospaced", Font.BOLD, 30));
 				QuoridorTitleField.setAlignmentX(SwingConstants.CENTER);
 				QuoridorTitleField.setText("Quoridor");
-		
+
 				// elements for Player1
 				PlayerLabel_1 = new JLabel("Player 1 Name:");
 				PlayerLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -109,7 +109,7 @@ public class StartGamePage {
 						addPlayerOneUsernameActionPerformed(evt);
 					}
 				});
-		
+
 				// elements for Player2
 				PlayerLabel_2 = new JLabel("Player 2 Name:");
 				PlayerSelect_2 = new JComboBox(model_2);
@@ -149,7 +149,7 @@ public class StartGamePage {
 						setTotalThinkingTimeActionPerformed(evt);
 					}
 				});
-				
+
 						// elements for error message
 						errorMessage = new JLabel("");
 						errorMessage.setFont(new Font("Monospaced", Font.BOLD, 30));
