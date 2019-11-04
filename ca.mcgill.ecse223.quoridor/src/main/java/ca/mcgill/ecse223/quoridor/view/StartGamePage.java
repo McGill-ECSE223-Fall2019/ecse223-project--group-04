@@ -245,12 +245,14 @@ public class StartGamePage {
 	private void startGameActionPerformed(ActionEvent evt) {
 		// clears error message
 		error = null;
+		frame.dispose();
 		try {
-			errorMessage.setForeground(Color.BLACK);
-			errorMessage.setText(QuoridorController.testMethod());
+			MainGameWindow mainGameWindow = new MainGameWindow();
+			mainGameWindow.frmQuoridorPlay.setVisible(true);
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			errorMessage.setText(e.getMessage());
-			System.out.println(e.getMessage());
 		}
 	}
 	private void addPlayerOneUsernameActionPerformed(ActionEvent evt) {
