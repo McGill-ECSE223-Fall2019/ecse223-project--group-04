@@ -1,7 +1,11 @@
 package ca.mcgill.ecse223.quoridor.features;
+import java.util.*;
+import java.util.concurrent.locks.Condition;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.awt.List;
 
 import ca.mcgill.ecse223.quoridor.QuoridorApplication;
 import ca.mcgill.ecse223.quoridor.controller.QuoridorController;
@@ -26,8 +30,10 @@ public class GrabWallStepDefinition {
 	private static Player currentPlayer; // keeps track of current player
 	private static Player nextPlayer; // next player
 	private static int curPlayerWallCount; // the number of walls in stock for current player
+	private static int previousNumberOfWalls;
+	private static boolean grabWallResult;
 	private static Game game = QuoridorApplication.getQuoridor().getCurrentGame(); // current game state
-
+	
 	/**
 	 * Step definition to make sure that I have enough walls on my stack. If I have
 	 * no walls, then add 10 walls in stock
@@ -37,24 +43,13 @@ public class GrabWallStepDefinition {
 	@Given("I have more walls on stock")
 	public void i_have_more_walls_on_stock() {
 		// Write code here that turns the phrase above into concrete actions
-		this.currentPlayer = QuoridorApplication.getQuoridor().getCurrentGame().getCurrentPosition().getPlayerToMove(); // set
-		// currentPlayer
-		this.nextPlayer = currentPlayer.getNextPlayer(); // set next player as the other player
-		this.curPlayerWallCount = this.currentPlayer.numberOfWalls();
 
-		if (this.curPlayerWallCount == 0) {
-			if (this.currentPlayer.toString().equalsIgnoreCase("black")) {
-				for (int j = 0; j < 10; j++) {
-					this.game.getCurrentPosition().addBlackWallsInStock(new Wall(j, this.currentPlayer));
-				}
+		System.out.println("here is num:  " + this.previousNumberOfWalls);
 
-			} else {
-				for (int j = 0; j < 10; j++) {
-					this.game.getCurrentPosition().addBlackWallsInStock(new Wall(j, this.currentPlayer));
-				}
-			}
 
-		}
+		boolean condition = this.game.getCurrentPosition().getPlayerToMove().getWalls().size() > 0;
+		System.out.println("here is num:  " + condition);
+		assertTrue(condition);
 	}
 
 	/**
@@ -69,7 +64,15 @@ public class GrabWallStepDefinition {
 	@When("I try to grab a wall from my stock")
 	public void i_try_to_grab_a_wall_from_my_stock(){
 		// Write code here that turns the phrase above into concrete actions
-		QuoridorController.grabWall(QuoridorApplication.getQuoridor().getBoard(), this.currentPlayer);
+		Player playerToMove = this.game.getCurrentPosition().getPlayerToMove();
+		if(playerToMove.equals(this.game.getWhitePlayer())) {
+ 			this.previousNumberOfWalls = this.game.getCurrentPosition().getWhiteWallsInStock().size();
+		} else {
+			this.previousNumberOfWalls = this.game.getCurrentPosition().getBlackWallsInStock().size();
+		}
+
+		this.grabWallResult = QuoridorController.grabWall(QuoridorApplication.getQuoridor());
+
 
 	}
 
@@ -94,7 +97,18 @@ public class GrabWallStepDefinition {
 	public void the_wall_in_my_hand_shall_disappear_from_my_stock() {
 		// Write code here that turns the phrase above into concrete actions
 		// This is more of a GUI
-		throw new cucumber.api.PendingException();
+		int currentNumberOfWalls;
+
+		Player playerToMove = this.game.getCurrentPosition().getPlayerToMove();
+ 		if(playerToMove.equals(this.game.getWhitePlayer())) {
+ 			currentNumberOfWalls = this.game.getCurrentPosition().getWhiteWallsInStock().size();
+		} else {
+			currentNumberOfWalls = this.game.getCurrentPosition().getBlackWallsInStock().size();
+		}
+
+
+		boolean condition = currentNumberOfWalls == this.previousNumberOfWalls -1;
+		assertTrue(condition);
 	}
 
 	/**
@@ -106,25 +120,12 @@ public class GrabWallStepDefinition {
 	@Given("I have no more walls on stock")
 	public void i_have_no_more_walls_on_stock() {
 		// Write code here that turns the phrase above into concrete actions
-		this.currentPlayer = QuoridorApplication.getQuoridor().getCurrentGame().getCurrentPosition().getPlayerToMove(); // set
-		// currentPlayer
-		this.nextPlayer = currentPlayer.getNextPlayer(); // set next player as the other player
-		this.curPlayerWallCount = this.currentPlayer.numberOfWalls();
 
-		if (this.curPlayerWallCount != 0) {
-			// remove all walls in stock
-			if (this.currentPlayer.toString().equalsIgnoreCase("white")) {
-				if(this.game.getCurrentPosition().getBlackWallsInStock() != null) {
-					this.game.getCurrentPosition().getBlackWallsInStock().clear();
-				}
-				
-			} else {
-				if(this.game.getCurrentPosition().getBlackWallsInStock() != null) {
-					this.game.getCurrentPosition().getWhiteWallsInStock().clear();
-				}
-			}
+     	int numberOfWalls = !QuoridorController.isWhitePlayer(QuoridorApplication.getQuoridor(), QuoridorApplication.getQuoridor().getCurrentGame().getCurrentPosition().getPlayerToMove()) ? this.game.getCurrentPosition().getBlackWallsInStock().size() : this.game.getCurrentPosition().getWhiteWallsInStock().size();
+		boolean condition = numberOfWalls==0;
 
-		}
+
+		assertTrue(condition);
 	}
 
 	/**
@@ -135,13 +136,12 @@ public class GrabWallStepDefinition {
 	@Then("I shall be notified that I have no more walls")
 	public void i_shall_be_notified_that_I_have_no_more_walls() {
 		// Write code here that turns the phrase above into concrete actions
-		Game game = QuoridorApplication.getQuoridor().getCurrentGame();
-		Player curPlayer = game.getCurrentPosition().getPlayerToMove();
 
-		if (curPlayer.equals(game.getWhitePlayer())) {
-			int wall = game.getCurrentPosition().numberOfWhiteWallsInStock();
-			assertEquals("You have no more walls in stock!", 0, wall);
-		}
+//			assertEquals("You have no more walls in stock!", this.);
+		System.out.println("was removed or nah ? " + this.grabWallResult);
+			assertTrue(this.grabWallResult);
+
+
 	}
 
 	/**
@@ -156,7 +156,8 @@ public class GrabWallStepDefinition {
 		// Write code here that turns the phrase above into concrete actions
 		// perhaps GUI
 
-		throw new cucumber.api.PendingException();
+		boolean condition = this.previousNumberOfWalls ==0;
+		assertTrue(condition);
 	}
 
 }

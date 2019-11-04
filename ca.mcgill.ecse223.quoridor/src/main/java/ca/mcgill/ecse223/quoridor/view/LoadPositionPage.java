@@ -14,7 +14,10 @@ import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import ca.mcgill.ecse223.quoridor.QuoridorApplication;
 import ca.mcgill.ecse223.quoridor.controller.*;
+import ca.mcgill.ecse223.quoridor.model.Quoridor;
 
 public class LoadPositionPage {
 	public JFrame frame;
@@ -55,10 +58,16 @@ public class LoadPositionPage {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		// Forces fullscreen
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.getContentPane().setLayout(null);
+
+		
+
 		LoadFileNameTextField = new JTextField();
 		LoadFileNameTextField.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		LoadFileNameTextField.setHorizontalAlignment(SwingConstants.CENTER);
-		LoadFileNameTextField.setBounds(312, 151, 521, 68);
+		LoadFileNameTextField.setBounds(507, 151, 521, 68);
 		frame.getContentPane().add(LoadFileNameTextField);
 		LoadFileNameTextField.setColumns(10);
 		
@@ -66,7 +75,7 @@ public class LoadPositionPage {
 		InvalidLoadFileLabel.setForeground(Color.RED);
 		InvalidLoadFileLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		InvalidLoadFileLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		InvalidLoadFileLabel.setBounds(399, 121, 354, 20);
+		InvalidLoadFileLabel.setBounds(591, 121, 354, 20);
 		frame.getContentPane().add(InvalidLoadFileLabel);
 		InvalidLoadFileLabel.setVisible(false);
 		
@@ -74,14 +83,14 @@ public class LoadPositionPage {
 		LoadPositionFileLabel.setBackground(Color.WHITE);
 		LoadPositionFileLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		LoadPositionFileLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		LoadPositionFileLabel.setBounds(10, 151, 332, 68);
+		LoadPositionFileLabel.setBounds(132, 151, 332, 68);
 		frame.getContentPane().add(LoadPositionFileLabel);
 		
 		JLabel InvalidFileNameLabel = new JLabel("Please enter a file name");
 		InvalidFileNameLabel.setForeground(Color.RED);
 		InvalidFileNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		InvalidFileNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		InvalidFileNameLabel.setBounds(399, 229, 354, 26);
+		InvalidFileNameLabel.setBounds(591, 229, 354, 26);
 		frame.getContentPane().add(InvalidFileNameLabel);
 		InvalidFileNameLabel.setVisible(false);
 		
@@ -99,7 +108,7 @@ public class LoadPositionPage {
 					MainGameWindow main = new MainGameWindow();
 					main.frmQuoridorPlay.setVisible(true);
 				} catch (IOException e1) {
-					
+					InvalidLoadFileLabel.setVisible(true);
 				}
 				if(valid = false) {
 					InvalidLoadFileLabel.setVisible(true);
@@ -107,13 +116,26 @@ public class LoadPositionPage {
 			}
 		});
 		loadPositionFileButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		loadPositionFileButton.setBounds(904, 151, 238, 68);
+		loadPositionFileButton.setBounds(1103, 151, 238, 68);
 		frame.getContentPane().add(loadPositionFileButton);
 		
 		JLabel TitleLabel = new JLabel("Quoridor\r\n");
 		TitleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		TitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		TitleLabel.setBounds(283, 10, 586, 101);
+		TitleLabel.setBounds(475, 10, 586, 101);
 		frame.getContentPane().add(TitleLabel);
+		
+		JButton btnReturntoMainMenu = new JButton("Return to Main Menu");
+		btnReturntoMainMenu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				frame.dispose();
+				MainMenu main = new MainMenu();
+				main.frame.setVisible(true);
+			}
+		});
+		btnReturntoMainMenu.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnReturntoMainMenu.setBounds(0, 0, 194, 45);
+		frame.getContentPane().add(btnReturntoMainMenu);
 	}
 }

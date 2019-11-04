@@ -101,8 +101,8 @@ public class SavePositionPage {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				frame.dispose();
-				MainGameWindow main = new MainGameWindow();
-				main.frmQuoridorPlay.setVisible(true);
+				MainMenu main = new MainMenu();
+				main.frame.setVisible(true);
 					
 			}
 		});
@@ -191,5 +191,18 @@ public class SavePositionPage {
 		});
 		ConfirmOverwriteButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		OverwritePane.setRightComponent(ConfirmOverwriteButton);		
+		
+		JButton btnReturnToMain = new JButton("Return to Main Menu");
+		btnReturnToMain.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				frame.dispose();
+				MainMenu main2 = new MainMenu();
+				main2.frame.setVisible(true);
+			}
+		});
+		btnReturnToMain.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnReturnToMain.setBounds(0, 0, 190, 46);
+		frame.getContentPane().add(btnReturnToMain);
 	}
 }

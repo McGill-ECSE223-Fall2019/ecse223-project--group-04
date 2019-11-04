@@ -78,41 +78,16 @@ public class QuoridorPage {
 		lblPleaseSelectMove.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblPleaseSelectMove.setBounds(449, 297, 155, 52);
 		frame.getContentPane().add(lblPleaseSelectMove);
+		
+		JButton btnYeq = new JButton("yeq");
+		btnYeq.setBounds(114, 130, 89, 23);
+		frame.getContentPane().add(btnYeq);
 	}
 
 
 
 	
-	public static void creatingNewWall(JFrame frameX, JPanel panel) {
 
-		if(QuoridorController.currentPlayerInt() == 0) {
-			idWhite++;
-			if(idWhite > 9) {
-				// TODO create a text zone to say there are no more walls
-			}
-			CurrPlayer = 0;
-			WallArray[idWhite] = new JButton("Wall"+ idWhite );
-			WallArray[idWhite].setBounds(993, 399, 89, 9);
-			frameX.getContentPane().add(WallArray[idWhite]);
-			SwingUtilities.updateComponentTreeUI(frameX);
-		}
-		if(QuoridorController.currentPlayerInt() == 1) {
-			idBlack++;
-			if(idBlack>19) {
-				// TODO Create a text zone to say there are no more walls
-			}
-			CurrPlayer = 1;
-			WallArray[idBlack] = new JButton("Wall"+ idBlack);
-			WallArray[idBlack].setBounds(993, 399, 89, 9);
-			frameX.getContentPane().add(WallArray[idBlack]);
-			SwingUtilities.updateComponentTreeUI(frameX);
-		}
-
-
-
-
-
-	}
 	
 	
 
@@ -192,8 +167,5 @@ public class QuoridorPage {
 //		}
 //	}
 //	
-	public static void moveWallView() {
-		
-	}
+	
 }
-

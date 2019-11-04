@@ -342,6 +342,7 @@ public class Game
     boolean wasSet = false;
     if (aNewWallMoveCandidate == null)
     {
+    	System.out.println("Was Null");
       WallMove existingWallMoveCandidate = wallMoveCandidate;
       wallMoveCandidate = null;
       
