@@ -3,7 +3,6 @@ Feature: Set Total Thinking Time
   enforced for both players to ensure that a game does not last forever 
   before the game starts.
 
-
   Background: 
     Given A new game is initializing
     And White player chooses a username

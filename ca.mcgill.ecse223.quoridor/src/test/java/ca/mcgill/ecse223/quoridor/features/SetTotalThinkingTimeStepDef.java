@@ -3,10 +3,13 @@ package ca.mcgill.ecse223.quoridor.features;
 import ca.mcgill.ecse223.quoridor.QuoridorApplication;
 import ca.mcgill.ecse223.quoridor.controller.QuoridorController;
 import ca.mcgill.ecse223.quoridor.model.Player;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import java.sql.Time;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 /**
  * Class used to encapsulate the step definitions related to the SetTotalThinkingTime
  * feature
@@ -25,12 +28,11 @@ public class SetTotalThinkingTimeStepDef {
      *
      * @param min sets the number of minutes
      * @param sec sets the number of seconds
-     * @throws Exception (UnsupportedOperationException) since Controller method isn't implemented yet
      * @author Nayem Alam
      */
     @When("{int}:{int} is set as the thinking time")
-    public void is_set_as_the_thinking_time(Integer min, Integer sec) throws Exception {
-        // controller method should set same thinking time for both p1&p2 -- i think
+    public void is_set_as_the_thinking_time(Integer min, Integer sec) {
+        // controller method should set same thinking time for both player1 & player2
         QuoridorController.setThinkingTime(min, sec);
     }
     /**

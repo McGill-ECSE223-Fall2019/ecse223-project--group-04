@@ -23,8 +23,9 @@ import java.io.*;
 public class SavePositionStepDef {
 
 	private QuoridorController QC = new QuoridorController();
-	private File file;
-	private String content;
+	private String expected;
+	private String previousContent;
+	private String savedContent;
 
 	// *********************************************
 	// Save position scenario
@@ -38,12 +39,15 @@ public class SavePositionStepDef {
 	@Given ("No file {string} exists in the filesystem")
 	public void NoFileExistsInTheFileSystem(String filename) {
 		String pathName = filename;
+
+		File file = new File (filename);
+
 		// new File creates a pointer to the file
 		//createNewFile actually creates it
 		
-		if(new File(pathName).exists()) {
+		if(file.exists()) {
 			//if file exists, delete it
-			new File(pathName).delete();
+			file.delete();
 		}
 		else 
 		{
@@ -55,9 +59,9 @@ public class SavePositionStepDef {
 	 * @author Nicolas Buisson
 	 */
 	@When ("The user initiates to save the game with name {string}")
-	public void TheUserInitiatesToSaveTheGameWithName(String filename) {
-		content = QC.saveGameFile(filename);
-		
+	public void TheUserInitiatesToSaveTheGameWithName(String filename) throws IOException {
+		//Create test game and content , Run saveGame() -- throws exception
+		savedContent = QC.overwriteGamePosition(filename);
 	}
 
 
@@ -65,17 +69,13 @@ public class SavePositionStepDef {
 	 * @author Nicolas Buisson
 	 */
 	@Then ("A file with {string} shall be created in the filesystem")
-	public void AFileShallBeCreatedInTheFileSystem(String filename) {
+	public void AFileShallBeCreatedInTheFileSystem(String filename) throws IOException {
 		
 		String pathName = filename;
-		file = new File(pathName);
-		boolean FileExists = false;
-		try {
-			FileExists = file.createNewFile();
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-		}
+		File file = new File(pathName);
+		//boolean FileExists = false;
+		boolean FileExists = file.exists();
+
 		assertEquals(true, FileExists);
 		assertEquals(filename, file.getName());
 		//check if file exists
@@ -92,9 +92,21 @@ public class SavePositionStepDef {
 	 */
 	@Given ("File {string} exists in the filesystem")
 	public void FileExistsInTheFileSystem(String filename) {
-
+		//Read previous content from file
+		expected = "W: a3" + "\n" + "B: f5";
+		//TEST FOR WALLS
+		Game testGame = QuoridorApplication.getQuoridor().getCurrentGame();
+		Tile blackTile = new Tile(5, 6, QuoridorApplication.getQuoridor().getBoard());
+		Tile whiteTile = new Tile(3, 1, QuoridorApplication.getQuoridor().getBoard());
+		PlayerPosition aNewBlackPosition = new PlayerPosition(QuoridorApplication.getQuoridor().getCurrentGame().getBlackPlayer(), blackTile);
+		PlayerPosition aNewWhitePosition = new PlayerPosition(QuoridorApplication.getQuoridor().getCurrentGame().getWhitePlayer(), whiteTile);
+		testGame.getCurrentPosition().setBlackPosition(aNewBlackPosition);
+		testGame.getCurrentPosition().setWhitePosition(aNewWhitePosition);
+		
 		String pathName = filename;
-		file = new File(pathName);
+
+		File file = new File(pathName);
+
 		if(file.exists()) {
 			//if it exists do nothing
 		}
@@ -115,9 +127,8 @@ public class SavePositionStepDef {
 	 * @author Nicolas Buisson
 	 */
 	@And ("The user confirms to overwrite existing file")
-	public void TheUserConfirmsToOverwriteExistingFile(String filename) {
-		content = QC.overWriteFile(filename);
-		
+	public void TheUserConfirmsToOverwriteExistingFile() throws IOException {
+		// Run overwriteGame() via UI
 	}
 
 	/**  
@@ -125,9 +136,12 @@ public class SavePositionStepDef {
 	 */
 	@Then ("File with {string} shall be updated in the filesystem")
 	public void FileShallBeUpdatedInTheFileSystem(String filename) {
-		
+		//# Read real content, assert that real content = testContent
 		String pathName = filename;
-		file = new File(pathName);
+
+		File file = new File(pathName);
+
+
 		FileReader reader = null;
 		try{
 			reader = new FileReader(file);
@@ -137,19 +151,23 @@ public class SavePositionStepDef {
 		}
 		BufferedReader BF = new BufferedReader(reader); 
 	
-		String acc = "";
+		String newContent = "";
+		StringBuilder sb = new StringBuilder();
 		try {
 			String line = BF.readLine();
 			while(line != null) {
-				acc += line;
+				sb.append(line);
+				sb.append("\n");
 				line = BF.readLine();
 			}	
+			sb.delete(sb.length()-1, sb.length());
+			newContent = sb.toString();
 		}
 		catch(IOException e) {
 			e.printStackTrace();
 		}
 		assertEquals(filename, file.getName());
-		assertEquals(content ,acc);
+		assertEquals(newContent, expected);
 		// check that file has the right name
 		// check that content of the file is updated
 	}
@@ -163,7 +181,7 @@ public class SavePositionStepDef {
 	 */
 	@And ("The user cancels to overwrite existing file")
 	public void TheUserCancelsToOverwriteExistingFile() {
-		content = QC.cancelOverWriteFile();
+		QC.cancelOverWriteFile();
 		
 	}
 
@@ -172,9 +190,11 @@ public class SavePositionStepDef {
 	 */
 	@Then ("File {string} shall not be changed in the filesystem")
 	public void FileShallNotBeChangedInTheFileSystem(String filename) {
-		
+		// # as above, but assert taht real content = previous content
 		String pathName = filename;
-		file = new File(pathName);
+		
+		File file = new File(pathName);
+
 		FileReader reader = null;
 		try{
 			reader = new FileReader(file);
@@ -184,19 +204,23 @@ public class SavePositionStepDef {
 		}
 		BufferedReader BF = new BufferedReader(reader); 
 		
-		String acc = "";
+		String readContent = "";
+		StringBuilder sb = new StringBuilder();
 		try {
 			String line = BF.readLine();
 			while(line != null) {
-				acc += line;
+				sb.append(line);
+				sb.append("\n");
 				line = BF.readLine();
 			}	
+			sb.delete(sb.length()-1, sb.length());
+			readContent = sb.toString();
 		}
 		catch(IOException e) {
 			e.printStackTrace();
 		}
 		assertEquals(filename, file.getName());
-		assertEquals(content, acc);
+		assertEquals(savedContent, readContent);
 		//check that the file has the right name
 		//check the file has the same content as before
 	}

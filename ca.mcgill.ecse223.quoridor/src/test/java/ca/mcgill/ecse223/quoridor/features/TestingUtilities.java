@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 import java.sql.Time;
 
 import ca.mcgill.ecse223.quoridor.QuoridorApplication;
+import ca.mcgill.ecse223.quoridor.model.Player;
 import ca.mcgill.ecse223.quoridor.model.User;
 
 class TestingUtilities {
@@ -51,7 +52,7 @@ class TestingUtilities {
 	/**
 	 * Method to check if username already exists
 	 *
-	 * @param username - username to check
+	 * @param username - String username to check
 	 * @author Nayem Alam
 	 */
 	public static boolean isExisting(String username) {
@@ -61,5 +62,26 @@ class TestingUtilities {
 			return true;
 		}
 		return false;
+	}
+    /**
+     * Method to return the player's color; this method actually sets the player's color.
+     * Example, if the currentPlayer = whitePlayer, then it's color = white, and vice versa
+     *
+     * @param currentPlayer - Player can either be whitePlayer or blackPlayer
+     * @author Nayem Alam
+     */
+	public static String getPlayerColor(Player currentPlayer) {
+		// color will be set based on corresponding player
+		String color = null;
+		Player whitePlayer = QuoridorApplication.getQuoridor().getCurrentGame().getWhitePlayer();
+		Player blackPlayer = QuoridorApplication.getQuoridor().getCurrentGame().getBlackPlayer();
+		if(currentPlayer.equals(whitePlayer)) {
+			color = "white";
+			currentPlayer.setNextPlayer(blackPlayer);
+		} else if(currentPlayer.equals(blackPlayer)) {
+			color = "black";
+			currentPlayer.setNextPlayer(whitePlayer);
+		}
+		return color;
 	}
 }

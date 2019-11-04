@@ -1,3 +1,4 @@
+
 Feature: Save Position
   As a player, I want to be able to save the actual position during a Quoridor game so that I can continue the game at a later stage from the exact position.
 
@@ -14,9 +15,9 @@ Feature: Save Position
       | save_game_test.dat |
 
   Scenario Outline: Save position with existing file name
-  	Given File "<filename>" exists in the filesystem
-    When The user initiates to save the game with name "<filename>"
-    And The user confirms to overwrite existing file
+  	Given File "<filename>" exists in the filesystem 
+    When The user initiates to save the game with name "<filename>" 
+    And The user confirms to overwrite existing file 
     Then File with "<filename>" shall be updated in the filesystem
 
     Examples: 
@@ -32,4 +33,3 @@ Feature: Save Position
     Examples: 
       | filename           |
       | save_game_test.dat |
-      
