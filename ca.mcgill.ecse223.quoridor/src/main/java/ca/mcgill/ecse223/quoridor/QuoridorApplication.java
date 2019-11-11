@@ -6,14 +6,14 @@ import ca.mcgill.ecse223.quoridor.view.*;
 
 
 public class QuoridorApplication {
-
+	
 	private static Quoridor quoridor;
 
 	public static void main(String[] args) {
 		// start UI
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                LoadPositionPage.main(args);
+                MainMenu.main(args);
             }
         });
 	}

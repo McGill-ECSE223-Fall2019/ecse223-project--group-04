@@ -6,7 +6,7 @@ Feature: Switch Current Player
   Background: 
     Given The game is running
     
-    @SwitchCurrentPlayer
+   @SwitchCurrentPlayer
   Scenario Outline: Switch current player
     Given The player to move is "<player>"
     And The clock of "<player>" is running

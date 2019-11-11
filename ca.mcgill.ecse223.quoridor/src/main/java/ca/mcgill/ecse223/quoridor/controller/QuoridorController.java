@@ -120,7 +120,7 @@ public class QuoridorController {
 	 */
 	public static Boolean initializeNewGame(Quoridor quoridor) throws Exception {
 		Boolean quoridorIsValid = !quoridor.equals(null);
-
+		
 		if(!quoridorIsValid) {
 			throw new IllegalArgumentException("This Quoridor already contains a game, or the Quoridor is null");
 		}
@@ -1101,7 +1101,7 @@ public class QuoridorController {
 //			gamePositionToLoad.addWhiteWallsInStock(whiteWall);
 //			j++;
 //		}
-
+		
 		for (int i = 2; i < blackPositions.length; i++) {
 
 			int blackWallColumn = blackPositions[i].charAt(0) - 96;
@@ -1148,6 +1148,7 @@ public class QuoridorController {
 	 */
 	public static void rotateWall() throws Exception{
 		Game curGame = QuoridorApplication.getQuoridor().getCurrentGame();
+
 		if(curGame.getWallMoveCandidate()==null) {
 			throw new Exception("No wall Selected");
 		}
@@ -1165,7 +1166,6 @@ public class QuoridorController {
 	 */
 	public static void dropWall() throws Exception {
 		// check wall in hand
-
 
 		  Quoridor q = QuoridorApplication.getQuoridor();
 		   WallMove wallMoveCandidate = q.getCurrentGame().getWallMoveCandidate();
@@ -1267,6 +1267,7 @@ public class QuoridorController {
 		if(id>9) {
 
 			return q.getCurrentGame().getBlackPlayer().getWall(id-10);
+
 
 		}
 		else {

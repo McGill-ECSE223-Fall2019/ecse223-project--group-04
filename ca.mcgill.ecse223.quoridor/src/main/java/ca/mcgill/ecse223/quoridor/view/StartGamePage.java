@@ -259,10 +259,11 @@ public class StartGamePage {
 			QuoridorController.initializeNewGame(quoridor);
 			QuoridorController.initializeBoard(quoridor);
 
+			
 			MainGameWindow gameWindow = new MainGameWindow();
 			MainGameWindow.frmQuoridorPlay.setVisible(true);
 			frame.dispose();
-
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

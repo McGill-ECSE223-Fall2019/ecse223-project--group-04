@@ -26,7 +26,7 @@ import java.awt.event.MouseEvent;
 
 public class MainMenu {
 
-	private JFrame frame;
+	public JFrame frame;
 	private JTextField txtQuoridor;
 
 	/**

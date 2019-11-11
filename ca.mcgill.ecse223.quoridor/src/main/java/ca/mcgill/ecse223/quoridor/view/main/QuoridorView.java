@@ -14,7 +14,7 @@ class QuoridorView extends JFrame {
     // JButton 
     static JButton[] buttons; 
     static JButton tmpButton;
-  
+    private static JPanel wallPanel;
     // label to diaplay text 
     static JLabel l; 
   

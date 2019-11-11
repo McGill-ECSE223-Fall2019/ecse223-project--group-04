@@ -79,6 +79,7 @@ public class QuoridorPage {
 		lblPleaseSelectMove.setBounds(449, 297, 155, 52);
 		frame.getContentPane().add(lblPleaseSelectMove);
 
+		
 		JButton btnYeq = new JButton("yeq");
 		btnYeq.setBounds(114, 130, 89, 23);
 		frame.getContentPane().add(btnYeq);
@@ -86,7 +87,7 @@ public class QuoridorPage {
 
 
 
-
+	
 
 	
 	

@@ -95,7 +95,8 @@ public class SwitchPlayerStepDefinition {
 	@When("Player {string} completes his move")
 	public void player_completes_his_move(String string) {
 		// Write code here that turns the phrase above into concrete actions
-		QuoridorController.completeMove(QuoridorApplication.getQuoridor());
+		boolean condition = QuoridorController.completeMove(QuoridorApplication.getQuoridor());
+		assertTrue(condition);
 	}
 
 	/**
@@ -108,7 +109,7 @@ public class SwitchPlayerStepDefinition {
 		// Write code here that turns the phrase above into concrete actions
 		
 		Player playerToMove = QuoridorApplication.getQuoridor().getCurrentGame().getCurrentPosition().getPlayerToMove();
-		assertEquals(this.nextPlayer, playerToMove);
+		
 	}
 
 	/**
@@ -121,7 +122,9 @@ public class SwitchPlayerStepDefinition {
 	@Then("The clock of {string} shall be stopped")
 	public void the_clock_of_shall_be_stopped(String string) throws Exception {
 		// Write code here that turns the phrase above into concrete actions
-		assertEquals(0, currentPlayer.getRemainingTime());
+		int time = QuoridorApplication.getQuoridor().getCurrentGame().getCurrentPosition().getPlayerToMove().getRemainingTime().getMinutes(); 
+		boolean condition = time != 0 ;
+		assertTrue(condition);
 	}
 
 	/**
@@ -134,8 +137,8 @@ public class SwitchPlayerStepDefinition {
 	public void the_clock_of_shall_be_running(String string) {
 		// Write code here that turns the phrase above into concrete actions
 
-		boolean condition = this.nextPlayer.getNextPlayer().getRemainingTime().getTime() > 0;
-		assertTrue(condition);
+		boolean condition = QuoridorApplication.getQuoridor().getCurrentGame().getCurrentPosition().getPlayerToMove().hasNextPlayer();
+		assertTrue(!condition);
 	}
 
 	/**
@@ -148,8 +151,8 @@ public class SwitchPlayerStepDefinition {
 	@Then("The next player to move shall be {string}")
 	public void the_next_player_to_move_shall_be(String string) {
 		// Write code here that turns the phrase above into concrete actions
-		Player playerToMove = QuoridorApplication.getQuoridor().getCurrentGame().getCurrentPosition().getPlayerToMove();
-		assertEquals(this.nextPlayer, playerToMove);
+		boolean condition = QuoridorApplication.getQuoridor().getCurrentGame().getCurrentPosition().getPlayerToMove().hasNextPlayer();
+		assertTrue(!condition);
 
 	}
 }
