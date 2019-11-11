@@ -1,6 +1,8 @@
 package ca.mcgill.ecse223.quoridor.view;
 
+import ca.mcgill.ecse223.quoridor.QuoridorApplication;
 import ca.mcgill.ecse223.quoridor.controller.QuoridorController;
+import ca.mcgill.ecse223.quoridor.model.Quoridor;
 
 import java.awt.*;
 
@@ -71,8 +73,8 @@ public class StartGamePage {
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-	    int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
-	    int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+		int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+		int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
 		frame.getContentPane().setLocation(x, y);
 		// Forces fullscreen
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -85,160 +87,160 @@ public class StartGamePage {
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setTitle("Quoridor - Start New Game");
 
-				// Content title
-				QuoridorTitleField = new JTextPane();
-				QuoridorTitleField.setLocation(50, 50);
-				QuoridorTitleField.setEditable(false);
-				QuoridorTitleField.setForeground(Color.BLACK);
-				QuoridorTitleField.setBackground(SystemColor.activeCaption);
-				QuoridorTitleField.setEditable(false);
-				QuoridorTitleField.setFont(new Font("Monospaced", Font.BOLD, 30));
-				QuoridorTitleField.setAlignmentX(SwingConstants.CENTER);
-				QuoridorTitleField.setText("Quoridor");
+		// Content title
+		QuoridorTitleField = new JTextPane();
+		QuoridorTitleField.setLocation(50, 50);
+		QuoridorTitleField.setEditable(false);
+		QuoridorTitleField.setForeground(Color.BLACK);
+		QuoridorTitleField.setBackground(SystemColor.activeCaption);
+		QuoridorTitleField.setEditable(false);
+		QuoridorTitleField.setFont(new Font("Monospaced", Font.BOLD, 30));
+		QuoridorTitleField.setAlignmentX(SwingConstants.CENTER);
+		QuoridorTitleField.setText("Quoridor");
 
-				// elements for Player1
-				PlayerLabel_1 = new JLabel("Player 1 Name:");
-				PlayerLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-				PlayerSelect_1 = new JComboBox(model_1);
-				PlayerSelect_1.setEditable(true);
-				btnAddPlayer_1 = new JButton("Select");
-		
-				// listeners for player1
-				btnAddPlayer_1.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent evt) {
-						addPlayerOneUsernameActionPerformed(evt);
-					}
-				});
+		// elements for Player1
+		PlayerLabel_1 = new JLabel("Player 1 Name:");
+		PlayerLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		PlayerSelect_1 = new JComboBox(model_1);
+		PlayerSelect_1.setEditable(true);
+		btnAddPlayer_1 = new JButton("Select");
 
-				// elements for Player2
-				PlayerLabel_2 = new JLabel("Player 2 Name:");
-				PlayerSelect_2 = new JComboBox(model_2);
-				PlayerSelect_2.setEditable(true);
-				btnAddPlayer_2 = new JButton("Select");
-				// listeners for player2
-				btnAddPlayer_2.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent evt) {
-						addPlayerTwoUsernameActionPerformed(evt);
-					}
-				});
-		
-				// elements for setTotalThinkingTime
-				ThinkingTime_Label = new JLabel("Set Thinking Time for Both Players");
-				ThinkingTime_Label.setFont(new Font("Lucida Grande", Font.BOLD, 13));
-				ThinkingTime_Label.setHorizontalAlignment(SwingConstants.CENTER);
-				Minutes_label = new JLabel("Minutes");
-				Minutes_label.setHorizontalAlignment(SwingConstants.CENTER);
-				Minutes_TextField = new JTextArea();
-				Minutes_TextField.setToolTipText("Minutes");
-				Seconds_label = new JLabel("Seconds");
-				Seconds_label.setHorizontalAlignment(SwingConstants.CENTER);
-				Seconds_TextField = new JTextArea();
-		
-				// elements for starting new game
-				btnStartGame = new JButton("START GAME");
-				// listeners for starting game
-				btnStartGame.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent evt) {
-						startGameActionPerformed(evt);
-					}
-				});
-				btnSetTime = new JButton("Set Time");
-				// listeners for setting time
-				btnSetTime.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent evt) {
-						setTotalThinkingTimeActionPerformed(evt);
-					}
-				});
+		// listeners for player1
+		btnAddPlayer_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				addPlayerOneUsernameActionPerformed(evt);
+			}
+		});
 
-						// elements for error message
-						errorMessage = new JLabel("");
-						errorMessage.setFont(new Font("Monospaced", Font.BOLD, 30));
-						errorMessage.setHorizontalAlignment(SwingConstants.CENTER);
-						errorMessage.setForeground(Color.RED);
-						GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-						groupLayout.setHorizontalGroup(
-						groupLayout.createParallelGroup(Alignment.LEADING)
+		// elements for Player2
+		PlayerLabel_2 = new JLabel("Player 2 Name:");
+		PlayerSelect_2 = new JComboBox(model_2);
+		PlayerSelect_2.setEditable(true);
+		btnAddPlayer_2 = new JButton("Select");
+		// listeners for player2
+		btnAddPlayer_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				addPlayerTwoUsernameActionPerformed(evt);
+			}
+		});
+
+		// elements for setTotalThinkingTime
+		ThinkingTime_Label = new JLabel("Set Thinking Time for Both Players");
+		ThinkingTime_Label.setFont(new Font("Lucida Grande", Font.BOLD, 13));
+		ThinkingTime_Label.setHorizontalAlignment(SwingConstants.CENTER);
+		Minutes_label = new JLabel("Minutes");
+		Minutes_label.setHorizontalAlignment(SwingConstants.CENTER);
+		Minutes_TextField = new JTextArea();
+		Minutes_TextField.setToolTipText("Minutes");
+		Seconds_label = new JLabel("Seconds");
+		Seconds_label.setHorizontalAlignment(SwingConstants.CENTER);
+		Seconds_TextField = new JTextArea();
+
+		// elements for starting new game
+		btnStartGame = new JButton("START GAME");
+		// listeners for starting game
+		btnStartGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				startGameActionPerformed(evt);
+			}
+		});
+		btnSetTime = new JButton("Set Time");
+		// listeners for setting time
+		btnSetTime.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				setTotalThinkingTimeActionPerformed(evt);
+			}
+		});
+
+		// elements for error message
+		errorMessage = new JLabel("");
+		errorMessage.setFont(new Font("Monospaced", Font.BOLD, 30));
+		errorMessage.setHorizontalAlignment(SwingConstants.CENTER);
+		errorMessage.setForeground(Color.RED);
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		groupLayout.setHorizontalGroup(
+				groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(QuoridorTitleField, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(PlayerLabel_1, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(PlayerSelect_1, 0, 200, Short.MAX_VALUE)
-							.addGap(5)
-							.addComponent(btnAddPlayer_1, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
+								.addContainerGap()
+								.addComponent(PlayerLabel_1, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(PlayerSelect_1, 0, 200, Short.MAX_VALUE)
+								.addGap(5)
+								.addComponent(btnAddPlayer_1, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(PlayerLabel_2, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(PlayerSelect_2, 0, 200, Short.MAX_VALUE)
-							.addGap(5)
-							.addComponent(btnAddPlayer_2, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
+								.addContainerGap()
+								.addComponent(PlayerLabel_2, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(PlayerSelect_2, 0, 200, Short.MAX_VALUE)
+								.addGap(5)
+								.addComponent(btnAddPlayer_2, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
 						.addComponent(ThinkingTime_Label, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(73)
-							.addComponent(Minutes_label, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-							.addGap(5)
-							.addComponent(Minutes_TextField, GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
-							.addGap(5)
-							.addComponent(Seconds_label, GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-							.addGap(5)
-							.addComponent(Seconds_TextField, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
-							.addGap(27)
-							.addComponent(btnSetTime, GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
-							.addGap(23))
+								.addGap(73)
+								.addComponent(Minutes_label, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+								.addGap(5)
+								.addComponent(Minutes_TextField, GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+								.addGap(5)
+								.addComponent(Seconds_label, GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+								.addGap(5)
+								.addComponent(Seconds_TextField, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+								.addGap(27)
+								.addComponent(btnSetTime, GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+								.addGap(23))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(errorMessage, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
-							.addContainerGap())
+								.addContainerGap()
+								.addComponent(errorMessage, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+								.addContainerGap())
 						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(btnStartGame, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
-							.addContainerGap())
-				);
-				groupLayout.setVerticalGroup(
-					groupLayout.createParallelGroup(Alignment.LEADING)
+								.addContainerGap()
+								.addComponent(btnStartGame, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+								.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+				groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(QuoridorTitleField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(1)
-									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(PlayerSelect_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(PlayerLabel_1)))
-								.addComponent(btnAddPlayer_1))
-							.addGap(5)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(1)
-									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(PlayerSelect_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(PlayerLabel_2)))
-								.addComponent(btnAddPlayer_2))
-							.addGap(5)
-							.addComponent(ThinkingTime_Label)
-							.addGap(5)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(6)
-									.addComponent(Minutes_label))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(6)
-									.addComponent(Minutes_TextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(6)
-									.addComponent(Seconds_label))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(6)
-									.addComponent(Seconds_TextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-								.addComponent(btnSetTime))
-							.addGap(22)
-							.addComponent(btnStartGame, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(errorMessage, GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-							.addContainerGap())
-				);
-				frame.getContentPane().setLayout(groupLayout);
+								.addComponent(QuoridorTitleField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addGap(10)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+										.addGroup(groupLayout.createSequentialGroup()
+												.addGap(1)
+												.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+														.addComponent(PlayerSelect_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+														.addComponent(PlayerLabel_1)))
+										.addComponent(btnAddPlayer_1))
+								.addGap(5)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addGroup(groupLayout.createSequentialGroup()
+												.addGap(1)
+												.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+														.addComponent(PlayerSelect_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+														.addComponent(PlayerLabel_2)))
+										.addComponent(btnAddPlayer_2))
+								.addGap(5)
+								.addComponent(ThinkingTime_Label)
+								.addGap(5)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addGroup(groupLayout.createSequentialGroup()
+												.addGap(6)
+												.addComponent(Minutes_label))
+										.addGroup(groupLayout.createSequentialGroup()
+												.addGap(6)
+												.addComponent(Minutes_TextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+										.addGroup(groupLayout.createSequentialGroup()
+												.addGap(6)
+												.addComponent(Seconds_label))
+										.addGroup(groupLayout.createSequentialGroup()
+												.addGap(6)
+												.addComponent(Seconds_TextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+										.addComponent(btnSetTime))
+								.addGap(22)
+								.addComponent(btnStartGame, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(errorMessage, GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+								.addContainerGap())
+		);
+		frame.getContentPane().setLayout(groupLayout);
 
 	}
 	// Methods
@@ -247,8 +249,20 @@ public class StartGamePage {
 		error = null;
 		frame.dispose();
 		try {
-			MainGameWindow mainGameWindow = new MainGameWindow();
-			mainGameWindow.frmQuoridorPlay.setVisible(true);
+
+			Quoridor quoridor = QuoridorApplication.getQuoridor();
+			// TODO: Set the correct names!
+			quoridor.addUser("TestUser1");
+			quoridor.addUser("TestUser2");
+//			QuoridorController.setWhitePlayerUserName(PlayerLabel_1.getText());
+//			QuoridorController.setBlackPlayerUserName(PlayerLabel_2.getText());
+			QuoridorController.initializeNewGame(quoridor);
+			QuoridorController.initializeBoard(quoridor);
+
+			MainGameWindow gameWindow = new MainGameWindow();
+			MainGameWindow.frmQuoridorPlay.setVisible(true);
+			frame.dispose();
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -310,8 +324,8 @@ public class StartGamePage {
 		error = null;
 
 		// call controller
-		Integer min = Integer.parseInt(Minutes_TextField.getText());
-		Integer sec = Integer.parseInt(Seconds_TextField.getText());
+		Integer min = Integer.parseInt(Minutes_TextField.getText().trim());
+		Integer sec = Integer.parseInt(Seconds_TextField.getText().trim());
 		long thinkingTime = min* 60L *1000 + sec* 1000L;
 		try {
 			QuoridorController.setThinkingTime(min, sec);

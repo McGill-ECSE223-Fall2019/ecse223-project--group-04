@@ -35,7 +35,8 @@ public class QuoridorPage {
 	private static int CurrPlayer = 0;
 	private static int index;
 
-	private static JFrame frame;
+
+	public static JFrame frame;
 
 	/**
 	 * Launch the application.

@@ -37,7 +37,7 @@ import java.awt.GridBagLayout;
 
 public class MainGameWindow {
 
-	public JFrame frmQuoridorPlay;
+	public static JFrame frmQuoridorPlay;
 	private JTextField txtCurrentPlayer;
 	private JTextField textField_1;
 	private JTextField txtTimeRemaining;
@@ -55,22 +55,26 @@ public class MainGameWindow {
 	private static final int TOTAL_NUMBER_OF_TILES = 81;
 	private static final int TOTAL_ROWS = 9;
 	private static final int TOTAL_COLS = 9;
-	private JButtonWrapper[][] btnArray = new JButtonWrapper[TOTAL_ROWS][TOTAL_COLS];
-	private JButton[] wallArray = new JButton[20];
+	private static JButton[][] btnArray = new JButton[TOTAL_ROWS][TOTAL_COLS];
+	private static JButton[] wallArray = new JButton[20];
 	private JButton btnPlaceNewWall;
 	private JButton btnNewButton;
 	private JButton button;
-	private int wallWidth = 160;
-	private int wallHeight = 10;
-	private boolean WallGrabbed = false;
+	private static int wallWidth = 185;
+	private static int wallWidthV = 101;
+	private static int wallHeight = 10;
+	private static boolean WallGrabbed = false;
 	private static int CurrRow;
-	private int CurrCol;
-	private JButton horizontal = new JButton("horizontal");
-	private JButton vertical = new JButton("vertical");
-	JLabel lblPleaseSelectMove = new JLabel("Incorrect Move");
-	private int wallIndex;
-	private int tileLength = 87;
-	private int tileWidth = 45;
+	private static int CurrCol;
+	private static JButton horizontal = new JButton("horizontal");
+	private static JButton vertical = new JButton("vertical");
+	static JLabel lblPleaseSelectMove = new JLabel("Incorrect Move");
+	private static int wallIndex;
+	private static int tileLength = 87;
+	private static int tileWidth = 45;
+	private static JPanel panel_10 = new JPanel();
+	private static JPanel panel_11 = new JPanel();
+	private static JPanel centerPanel = new JPanel();
 
 	/**
 	 * Launch the application.
@@ -180,11 +184,11 @@ public class MainGameWindow {
 		lblPleaseSelectMove.setVisible(false);
 
 
-		JPanel panel_10 = new JPanel();
+
 		panel_2.add(panel_10);
 		panel_10.setLayout(null);
 
-		JPanel centerPanel = new JPanel();
+
 		frmQuoridorPlay.getContentPane().add(centerPanel, BorderLayout.CENTER);
 		centerPanel.setLayout(null);
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -200,52 +204,14 @@ public class MainGameWindow {
 
 				lblPleaseSelectMove.setVisible(false);
 				JButton button = new JButton();
-				btnArray[row][col] = new JButtonWrapper(row, col, button);
+				btnArray[row][col] = new JButton();
+				btnArray[row][col].setBounds((tileLength +11)*row, (tileWidth+11)*col, tileLength, tileWidth);
+				centerPanel.add(btnArray[row][col]);
 
-				btnArray[row][col].getButton().addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseReleased(MouseEvent arg0) {
-						// TODO: Add correct mouse listener for this tile, aka the right method call
-						//textField_1.setText("SUP");
 
-						for(int i = 0; i<20; i++) {
+				btnArray[row][col].addMouseListener(new ButtonActionListener(row+1, col+1));
 
-							if(wallArray[i].isVisible() == false) {//checking if there is one wall grabbed or not
 
-								WallGrabbed = true;
-
-							}
-							else {
-								continue;
-							}
-						}
-
-						if(WallGrabbed == true) {
-
-							//TODO call the method for drop wall (drop wall should call wallMove from controller)
-							//so that the changes from the view are applied to the system
-
-						}
-						if(WallGrabbed == false) {
-
-							if(btnArray[CurrRow][CurrCol].getButton().getBackground().equals(Color.GREEN)) {
-
-								//TODO implement pawn move
-
-							}
-							else {
-
-								lblPleaseSelectMove.setVisible(true);
-								SwingUtilities.updateComponentTreeUI(frmQuoridorPlay);
-
-							}
-
-						}
-
-					}
-				});
-
-				centerPanel.add(btnArray[row][col].getButton());
 			}
 		}
 
@@ -302,6 +268,10 @@ public class MainGameWindow {
 		JPanel southPanel = new JPanel();
 		frmQuoridorPlay.getContentPane().add(southPanel, BorderLayout.SOUTH);
 
+
+		southPanel.add(vertical);
+		southPanel.add(horizontal);
+
 		JPanel rightPanel = new JPanel();
 		rightPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		frmQuoridorPlay.getContentPane().add(rightPanel, BorderLayout.EAST);
@@ -354,20 +324,28 @@ public class MainGameWindow {
 		panel_9.add(wallsOnBoardBlackPlayer);
 		wallsOnBoardBlackPlayer.setColumns(10);
 
-		JPanel panel_11 = new JPanel();
+
 		panel_6.add(panel_11);
 		panel_11.setLayout(null);
 
-		for(int i = 0; i< wallArray.length; i++) { //Initializing the walls for both players
+		for(int i = 0; i < wallArray.length; i++) { //Initializing the walls for both players
 
 			if(i<=9) {
-
+				int wId=i;
 				wallArray[i] = new JButton("Wall"+i);
 				wallArray[i].addMouseListener(new MouseAdapter() {
 
 					public void mouseReleased(MouseEvent e) {
 
+						for(int j = 0; j<wallArray.length; j++) {
+							if(wallArray[j].isVisible() == false && wId != j) {
+
+								wallArray[j].setVisible(true);
+							}
+
+						}
 						lblPleaseSelectMove.setVisible(false);
+						wallArray[wId].setVisible(false);
 						// TODO call the method that specifies what happens to the wall once it is grabbed
 						// TODO call the method for rotate wall in here
 
@@ -380,11 +358,21 @@ public class MainGameWindow {
 			}
 			else {
 				int bId = i-10;
+				int Aid = i;
 				wallArray[i] = new JButton("Wall"+bId);
 				wallArray[i].addMouseListener(new MouseAdapter() {
 
 					public void mouseReleased(MouseEvent e) {
 
+						for(int j = 0; j<wallArray.length; j++) {
+							if(wallArray[j].isVisible() == false && Aid != j) {
+
+								wallArray[j].setVisible(true);
+
+							}
+
+						}
+						wallArray[Aid].setVisible(false);
 						lblPleaseSelectMove.setVisible(false);
 						// TODO call the method that specifies what happens to the wall once it is grabbed
 						// TODO call the method for rotate wall in here
@@ -412,25 +400,25 @@ public class MainGameWindow {
 			if(QuoridorController.initializeValidatePosition(row-1 , col) == true) {
 
 
-				btnArray[row-1][col].getButton().setBackground(Color.GREEN);
+				btnArray[row-1][col].setBackground(Color.GREEN);
 
 			}
 			if(QuoridorController.initializeValidatePosition(row+1 , col) == true) {
 
 
-				btnArray[row+1][col].getButton().setBackground(Color.GREEN);
+				btnArray[row+1][col].setBackground(Color.GREEN);
 
 			}
 			if(QuoridorController.initializeValidatePosition(row , col-1) == true) {
 
 
-				btnArray[row][col-1].getButton().setBackground(Color.GREEN);
+				btnArray[row][col-1].setBackground(Color.GREEN);
 
 			}
 			if(QuoridorController.initializeValidatePosition(row , col+1) == true) {
 
 
-				btnArray[row][col+1].getButton().setBackground(Color.GREEN);
+				btnArray[row][col+1].setBackground(Color.GREEN);
 
 			}
 		}
@@ -443,30 +431,139 @@ public class MainGameWindow {
 			if(QuoridorController.initializeValidatePosition(row-1 , col) == true) {
 
 
-				btnArray[row-1][col].getButton().setBackground(Color.GREEN);
+				btnArray[row-1][col].setBackground(Color.GREEN);
 
 			}
 			if(QuoridorController.initializeValidatePosition(row+1 , col) == true) {
 
 
-				btnArray[row+1][col].getButton().setBackground(Color.GREEN);
+				btnArray[row+1][col].setBackground(Color.GREEN);
 
 			}
 			if(QuoridorController.initializeValidatePosition(row , col-1) == true) {
 
 
-				btnArray[row][col-1].getButton().setBackground(Color.GREEN);
+				btnArray[row][col-1].setBackground(Color.GREEN);
 
 			}
 			if(QuoridorController.initializeValidatePosition(row , col+1) == true) {
 
 
-				btnArray[row][col+1].getButton().setBackground(Color.GREEN);
+				btnArray[row][col+1].setBackground(Color.GREEN);
 
 			}
 		}
 
 
+
+	}
+	public static void tileListener( int row, int col){
+
+
+		for(int i = 0; i<20; i++) {
+
+			if(wallArray[i].isVisible() == false) {//checking if there is one wall grabbed or not
+
+				WallGrabbed = true;
+				wallIndex = i;
+
+			}
+			else {
+				continue;
+			}
+		}
+		if(WallGrabbed == true) {
+
+
+			vertical.addMouseListener(new MouseAdapter() {
+
+				public void mouseClicked(MouseEvent e) {
+					moveWallView(row, col, "vertical", wallIndex);
+				}
+			});
+
+
+			horizontal.addMouseListener(new MouseAdapter() {
+
+				public void mouseClicked(MouseEvent e) {
+
+
+					moveWallView(row, col, "horizontal", wallIndex);
+
+				}
+			});
+
+
+		}
+		if(WallGrabbed == false) {
+
+			if(btnArray[CurrRow][CurrCol].getBackground().equals(Color.GREEN)) {
+
+				//TODO implement pawn move
+
+			}
+			else {
+
+				lblPleaseSelectMove.setVisible(true);
+				SwingUtilities.updateComponentTreeUI(frmQuoridorPlay);
+
+			}
+
+		}
+		WallGrabbed = false;
+
+	}
+
+
+	public static void moveWallView(int row, int col, String dir, int wallIndex) {
+		if(wallIndex<=9) {
+
+			panel_10.remove(wallArray[wallIndex]);
+			centerPanel.add(wallArray[wallIndex]);
+			wallArray[wallIndex].setVisible(true);
+			if(QuoridorController.wallMove(row, col, dir, QuoridorController.getWall(wallIndex), QuoridorController.getCurrentPlayer()) == true) {
+				if(dir.equals("horizontal")) {
+
+					wallArray[wallIndex].setBounds(btnArray[row-1][col-1].getX(), btnArray[row-1][col-1].getY()+tileWidth, wallWidth, wallHeight);
+					wallArray[wallIndex].setVisible(true);
+					SwingUtilities.updateComponentTreeUI(frmQuoridorPlay);
+
+
+				}
+				else {
+					wallArray[wallIndex].setBounds(btnArray[row-1][col-1].getX()+tileLength, btnArray[row-1][col-1].getY(), wallHeight, wallWidthV  );
+					wallArray[wallIndex].setVisible(true);
+					SwingUtilities.updateComponentTreeUI(frmQuoridorPlay);
+				}
+
+			}
+			else {
+				lblPleaseSelectMove.setVisible(true);
+
+			}
+
+		}
+		if(wallIndex >9) {
+
+			panel_11.remove(wallArray[wallIndex]);
+			centerPanel.add(wallArray[wallIndex]);
+			if(QuoridorController.wallMove(row, col, dir, QuoridorController.getWall(wallIndex), QuoridorController.getCurrentPlayer()) == true) {
+				if(dir.equals("horizontal")) {
+					btnArray[row][col].setBackground(Color.RED);
+					wallArray[wallIndex].setBounds(btnArray[row-1][col-1].getX(), btnArray[row-1][col-1].getY()+tileWidth, wallWidth, wallHeight);
+					wallArray[wallIndex].setVisible(true);
+					SwingUtilities.updateComponentTreeUI(frmQuoridorPlay);
+
+				}
+				else {
+					wallArray[wallIndex].setBounds(btnArray[row-1][col-1].getX()-11, btnArray[row-1][col-1].getY(), wallHeight, wallWidthV);
+					wallArray[wallIndex].setVisible(true);
+					SwingUtilities.updateComponentTreeUI(frmQuoridorPlay);
+				}
+
+			}
+			else {
+				lblPleaseSelectMove.setVisible(true);
 
 	}
 }
