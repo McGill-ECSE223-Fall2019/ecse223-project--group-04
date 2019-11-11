@@ -286,11 +286,16 @@ public class StartGamePage {
 				errorMessage.setForeground(Color.BLACK);
 				errorMessage.setText("Username: " + PlayerSelect_1.getSelectedItem() + " created.");
 				try {
-					QuoridorController.setWhitePlayerUserName(PlayerSelect_1.getSelectedItem().toString());					System.err.println("Not calling controller method ... ");
+					QuoridorController.createNewUsernameGUI(PlayerSelect_1.getSelectedItem().toString());
 				} catch (Exception e) {
 					error = e.getMessage();
 					System.err.println("Not calling controller method ... ");
 				}
+			} else {
+				QuoridorController.selectAnExistingUsernameGUI(PlayerSelect_1.getSelectedItem().toString());
+				errorMessage.setForeground(Color.BLACK);
+				errorMessage.setText("Selected existing username: "+ PlayerSelect_1.getSelectedItem());
+				System.out.println("User selected an existing username.");
 			}
 		}
 	}
@@ -311,11 +316,16 @@ public class StartGamePage {
 				errorMessage.setForeground(Color.BLACK);
 				errorMessage.setText("Username: " + PlayerSelect_2.getSelectedItem() + " created.");
 				try {
-					QuoridorController.setBlackPlayerUserName(PlayerSelect_2.getSelectedItem().toString());
+					QuoridorController.createNewUsernameGUI(PlayerSelect_2.getSelectedItem().toString());
 				} catch (Exception e) {
 					error = e.getMessage();
 					System.err.println("Not calling controller method ... ");
 				}
+			} else {
+				QuoridorController.selectAnExistingUsernameGUI(PlayerSelect_2.getSelectedItem().toString());
+				errorMessage.setForeground(Color.BLACK);
+				errorMessage.setText("Selected existing username: " + PlayerSelect_2.getSelectedItem());
+				System.out.println("User selected an existing username.");
 			}
 		}
 	}

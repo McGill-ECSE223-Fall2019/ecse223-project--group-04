@@ -338,13 +338,38 @@ public class QuoridorController {
 		}
 		return userList;
 	}
+	/**
+	 * GUI related Method - createNewUsername(String username)
+	 *
+	 * This method interacts with the GUI, it creates a new name for the user with
+	 * given string
+	 *
+	 * @param username - String username to create
+	 * @author Nayem Alam
+	 */
+	public static void createNewUsernameGUI(String username) {
+		Quoridor quoridor = QuoridorApplication.getQuoridor();
+		User user = new User(username, quoridor);
+		user.setName(username);
+	}
 
-	//	public static List<String> myUsers() {
-	//		List<String> userList = new ArrayList<>();
-	//		userList.add("Daniel");
-	//		userList.add("Hyacinth");
-	//		return userList;
-	//	}
+	/**
+	 * GUI related Method - selectAnExistingUsername(String username)
+	 *
+	 * This method interacts with the GUI, it checks if the username is already created
+	 * if so, the user then selects that username
+	 *
+	 * @param username - String username can either exist in the list or can create new username
+	 * @author Nayem Alam
+	 */
+	public static void selectAnExistingUsernameGUI(String username) {
+		List<User> userList = QuoridorApplication.getQuoridor().getUsers();
+		for(User user : userList) {
+			if(user.getName().equals(username)) {
+				user.setName(username);
+			}
+		}
+	}
 
 	/**
 	 * Method - selectNewUserName(String username)
