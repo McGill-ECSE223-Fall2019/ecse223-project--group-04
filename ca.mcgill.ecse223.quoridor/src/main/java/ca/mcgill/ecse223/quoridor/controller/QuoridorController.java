@@ -1173,7 +1173,6 @@ public class QuoridorController {
 	 */
 	public static void rotateWall() throws Exception{
 		Game curGame = QuoridorApplication.getQuoridor().getCurrentGame();
-
 		if(curGame.getWallMoveCandidate()==null) {
 			throw new Exception("No wall Selected");
 		}
@@ -1191,6 +1190,7 @@ public class QuoridorController {
 	 */
 	public static void dropWall() throws Exception {
 		// check wall in hand
+
 
 		  Quoridor q = QuoridorApplication.getQuoridor();
 		   WallMove wallMoveCandidate = q.getCurrentGame().getWallMoveCandidate();
@@ -1292,7 +1292,6 @@ public class QuoridorController {
 		if(id>9) {
 
 			return q.getCurrentGame().getBlackPlayer().getWall(id-10);
-
 
 		}
 		else {

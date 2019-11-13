@@ -516,52 +516,58 @@ public class MainGameWindow {
 
 
 	public static void moveWallView(int row, int col, String dir, int wallIndex) {
-		if (wallIndex <= 9) {
+		if(wallIndex<=9) {
 
 			panel_10.remove(wallArray[wallIndex]);
 			centerPanel.add(wallArray[wallIndex]);
 			wallArray[wallIndex].setVisible(true);
-			if (QuoridorController.wallMove(row, col, dir, QuoridorController.getWall(wallIndex), QuoridorController.getCurrentPlayer()) == true) {
-				if (dir.equals("horizontal")) {
+			if(QuoridorController.wallMove(row, col, dir, QuoridorController.getWall(wallIndex), QuoridorController.getCurrentPlayer()) == true) {
+				if(dir.equals("horizontal")) {
 
-					wallArray[wallIndex].setBounds(btnArray[row - 1][col - 1].getX(), btnArray[row - 1][col - 1].getY() + tileWidth, wallWidth, wallHeight);
+					wallArray[wallIndex].setBounds(btnArray[row-1][col-1].getX(), btnArray[row-1][col-1].getY()+tileWidth, wallWidth, wallHeight);
 					wallArray[wallIndex].setVisible(true);
 					SwingUtilities.updateComponentTreeUI(frmQuoridorPlay);
 
 
-				} else {
-					wallArray[wallIndex].setBounds(btnArray[row - 1][col - 1].getX() + tileLength, btnArray[row - 1][col - 1].getY(), wallHeight, wallWidthV);
+				}
+				else {
+					wallArray[wallIndex].setBounds(btnArray[row-1][col-1].getX()+tileLength, btnArray[row-1][col-1].getY(), wallHeight, wallWidthV  );
 					wallArray[wallIndex].setVisible(true);
 					SwingUtilities.updateComponentTreeUI(frmQuoridorPlay);
 				}
 
-			} else {
+			}
+			else {
 				lblPleaseSelectMove.setVisible(true);
 
 			}
 
 		}
-		if (wallIndex > 9) {
+		if(wallIndex >9) {
 
 			panel_11.remove(wallArray[wallIndex]);
 			centerPanel.add(wallArray[wallIndex]);
-			if (QuoridorController.wallMove(row, col, dir, QuoridorController.getWall(wallIndex), QuoridorController.getCurrentPlayer()) == true) {
-				if (dir.equals("horizontal")) {
+			if(QuoridorController.wallMove(row, col, dir, QuoridorController.getWall(wallIndex), QuoridorController.getCurrentPlayer()) == true) {
+				if(dir.equals("horizontal")) {
 					btnArray[row][col].setBackground(Color.RED);
-					wallArray[wallIndex].setBounds(btnArray[row - 1][col - 1].getX(), btnArray[row - 1][col - 1].getY() + tileWidth, wallWidth, wallHeight);
+					wallArray[wallIndex].setBounds(btnArray[row-1][col-1].getX(), btnArray[row-1][col-1].getY()+tileWidth, wallWidth, wallHeight);
 					wallArray[wallIndex].setVisible(true);
 					SwingUtilities.updateComponentTreeUI(frmQuoridorPlay);
 
-				} else {
-					wallArray[wallIndex].setBounds(btnArray[row - 1][col - 1].getX() - 11, btnArray[row - 1][col - 1].getY(), wallHeight, wallWidthV);
+				}
+				else {
+					wallArray[wallIndex].setBounds(btnArray[row-1][col-1].getX()-11, btnArray[row-1][col-1].getY(), wallHeight, wallWidthV);
 					wallArray[wallIndex].setVisible(true);
 					SwingUtilities.updateComponentTreeUI(frmQuoridorPlay);
 				}
 
-			} else {
+			}
+			else {
 				lblPleaseSelectMove.setVisible(true);
 
 			}
 		}
+
+
 	}
 }
