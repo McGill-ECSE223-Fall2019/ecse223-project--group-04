@@ -257,11 +257,8 @@ public class StartGamePage {
 			
 			Quoridor quoridor = QuoridorApplication.getQuoridor();
 			// TODO: Set the correct names!
-			quoridor.addUser("TestUser1");
-			quoridor.addUser("TestUser2");
-			// TODO: Set the correct names!
-			User userWhite = quoridor.addUser("TestUser1");
-			User userBlack = quoridor.addUser("TestUser2");
+			quoridor.addUser(PlayerSelect_1.getSelectedItem().toString());
+			quoridor.addUser(PlayerSelect_2.getSelectedItem().toString());
 			Player whitePlayer = new Player(new Time(0), quoridor.getUser(0), ControllerUtilities.BLACK_TILE_INDEX, Direction.Horizontal);
 			Player blackPlayer = new Player(new Time(0), quoridor.getUser(1), ControllerUtilities.WHITE_TILE_INDEX, Direction.Horizontal);
 			QuoridorController.initializeNewGame(quoridor, whitePlayer, blackPlayer);
