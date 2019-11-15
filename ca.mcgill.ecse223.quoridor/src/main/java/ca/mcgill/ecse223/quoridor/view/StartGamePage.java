@@ -46,6 +46,7 @@ public class StartGamePage {
 
 	// data elements
 	private String error = null;
+	private JButton btnNewButton;
 
 	/**
 	 * Launch the application.
@@ -157,94 +158,109 @@ public class StartGamePage {
 				setTotalThinkingTimeActionPerformed(evt);
 			}
 		});
+		// listeners for back button
+		btnNewButton = new JButton("BACK");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				backActionPerformed(evt);
+			}
+		});
 
 		// elements for error message
 		errorMessage = new JLabel("");
 		errorMessage.setFont(new Font("Monospaced", Font.BOLD, 30));
 		errorMessage.setHorizontalAlignment(SwingConstants.CENTER);
 		errorMessage.setForeground(Color.RED);
+		
+		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
-				groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(QuoridorTitleField, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addComponent(QuoridorTitleField, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(PlayerLabel_1, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(PlayerSelect_1, 0, 200, Short.MAX_VALUE)
+					.addGap(5)
+					.addComponent(btnAddPlayer_1, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(PlayerLabel_2, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(PlayerSelect_2, 0, 200, Short.MAX_VALUE)
+					.addGap(5)
+					.addComponent(btnAddPlayer_2, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
+				.addComponent(ThinkingTime_Label, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(73)
+					.addComponent(Minutes_label, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+					.addGap(5)
+					.addComponent(Minutes_TextField, GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+					.addGap(5)
+					.addComponent(Seconds_label, GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+					.addGap(5)
+					.addComponent(Seconds_TextField, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+					.addGap(27)
+					.addComponent(btnSetTime, GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+					.addGap(23))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnStartGame, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+					.addContainerGap())
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(12)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(PlayerLabel_1, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(PlayerSelect_1, 0, 200, Short.MAX_VALUE)
-								.addGap(5)
-								.addComponent(btnAddPlayer_1, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
+							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())
 						.addGroup(groupLayout.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(PlayerLabel_2, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(PlayerSelect_2, 0, 200, Short.MAX_VALUE)
-								.addGap(5)
-								.addComponent(btnAddPlayer_2, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
-						.addComponent(ThinkingTime_Label, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
-						.addGroup(groupLayout.createSequentialGroup()
-								.addGap(73)
-								.addComponent(Minutes_label, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-								.addGap(5)
-								.addComponent(Minutes_TextField, GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
-								.addGap(5)
-								.addComponent(Seconds_label, GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-								.addGap(5)
-								.addComponent(Seconds_TextField, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
-								.addGap(27)
-								.addComponent(btnSetTime, GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
-								.addGap(23))
-						.addGroup(groupLayout.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(errorMessage, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
-								.addContainerGap())
-						.addGroup(groupLayout.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(btnStartGame, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
-								.addContainerGap())
+							.addComponent(errorMessage, GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
+							.addGap(21))))
 		);
 		groupLayout.setVerticalGroup(
-				groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(QuoridorTitleField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 						.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(QuoridorTitleField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addGap(10)
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-										.addGroup(groupLayout.createSequentialGroup()
-												.addGap(1)
-												.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-														.addComponent(PlayerSelect_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-														.addComponent(PlayerLabel_1)))
-										.addComponent(btnAddPlayer_1))
-								.addGap(5)
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createSequentialGroup()
-												.addGap(1)
-												.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-														.addComponent(PlayerSelect_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-														.addComponent(PlayerLabel_2)))
-										.addComponent(btnAddPlayer_2))
-								.addGap(5)
-								.addComponent(ThinkingTime_Label)
-								.addGap(5)
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createSequentialGroup()
-												.addGap(6)
-												.addComponent(Minutes_label))
-										.addGroup(groupLayout.createSequentialGroup()
-												.addGap(6)
-												.addComponent(Minutes_TextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-										.addGroup(groupLayout.createSequentialGroup()
-												.addGap(6)
-												.addComponent(Seconds_label))
-										.addGroup(groupLayout.createSequentialGroup()
-												.addGap(6)
-												.addComponent(Seconds_TextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-										.addComponent(btnSetTime))
-								.addGap(22)
-								.addComponent(btnStartGame, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(errorMessage, GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-								.addContainerGap())
+							.addGap(1)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(PlayerSelect_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(PlayerLabel_1)))
+						.addComponent(btnAddPlayer_1))
+					.addGap(5)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(1)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(PlayerSelect_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(PlayerLabel_2)))
+						.addComponent(btnAddPlayer_2))
+					.addGap(5)
+					.addComponent(ThinkingTime_Label)
+					.addGap(5)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(6)
+							.addComponent(Minutes_label))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(6)
+							.addComponent(Minutes_TextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(6)
+							.addComponent(Seconds_label))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(6)
+							.addComponent(Seconds_TextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnSetTime))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnStartGame, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(errorMessage, GroupLayout.DEFAULT_SIZE, 11, Short.MAX_VALUE)
+					.addGap(17)
+					.addComponent(btnNewButton))
 		);
 		frame.getContentPane().setLayout(groupLayout);
 
@@ -255,11 +271,22 @@ public class StartGamePage {
 		error = null;
 		frame.dispose();
 		try {
-			
-			
-			
 			MainGameWindow gameWindow = new MainGameWindow();
 			MainGameWindow.frmQuoridorPlay.setVisible(true);
+			frame.dispose();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			errorMessage.setText(e.getMessage());
+		}
+	}
+	private void backActionPerformed(ActionEvent evt) {
+		// clears error message
+		error = null;
+		try {
+			MainMenu mainMenu = new MainMenu();
+			mainMenu.frame.setVisible(true);
 			frame.dispose();
 			
 		} catch (Exception e) {
