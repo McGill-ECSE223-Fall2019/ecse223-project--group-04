@@ -138,11 +138,16 @@ public class QuoridorController {
 		// and vice versa
 		whitePlayer.setGameAsWhite(newGame);
 		blackPlayer.setGameAsBlack(newGame);
+		
+		
 
 		newGame.setWhitePlayer(whitePlayer);
 		newGame.setBlackPlayer(blackPlayer);
 		// Set the game to the quoridor object
 		quoridor.setCurrentGame(newGame);
+		
+		// initialise player positions and set the players to their initial tiles
+		//PlayerPosition whitePos = new PlayerPosition(whitePlayer, QuoridorApplication.getQuoridor().getBoard())
 		
 		initializeBoard(quoridor);
 

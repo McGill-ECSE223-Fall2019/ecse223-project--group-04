@@ -8,6 +8,89 @@ class PawnBehavior {
     0..1 -> 0..1 Player player;
 
     pawnSM {
+    	InGame{
+	    	Vertical{
+	    		Start {
+	    			startGame[getCurrentGame() == getPlayer().getGameAsWhite()] -> TrueSouth;
+	    			startGame[getCurrentGame() == getPlayer().getGameAsBlack()] -> TrueNorth;
+	    		}
+	    		TrueNorth {
+	    			jumpUp / {illegalMove();}-> TrueNorth;
+	    			stepUp / {illegalMove();} -> TrueNorth;
+	    			stepDown[isLegalStep(MoveDirection.South)] -> SoftNorth;
+	    			jumpDown[isLegalJump(MoveDirection.South)] -> MiddleVertical;
+	    		}
+	    		SoftNorth {
+	    			jumpUp / {illegalMove();} -> SoftNorth;
+	    			stepUp[isLegalStep(MoveDirection.North)] -> TrueNorth;
+	    			stepDown[isLegalStep(MoveDirection.South)] -> MiddleVertical;
+	    			jumpDown[isLegalJump(MoveDirection.South)] -> MiddleVertical;
+	    		}
+	    		MiddleVertical {
+	    			stepUp[isLegalStep(MoveDirection.North) && getCurrentPawnRow() == 3] -> SoftNorth;
+	    			jumpUp[isLegalJump(MoveDirection.North) && getCurrentPawnRow() == 4] -> SoftNorth;
+	    			jumpUp[isLegalJump(MoveDirection.North) && getCurrentPawnRow() == 3] -> TrueNorth;
+	    			jumpUp -> MiddleVertical;
+	    			stepUp -> MiddleVertical;
+	    			stepDown[isLegalStep(MoveDirection.South) && getCurrentPawnRow() == 7] -> SoftSouth;
+	    			jumpDown[isLegalJump(MoveDirection.South) && getCurrentPawnRow() == 6] -> SoftSouth;
+	    			jumpDown[isLegalJump(MoveDirection.South) && getCurrentPawnRow() == 7] -> TrueSouth;
+	    			jumpDown -> MiddleVertical;
+	    			stepDown -> MiddleVertical;
+	    		}
+	    		TrueSouth {
+	    			jumpDown / {illegalMove();}-> TrueSouth;
+	    			stepDown / {illegalMove();} -> TrueSouth;
+	    			stepUp[isLegalStep(MoveDirection.North)] -> SoftSouth;
+	    			jumpUp[isLegalJump(MoveDirection.North)] -> MiddleVertical;
+	    		}
+	    		SoftSouth {
+	    			jumpDown / {illegalMove();} -> SoftSouth;
+	    			stepDown[isLegalStep(MoveDirection.South)] -> TrueSouth;
+	    			stepUp[isLegalStep(MoveDirection.North)] -> MiddleVertical;
+	    			jumpUp[isLegalJump(MoveDirection.North)] -> MiddleVertical;
+	    		}
+	    	}
+	    	||
+	    	Horizontal{
+	    		MiddleHorizontal {
+	    			stepLeft[isLegalStep(MoveDirection.West) && getCurrentPawnColumn() == 3] -> SoftWest;
+	    			jumpLeft[isLegalJump(MoveDirection.West) && getCurrentPawnColumn() == 4] -> SoftWest;
+	    			jumpLeft[isLegalJump(MoveDirection.West) && getCurrentPawnColumn() == 3] -> TrueWest;
+	    			jumpLeft -> MiddleHorizontal;
+	    			stepLeft -> MiddleHorizontal;
+	    			stepRight[isLegalStep(MoveDirection.East) && getCurrentPawnColumn() == 7] -> SoftEast;
+	    			jumpRight[isLegalJump(MoveDirection.East) && getCurrentPawnColumn() == 6] -> SoftEast;
+	    			jumpRight[isLegalJump(MoveDirection.East) && getCurrentPawnColumn() == 7] -> TrueEast;
+	    			jumpRight -> MiddleHorizontal;
+	    			stepRight -> MiddleHorizontal;
+	    		}
+	    		TrueWest {
+	    			jumpLeft / {illegalMove();}-> TrueWest;
+	    			stepLeft / {illegalMove();} -> TrueWest;
+	    			stepRight[isLegalStep(MoveDirection.East)] -> SoftWest;
+	    			jumpRight[isLegalJump(MoveDirection.East)] -> MiddleHorizontal;
+	    		}
+	    		SoftWest {
+	    			jumpLeft / {illegalMove();} -> SoftWest;
+	    			stepLeft[isLegalStep(MoveDirection.West)] -> TrueWest;
+	    			stepRight[isLegalStep(MoveDirection.East)] -> MiddleHorizontal;
+	    			jumpRight[isLegalJump(MoveDirection.East)] -> MiddleHorizontal;
+	    		}
+	    		TrueEast {
+	    			jumpRight / {illegalMove();}-> TrueEast;
+	    			stepRight / {illegalMove();} -> TrueEast;
+	    			stepLeft[isLegalStep(MoveDirection.West)] -> SoftEast;
+	    			jumpLeft[isLegalJump(MoveDirection.West)] -> MiddleHorizontal;
+	    		}
+	    		SoftEast {
+	    			jumpRight / {illegalMove();} -> SoftEast;
+	    			stepRight[isLegalStep(MoveDirection.East)] -> TrueEast;
+	    			stepLeft[isLegalStep(MoveDirection.West)] -> MiddleHorizontal;
+	    			jumpLeft[isLegalJump(MoveDirection.West)] -> MiddleHorizontal;
+	    		}
+	    	}
+	    }
     }
 
     // Returns the current row number of the pawn
@@ -20,7 +103,9 @@ class PawnBehavior {
     boolean isLegalJump(MoveDirection dir) { return false; }
 
     // Action to be called when an illegal move is attempted
-    void illegalMove() { }
+    void illegalMove() { 
+		throw new IllegalArgumentException("Move out of bounds!");    
+    }	
     
     // Enumeration for the possible moving directions
     // (directions are from the viewpoint of white player)
