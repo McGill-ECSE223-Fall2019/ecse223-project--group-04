@@ -4,9 +4,9 @@ Feature: Grab Wall
 
 	Background:
 		Given The game is running
-		And It is my turn to move
+		And It is my turn to move 
 		And I do not have a wall in my hand
-  
+		
 	Scenario: Start wall placement
     Given  I have more walls on stock
 		When I try to grab a wall from my stock

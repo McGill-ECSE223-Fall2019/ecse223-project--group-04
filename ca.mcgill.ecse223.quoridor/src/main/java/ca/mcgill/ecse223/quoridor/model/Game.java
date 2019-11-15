@@ -4,7 +4,7 @@
 package ca.mcgill.ecse223.quoridor.model;
 import java.util.*;
 
-// line 42 "../../../../../QuoridorGame.ump"
+// line 45 "../../../../../QuoridorGame.ump"
 public class Game
 {
 
@@ -342,6 +342,7 @@ public class Game
     boolean wasSet = false;
     if (aNewWallMoveCandidate == null)
     {
+    	System.out.println("Was Null");
       WallMove existingWallMoveCandidate = wallMoveCandidate;
       wallMoveCandidate = null;
       

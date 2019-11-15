@@ -4,7 +4,7 @@ Feature: Validate Position
 
 	Background:
 		Given The game is running
-
+	@ValidatePosition
   Scenario Outline: Validate pawn position
     Given A game position is supplied with pawn coordinate <row>:<col>
     When Validation of the position is initiated
@@ -16,7 +16,7 @@ Feature: Validate Position
       |   9 |   9 | ok     |
       |   4 |   2 | ok     |
       
-
+	@ValidatePosition2
   Scenario Outline: Validate wall position
     Given A game position is supplied with wall coordinate <row>:<col>-"<dir>"
     When Validation of the position is initiated
@@ -28,7 +28,7 @@ Feature: Validate Position
       |   8 |   8 | vertical   | ok     |
       |   4 |   2 | horizontal | ok     |
       
-
+	@ValidatePosition3
   Scenario: Validate overlapping walls (all valid)
     Given The following walls exist:
       | wrow | wcol | wdir       |
@@ -36,7 +36,7 @@ Feature: Validate Position
       |    7 |    4 | vertical   |
     When Validation of the position is initiated
     Then The position shall be valid
-
+	@ValidatePosition4
   Scenario: Validate overlapping walls (invalid-1)
     Given The following walls exist:
       | wrow | wcol | wdir       |
@@ -44,7 +44,7 @@ Feature: Validate Position
       |    2 |    4 | horizontal |
     When Validation of the position is initiated
     Then The position shall be invalid
-
+	@ValidatePosition5
   Scenario: Validate overlapping walls (invalid-2)
     Given The following walls exist:
       | wrow | wcol | wdir     |
@@ -52,7 +52,7 @@ Feature: Validate Position
       |    2 |    2 | vertical |
     When Validation of the position is initiated
     Then The position shall be invalid
-
+	@ValidatePosition6
   Scenario: Validate overlapping walls (invalid-3)
     Given The following walls exist:
       | wrow | wcol | wdir       |

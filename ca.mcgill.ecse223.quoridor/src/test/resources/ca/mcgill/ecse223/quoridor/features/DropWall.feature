@@ -10,7 +10,7 @@ Feature: Drop Wall
       |    7 |    4 | vertical   |
     And It is my turn to move
     And I have a wall in my hand over the board
-
+  @DropWallValid
   Scenario Outline: Valid wall placement 
     Given The wall move candidate with "<dir>" at position (<row>, <col>) is valid
     When I release the wall in my hand
@@ -23,7 +23,7 @@ Feature: Drop Wall
       | dir        | row | col |
       | horizontal |   3 |   2 |
       | vertical   |   5 |   6 |
-
+  @DropWallInvalidValid    
   Scenario Outline: Invalid wall placement
     Given The wall move candidate with "<dir>" at position (<row>, <col>) is invalid
     When I release the wall in my hand
@@ -37,5 +37,5 @@ Feature: Drop Wall
       | vertical 	 |   1 |   1 |
       | horizontal |   1 |   2 |
   	  | horizontal |   7 |   4 |
-      | vertical 	 |   6 |   4 |
+      | vertical 	 |   6 |   6 |
   	

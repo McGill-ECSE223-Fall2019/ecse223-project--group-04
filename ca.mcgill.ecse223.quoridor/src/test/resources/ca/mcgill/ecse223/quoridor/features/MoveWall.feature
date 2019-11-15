@@ -7,7 +7,7 @@ Feature: Move Wall
     Given The game is running
     And It is my turn to move
     And I have a wall in my hand over the board
-
+	@MoveWall
   Scenario Outline: Move wall over the board
     Given A wall move candidate exists with "<dir>" at position (<row>, <col>)
     And The wall candidate is not at the "<side>" edge of the board
@@ -21,12 +21,12 @@ Feature: Move Wall
       | horizontal |   2 |   3 | right |    2 |    4 |
       | vertical   |   5 |   6 | up    |    4 |    6 |
       | horizontal |   5 |   6 | down  |    6 |    6 |
-
+	@MoveWall1
   Scenario Outline: Move wall at the edge of the board
     Given A wall move candidate exists with "<dir>" at position (<row>, <col>)
     And The wall candidate is at the "<side>" edge of the board
     When I try to move the wall "<side>"
-    Then I shall be notified that my move is illegal 
+    Then I shall be notified that my move is illegal
     And A wall move candidate shall exist with "<dir>" at position (<nrow>, <ncol>)
 
     Examples: 
@@ -35,4 +35,3 @@ Feature: Move Wall
       | horizontal |   2 |   8 | right |    2 |    8 |
       | vertical   |   1 |   6 | up    |    1 |    6 |
       | horizontal |   8 |   6 | down  |    8 |    6 |
-      
