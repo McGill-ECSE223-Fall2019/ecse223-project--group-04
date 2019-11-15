@@ -114,7 +114,6 @@ public class InitializeBoardStepDef {
 	 */
 	@And("White's clock shall be counting down")
 	public void whitesClockShallBeCountingDown() {
-		int i = 0;
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {

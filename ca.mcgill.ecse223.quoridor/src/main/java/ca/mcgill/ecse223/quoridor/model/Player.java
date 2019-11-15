@@ -5,7 +5,7 @@ package ca.mcgill.ecse223.quoridor.model;
 import java.sql.Time;
 import java.util.*;
 
-// line 34 "../../../../../QuoridorGame.ump"
+// line 37 "../../../../../QuoridorGame.ump"
 public class Player
 {
 
@@ -205,6 +205,8 @@ public class Player
   {
     boolean wasRemoved = false;
     //Unable to remove aWall, as it must always have a owner
+//    System.out.println("Player Owner:  " + aWall.getOwner().toString());
+//    System.out.println("this player:  " + this.toString());
     if (!this.equals(aWall.getOwner()))
     {
       walls.remove(aWall);

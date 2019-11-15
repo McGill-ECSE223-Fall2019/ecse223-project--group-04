@@ -11,6 +11,10 @@ import javax.swing.BoxLayout;
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import ca.mcgill.ecse223.quoridor.QuoridorApplication;
+import ca.mcgill.ecse223.quoridor.model.Quoridor;
+
 import javax.swing.JTextPane;
 import javax.swing.JButton;
 import java.awt.GridLayout;
@@ -56,6 +60,12 @@ public class MainMenu {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		// Create users for Controller 
+		Quoridor quoridor = QuoridorApplication.getQuoridor();
+		// TODO: Set the correct names!
+		quoridor.addUser("TestUser1");
+		quoridor.addUser("TestUser2");
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

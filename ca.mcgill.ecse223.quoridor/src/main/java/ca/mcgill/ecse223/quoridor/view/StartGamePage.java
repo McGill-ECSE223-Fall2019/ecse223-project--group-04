@@ -2,11 +2,7 @@ package ca.mcgill.ecse223.quoridor.view;
 
 import ca.mcgill.ecse223.quoridor.QuoridorApplication;
 import ca.mcgill.ecse223.quoridor.controller.QuoridorController;
-import ca.mcgill.ecse223.quoridor.model.Direction;
-import ca.mcgill.ecse223.quoridor.model.Player;
 import ca.mcgill.ecse223.quoridor.model.Quoridor;
-import ca.mcgill.ecse223.quoridor.model.User;
-import ca.mcgill.ecse223.quoridor.utilities.ControllerUtilities;
 
 import java.awt.*;
 
@@ -14,8 +10,9 @@ import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
-import java.sql.Time;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class StartGamePage {
 
@@ -47,6 +44,10 @@ public class StartGamePage {
 	// data elements
 	private String error = null;
 
+	private JPanel panel;
+	private JButton btnReturntoMainMenu;
+
+
 	/**
 	 * Launch the application.
 	 */
@@ -55,7 +56,6 @@ public class StartGamePage {
 			public void run() {
 				try {
 					StartGamePage window = new StartGamePage();
-					initGame();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -141,6 +141,7 @@ public class StartGamePage {
 		Seconds_label = new JLabel("Seconds");
 		Seconds_label.setHorizontalAlignment(SwingConstants.CENTER);
 		Seconds_TextField = new JTextArea();
+
 
 		// elements for starting new game
 		btnStartGame = new JButton("START GAME");
@@ -257,6 +258,14 @@ public class StartGamePage {
 		try {
 			
 			
+//			// TODO: Set the correct names!
+//			quoridor.addUser("TestUser1");
+//			quoridor.addUser("TestUser2");
+//			QuoridorController.setWhitePlayerUserName(PlayerLabel_1.getText());
+//			QuoridorController.setBlackPlayerUserName(PlayerLabel_2.getText());
+			Quoridor quoridor = QuoridorApplication.getQuoridor();
+			QuoridorController.initializeNewGame(quoridor);
+			QuoridorController.initializeBoard(quoridor);
 			
 			MainGameWindow gameWindow = new MainGameWindow();
 			MainGameWindow.frmQuoridorPlay.setVisible(true);
@@ -284,16 +293,11 @@ public class StartGamePage {
 				errorMessage.setForeground(Color.BLACK);
 				errorMessage.setText("Username: " + PlayerSelect_1.getSelectedItem() + " created.");
 				try {
-					QuoridorController.createNewUsernameGUI(PlayerSelect_1.getSelectedItem().toString());
+					QuoridorController.setWhitePlayerUserName(PlayerSelect_1.getSelectedItem().toString());					System.err.println("Not calling controller method ... ");
 				} catch (Exception e) {
 					error = e.getMessage();
 					System.err.println("Not calling controller method ... ");
 				}
-			} else {
-				QuoridorController.selectAnExistingUsernameGUI(PlayerSelect_1.getSelectedItem().toString());
-				errorMessage.setForeground(Color.BLACK);
-				errorMessage.setText("Selected existing username: "+ PlayerSelect_1.getSelectedItem());
-				System.out.println("User selected an existing username.");
 			}
 		}
 	}
@@ -314,16 +318,11 @@ public class StartGamePage {
 				errorMessage.setForeground(Color.BLACK);
 				errorMessage.setText("Username: " + PlayerSelect_2.getSelectedItem() + " created.");
 				try {
-					QuoridorController.createNewUsernameGUI(PlayerSelect_2.getSelectedItem().toString());
+					QuoridorController.setBlackPlayerUserName(PlayerSelect_2.getSelectedItem().toString());
 				} catch (Exception e) {
 					error = e.getMessage();
 					System.err.println("Not calling controller method ... ");
 				}
-			} else {
-				QuoridorController.selectAnExistingUsernameGUI(PlayerSelect_2.getSelectedItem().toString());
-				errorMessage.setForeground(Color.BLACK);
-				errorMessage.setText("Selected existing username: " + PlayerSelect_2.getSelectedItem());
-				System.out.println("User selected an existing username.");
 			}
 		}
 	}
@@ -345,21 +344,6 @@ public class StartGamePage {
 			errorMessage.setForeground(Color.RED);
 			errorMessage.setText("Invalid time input. Please enter integers.");
 			System.err.println("Not calling controller method ... ");
-		}
-	}
-	
-	private static void initGame() {
-		Quoridor quoridor = QuoridorApplication.getQuoridor();
-		// TODO: Set the correct names!
-		User userWhite = quoridor.addUser("DummyName1");
-		User userBlack = quoridor.addUser("DummyName2");
-		Player whitePlayer = new Player(new Time(0), quoridor.getUser(0), ControllerUtilities.BLACK_TILE_INDEX, Direction.Horizontal);
-		Player blackPlayer = new Player(new Time(0), quoridor.getUser(1), ControllerUtilities.WHITE_TILE_INDEX, Direction.Horizontal);
-		try {
-			QuoridorController.initializeNewGame(quoridor, whitePlayer, blackPlayer);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 }
