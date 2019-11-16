@@ -14,7 +14,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import java.util.*;
 
 public class RotateWallFeatureStepDev {
 	/**
@@ -39,8 +38,8 @@ public class RotateWallFeatureStepDev {
 
 	@Then("The wall shall be rotated over the board to {string}")
 	public void the_wall_shall_be_rotated_over_the_board_to(String string) {
+		// Checking if the board wall is rotated over the board
 		Quoridor q = QuoridorApplication.getQuoridor();
-		assertEquals(string, q.getCurrentGame().getWhitePlayer().getWall(0).getMove().getWallDirection().toString().toLowerCase());	
-		
+		assertEquals(string, q.getCurrentGame().getBlackPlayer().getWall(11).getMove().getWallDirection());	
 	}
 }

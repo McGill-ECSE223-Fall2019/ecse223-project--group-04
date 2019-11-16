@@ -133,6 +133,7 @@ public class ValidatePositionStepDefinition {
 		if(q.getCurrentGame().getBlackPlayer().getWall(0).getMove().getWallDirection() == Direction.Vertical) {
 			providedDirection1 = "vertical";
 		}
+		//QuoridorController.checkWallValid(providedRow,providedColumn, providedDirection,q.getCurrentGame().getWhitePlayer().getWall(0));
 		assertEquals(true,QuoridorController.checkWallValid(providedRow,providedColumn, providedDirection,q.getCurrentGame().getWhitePlayer().getWall(0)));
 		assertEquals(true,QuoridorController.checkWallValid(providedRow1,providedColumn1, providedDirection1,q.getCurrentGame().getBlackPlayer().getWall(0)));
 	}

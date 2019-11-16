@@ -3,14 +3,18 @@ package ca.mcgill.ecse223.quoridor.view;
 import ca.mcgill.ecse223.quoridor.QuoridorApplication;
 import ca.mcgill.ecse223.quoridor.controller.QuoridorController;
 
+import ca.mcgill.ecse223.quoridor.model.Quoridor;
+
+
 import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
-import java.sql.Time;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class StartGamePage {
 
@@ -42,6 +46,10 @@ public class StartGamePage {
 	// data elements
 	private String error = null;
 	private JButton btnNewButton;
+
+	private JPanel panel;
+	private JButton btnReturntoMainMenu;
+
 
 	/**
 	 * Launch the application.
@@ -135,6 +143,7 @@ public class StartGamePage {
 		Seconds_label = new JLabel("Seconds");
 		Seconds_label.setHorizontalAlignment(SwingConstants.CENTER);
 		Seconds_TextField = new JTextArea();
+
 
 		// elements for starting new game
 		btnStartGame = new JButton("START GAME");
@@ -262,7 +271,9 @@ public class StartGamePage {
 		// clears error message
 		error = null;
 		try {
+
 			QuoridorController.initializeNewGame(QuoridorApplication.getQuoridor(), QuoridorController.createWhitePlayer(), QuoridorController.createBlackPlayer());
+
 			MainGameWindow gameWindow = new MainGameWindow();
 			MainGameWindow.frmQuoridorPlay.setVisible(true);
 			frame.dispose();
@@ -302,16 +313,13 @@ public class StartGamePage {
 				errorMessage.setForeground(Color.BLACK);
 				errorMessage.setText("Username: " + PlayerSelect_1.getSelectedItem() + " created.");
 				try {
+
 					QuoridorController.createNewUsernamePlayerOneGUI(PlayerSelect_1.getSelectedItem().toString());
+
 				} catch (Exception e) {
 					error = e.getMessage();
 					System.err.println("Not calling controller method ... ");
 				}
-			} else {
-				QuoridorController.selectAnExistingUsernameGUI(PlayerSelect_1.getSelectedItem().toString());
-				errorMessage.setForeground(Color.BLACK);
-				errorMessage.setText("Selected existing username: "+ PlayerSelect_1.getSelectedItem());
-				System.out.println("User selected an existing username.");
 			}
 		}
 	}
@@ -332,16 +340,13 @@ public class StartGamePage {
 				errorMessage.setForeground(Color.BLACK);
 				errorMessage.setText("Username: " + PlayerSelect_2.getSelectedItem() + " created.");
 				try {
+
 					QuoridorController.createNewUsernamePlayerTwoGUI(PlayerSelect_2.getSelectedItem().toString());
+
 				} catch (Exception e) {
 					error = e.getMessage();
 					System.err.println("Not calling controller method ... ");
 				}
-			} else {
-				QuoridorController.selectAnExistingUsernameGUI(PlayerSelect_2.getSelectedItem().toString());
-				errorMessage.setForeground(Color.BLACK);
-				errorMessage.setText("Selected existing username: " + PlayerSelect_2.getSelectedItem());
-				System.out.println("User selected an existing username.");
 			}
 		}
 	}
@@ -365,4 +370,6 @@ public class StartGamePage {
 			System.err.println("Not calling controller method ... ");
 		}
 	}
+
 }
+
