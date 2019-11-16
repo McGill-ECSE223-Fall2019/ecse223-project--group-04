@@ -567,6 +567,10 @@ public class QuoridorController {
 			int row1;
 			for(int i = 0; i<=19; i++){
 				
+				if(id == i) {
+					continue;
+				}
+				
 				if(i>9) {
 				
 					if(q.getCurrentGame().getBlackPlayer().getWall(i-10).hasMove() == false) {
