@@ -566,11 +566,7 @@ public class QuoridorController {
 			int col1;
 			int row1;
 			for(int i = 0; i<=19; i++){
-				if(id == i) {
-					continue; //don t want to compare the wall with itself
-				}
-
-
+				
 				if(i>9) {
 				
 					if(q.getCurrentGame().getBlackPlayer().getWall(i-10).hasMove() == false) {
@@ -789,6 +785,12 @@ public class QuoridorController {
 			
 			if(aWall.hasMove() == false && pos == true) {
 				moveNumber++;
+				if(player.equals(q.getCurrentGame().getWhitePlayer())) {
+					q.getCurrentGame().getCurrentPosition().getWhiteWallsInStock().remove(aWall.getId());
+				}
+				else {
+					q.getCurrentGame().getCurrentPosition().getBlackWallsInStock().remove(aWall.getId()-10);
+				}
 				new WallMove(moveNumber,1,player,aTile,q.getCurrentGame(), Direction.Vertical, aWall);
 				return true;
 			}
@@ -801,6 +803,12 @@ public class QuoridorController {
 			
 			if(aWall.hasMove() == false && pos == true) {
 				moveNumber++;
+				if(player.equals(q.getCurrentGame().getWhitePlayer())) {
+					q.getCurrentGame().getCurrentPosition().getWhiteWallsInStock().remove(aWall.getId());
+				}
+				else {
+					q.getCurrentGame().getCurrentPosition().getBlackWallsInStock().remove(aWall.getId()-10);
+				}
 				new WallMove(moveNumber,1,player,aTile,q.getCurrentGame(), Direction.Horizontal, aWall);
 				return true;
 			}
@@ -1239,3 +1247,4 @@ public class QuoridorController {
 		}
 	}
 }
+
