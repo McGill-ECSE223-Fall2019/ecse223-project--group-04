@@ -3,7 +3,7 @@
 
 package ca.mcgill.ecse223.quoridor.model;
 
-// line 19 "../../../../../QuoridorGame.ump"
+// line 22 "../../../../../QuoridorGame.ump"
 public class Tile
 {
 

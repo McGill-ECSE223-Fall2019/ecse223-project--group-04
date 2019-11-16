@@ -28,4 +28,5 @@ Feature: Load Position
       | filename                                         |
       | quoridor_test_game_invalid_pawn.dat              |
       | quoridor_test_game_invalid_wall_overlap_.dat     |
+      | quoridor_test_game_invalid_wall_out-of-track.dat |
       

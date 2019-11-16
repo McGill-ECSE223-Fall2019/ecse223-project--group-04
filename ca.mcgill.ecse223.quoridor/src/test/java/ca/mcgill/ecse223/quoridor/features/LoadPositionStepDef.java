@@ -1,21 +1,18 @@
 package ca.mcgill.ecse223.quoridor.features;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-
-import java.io.IOException;
-import java.sql.Time;
-
-import ca.mcgill.ecse223.quoridor.QuoridorApplication;
-import ca.mcgill.ecse223.quoridor.controller.QuoridorController;
-import ca.mcgill.ecse223.quoridor.model.Direction;
-import ca.mcgill.ecse223.quoridor.model.GamePosition;
-import ca.mcgill.ecse223.quoridor.model.Player;
-import ca.mcgill.ecse223.quoridor.model.Quoridor;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import ca.mcgill.ecse223.quoridor.model.*;
+import ca.mcgill.ecse223.quoridor.QuoridorApplication;
+import ca.mcgill.ecse223.quoridor.controller.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.io.*;
 
 /**
  * Class used to encapsulate the step definitions related to LoadPosition
@@ -45,17 +42,9 @@ public class LoadPositionStepDef {
 	 */
 	@When ("I initiate to load a saved game {string}")
 	public void IInitiateToLoadASavedGame(String filename) throws IOException {
-		Quoridor q = QuoridorApplication.getQuoridor();
-		
 		thrownException = null;
-		int thinkingTime = 180;
-		
-		
-		Player player1 = new Player(new Time(thinkingTime), q.getUser(0), 9, Direction.Horizontal);
-		Player player2 = new Player(new Time(thinkingTime), q.getUser(1), 1, Direction.Horizontal);
-		
 		try {
-			valid = QC.loadSavedPosition(filename, player1, player2);
+			valid = QC.loadSavedPosition(filename);
 		} catch (IllegalArgumentException e) {
 			thrownException = e;
 		}
@@ -86,18 +75,18 @@ public class LoadPositionStepDef {
 	 */
 	@And ("{string} shall be at {int}:{int}")
 	public void PlayerShallBeAtRowCol(String player, int p_row, int p_col) {
-		Player black = QuoridorApplication.getQuoridor().getCurrentGame().getBlackPlayer();
-		Player white = QuoridorApplication.getQuoridor().getCurrentGame().getWhitePlayer();
+		
+		//if(gamePosition.getGame().getBlackPlayer().equals(gamePosition.getPlayerToMove()))
 			
-		if(black.getUser().getName().equals(player)) {
+		if(player.equals("black")) {
 			assertEquals(p_row, gamePosition.getBlackPosition().getTile().getRow());
+			
 			assertEquals(p_col, gamePosition.getBlackPosition().getTile().getColumn());
 		}
-		else if(white.getUser().getName().equals(player)){
+		else {
 			assertEquals(p_row, gamePosition.getWhitePosition().getTile().getRow());
+			
 			assertEquals(p_col, gamePosition.getWhitePosition().getTile().getColumn());
-		} else {
-			fail("Issue setting up test!");
 		}
 	}
 
@@ -106,19 +95,23 @@ public class LoadPositionStepDef {
 	 */
 	@And ("{string} shall have a vertical wall at {int}:{int}")
 	public void PlayerShallHaveAVerticalWallAtRowCol(String player, int pw_row, int pw_col) {
-		Player black = QuoridorApplication.getQuoridor().getCurrentGame().getBlackPlayer();
-		Player white = QuoridorApplication.getQuoridor().getCurrentGame().getWhitePlayer();
+		gamePosition = QuoridorApplication.getQuoridor().getCurrentGame().getCurrentPosition();
+		//if(gamePosition.getGame().getBlackPlayer().equals(gamePosition.getPlayerToMove()))
 		
-		if(black.getUser().getName().equals(player)) {
+		if(player.equals("black")) {
+
 			assertEquals(Direction.Vertical, gamePosition.getBlackWallsOnBoard(0).getMove().getWallDirection());
+
 			assertEquals(pw_row, gamePosition.getBlackWallsOnBoard(0).getMove().getTargetTile().getRow());
+
 			assertEquals(pw_col, gamePosition.getBlackWallsOnBoard(0).getMove().getTargetTile().getColumn());
-		}else if (white.getUser().getName().equals(player)) {
-			assertEquals(Direction.Vertical, gamePosition.getWhiteWallsOnBoard(0).getMove().getWallDirection());
-			assertEquals(pw_row, gamePosition.getWhiteWallsOnBoard(0).getMove().getTargetTile().getRow());
-			assertEquals(pw_col, gamePosition.getWhiteWallsOnBoard(0).getMove().getTargetTile().getColumn());
 		}else {
-			fail("Issue setting up test!");
+			
+			assertEquals(Direction.Vertical, gamePosition.getWhiteWallsOnBoard(0).getMove().getWallDirection());
+
+			assertEquals(pw_row, gamePosition.getWhiteWallsOnBoard(0).getMove().getTargetTile().getRow());
+
+			assertEquals(pw_col, gamePosition.getWhiteWallsOnBoard(0).getMove().getTargetTile().getColumn());
 		}
 	}
 	
@@ -128,19 +121,22 @@ public class LoadPositionStepDef {
 	@And ("{string} shall have a horizontal wall at {int}:{int}")
 	public void PlayerShallHaveAHorizontalWallAtRowCol(String player, int pw_row, int pw_col) {
 
-		Player black = QuoridorApplication.getQuoridor().getCurrentGame().getBlackPlayer();
-		Player white = QuoridorApplication.getQuoridor().getCurrentGame().getWhitePlayer();
+		//if(gamePosition.getGame().getBlackPlayer().equals(gamePosition.getPlayerToMove()))
 		
-		if(black.getUser().getName().equals(player)) {
+		if(player.equals("black")) {
+
 			assertEquals(Direction.Horizontal, gamePosition.getBlackWallsOnBoard(0).getMove().getWallDirection());
+
 			assertEquals(pw_row, gamePosition.getBlackWallsOnBoard(0).getMove().getTargetTile().getRow());
+
 			assertEquals(pw_col, gamePosition.getBlackWallsOnBoard(0).getMove().getTargetTile().getColumn());
-		}else if (white.getUser().getName().equals(player)) {
-			assertEquals(Direction.Horizontal, gamePosition.getWhiteWallsOnBoard(0).getMove().getWallDirection());
-			assertEquals(pw_row, gamePosition.getWhiteWallsOnBoard(0).getMove().getTargetTile().getRow());
-			assertEquals(pw_col, gamePosition.getWhiteWallsOnBoard(0).getMove().getTargetTile().getColumn());
 		}else {
-			fail("Issues setting up test!");
+			
+			assertEquals(Direction.Horizontal, gamePosition.getWhiteWallsOnBoard(0).getMove().getWallDirection());
+
+			assertEquals(pw_row, gamePosition.getWhiteWallsOnBoard(0).getMove().getTargetTile().getRow());
+
+			assertEquals(pw_col, gamePosition.getWhiteWallsOnBoard(0).getMove().getTargetTile().getColumn());
 		}
 	}
 
@@ -149,6 +145,7 @@ public class LoadPositionStepDef {
 	 */
 	@And ("Both players shall have {int} in their stacks")
 	public void BothPlayersShallHaveRemainingWallsInTheirStacks(int remaining_walls) { 
+		
 		assertEquals(remaining_walls, gamePosition.getWhiteWallsInStock().size());
 		assertEquals(remaining_walls, gamePosition.getBlackWallsInStock().size());
 	}
