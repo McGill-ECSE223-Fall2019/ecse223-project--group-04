@@ -1216,8 +1216,8 @@ public class QuoridorController {
 		int y = wallMoveCandidate.getTargetTile().getColumn();
 		String dir = wallMoveCandidate.getWallDirection().toString();
 		int id = wallMoveCandidate.getWallPlaced().getId();
-
-		if (initiatePosValidation(x, y, dir, id)) {
+        // fix the validation and it will work
+		if (initiatePosValidation(x, y, dir, id-1)) {
 			q.getCurrentGame().addMove(wallMoveCandidate);
 			List<Move> curList = new ArrayList<>(q.getCurrentGame().getMoves());
 			Move lastMoveInTheList = curList.get(curList.size() - 1);
