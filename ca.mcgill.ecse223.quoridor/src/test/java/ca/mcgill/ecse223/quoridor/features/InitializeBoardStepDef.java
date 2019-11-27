@@ -68,7 +68,7 @@ public class InitializeBoardStepDef {
 	@And("White's pawn shall be in its initial position")
 	public void whitesPawnShallBeInItsInitialPosition() {
 		PlayerPosition whitePos = QuoridorController.getWhitePlayerPosition();
-		Tile whiteInitialTile = QuoridorApplication.getQuoridor().getBoard().getTile(ControllerUtilities.WHITE_TILE_INDEX);
+		Tile whiteInitialTile = QuoridorController.getTileAtRowCol(ControllerUtilities.WHITE_INITIAL_ROW, ControllerUtilities.WHITE_INITIAL_COL);
 		assertEquals(whitePos.getTile(), whiteInitialTile);
 	}
 
@@ -81,7 +81,7 @@ public class InitializeBoardStepDef {
 	@And("Black's pawn shall be in its initial position")
 	public void blacksPawnShallBeInItsInitialPosition() {
 		PlayerPosition blackPos = QuoridorController.getBlackPlayerPlayerPosition();
-		Tile blackInitialTile = QuoridorApplication.getQuoridor().getBoard().getTile(ControllerUtilities.BLACK_TILE_INDEX);
+		Tile blackInitialTile = QuoridorController.getTileAtRowCol(ControllerUtilities.BLACK_INITIAL_ROW, ControllerUtilities.BLACK_INITIAL_COL);
 		assertEquals(blackPos.getTile(), blackInitialTile);
 	}
 

@@ -92,7 +92,7 @@ public class StartNewGameFeatureStepDef {
 	 */
 	@Then("The game shall become ready to start")
 	public void theGameShallBecomeReadyToStart() {
-		assertEquals(Game.GameStatus.Initializing, QuoridorApplication.getQuoridor().getCurrentGame().getGameStatus());
+		assertEquals(Game.GameStatus.Running, QuoridorApplication.getQuoridor().getCurrentGame().getGameStatus());
 	}
 
 	// *********************************************

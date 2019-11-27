@@ -1,0 +1,46 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - MainMenu",
+            "request": "launch",
+            "mainClass": "ca.mcgill.ecse223.quoridor.view.MainMenu",
+            "projectName": "ca.mcgill.ecse223.quoridor"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - MainGameWindow",
+            "request": "launch",
+            "mainClass": "ca.mcgill.ecse223.quoridor.view.MainGameWindow",
+            "projectName": "ca.mcgill.ecse223.quoridor"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Runner",
+            "request": "launch",
+            "mainClass": "ca.mcgill.ecse223.quoridor.view.main.Runner",
+            "projectName": "ca.mcgill.ecse223.quoridor"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - LoadPositionPage",
+            "request": "launch",
+            "mainClass": "ca.mcgill.ecse223.quoridor.view.LoadPositionPage",
+            "projectName": "ca.mcgill.ecse223.quoridor"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - FrameTestBase",
+            "request": "launch",
+            "mainClass": "ca.mcgill.ecse223.quoridor.view.FrameTestBase",
+            "projectName": "ca.mcgill.ecse223.quoridor"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - QuoridorApplication",
+            "request": "launch",
+            "mainClass": "ca.mcgill.ecse223.quoridor.QuoridorApplication",
+            "projectName": "ca.mcgill.ecse223.quoridor"
+        }
+    ]
+}

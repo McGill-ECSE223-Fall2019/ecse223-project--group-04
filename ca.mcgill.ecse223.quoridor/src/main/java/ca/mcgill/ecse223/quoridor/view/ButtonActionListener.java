@@ -22,7 +22,7 @@ public class ButtonActionListener implements MouseListener{
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		MainGameWindow.tileListener(row, col);
+		//MainGameWindow.tileListener(row, col);
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {

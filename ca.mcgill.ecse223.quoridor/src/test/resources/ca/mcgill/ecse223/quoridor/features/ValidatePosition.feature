@@ -28,7 +28,6 @@ Feature: Validate Position
       |   8 |   8 | vertical   | ok     |
       |   4 |   2 | horizontal | ok     |
       
-
   Scenario: Validate overlapping walls (all valid)
     Given The following walls exist:
       | wrow | wcol | wdir       |

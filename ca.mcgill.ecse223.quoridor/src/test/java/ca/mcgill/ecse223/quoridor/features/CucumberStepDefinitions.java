@@ -26,7 +26,6 @@ import io.cucumber.java.en.Given;
 
 public class CucumberStepDefinitions {
 
-
 	@Given("^The game is not running$")
 	public void theGameIsNotRunning() {
 		initQuoridorAndBoard();

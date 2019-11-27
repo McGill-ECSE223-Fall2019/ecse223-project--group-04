@@ -1,15 +1,6 @@
-<<<<<<< HEAD
 # Ignore Gradle project-specific cache directory
 .gradle
 
 # Ignore Gradle build output directory
 build
 ca.mcgill.ecse223.quoridor/
-=======
-# Ignore Gradle project-specific cache directory
-.gradle
-
-# Ignore Gradle build output directory
-build
-ca.mcgill.ecse223.quoridor/
->>>>>>> Sharing iteration 4 base project

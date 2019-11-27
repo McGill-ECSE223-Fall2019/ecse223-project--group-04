@@ -12,7 +12,6 @@ repositories {
 }
 
 dependencies {
-<<<<<<< HEAD
     //implementation 'org.eclipse.jdt:org.eclipse.jdt.core:3.19.0'
     implementation 'org.eclipse.jdt:org.eclipse.jdt.annotation:2.2.300'
     //implementation 'com.jgoodies:jgoodies-common:1.8.1'
@@ -21,20 +20,15 @@ dependencies {
     // https://mvnrepository.com/artifact/com.jgoodies/jgoodies-common
     compile group: 'com.jgoodies', name: 'jgoodies-common', version: '1.8.1'
 
-=======
->>>>>>> Sharing iteration 4 base project
     testImplementation "io.cucumber:cucumber-java:4.7.2"
     testImplementation "io.cucumber:cucumber-junit:4.7.2"
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.5.0"
     
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.5.0"
     testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.5.0"
-<<<<<<< HEAD
 
     runtimeOnly 'com.jgoodies:jgoodies-forms:1.9.0'
     runtimeOnly 'com.jgoodies:jgoodies-common:1.8.1'
-=======
->>>>>>> Sharing iteration 4 base project
 }
 
 test {

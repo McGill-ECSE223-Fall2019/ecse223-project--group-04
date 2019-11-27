@@ -1,0 +1,8 @@
+<svg width="12cm" height="4cm" viewBox="0 0 1200 400"
+     xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <desc>Example rect01 - rectangle with sharp corners</desc>
+
+
+  <rect x="400" y="100" width="10" height="100"
+        fill="black" stroke="navy" stroke-width="10"  />
+</svg>

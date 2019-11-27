@@ -1,13 +1,11 @@
 package ca.mcgill.ecse223.quoridor.utilities;
 
-import ca.mcgill.ecse223.quoridor.model.Board;
-import ca.mcgill.ecse223.quoridor.model.Game;
-import ca.mcgill.ecse223.quoridor.model.GamePosition;
-import ca.mcgill.ecse223.quoridor.model.Move;
-import ca.mcgill.ecse223.quoridor.model.Player;
-import ca.mcgill.ecse223.quoridor.model.Wall;
+import ca.mcgill.ecse223.quoridor.QuoridorApplication;
+import ca.mcgill.ecse223.quoridor.model.*;
 import ca.mcgill.ecse223.quoridor.model.Game.GameStatus;
 import ca.mcgill.ecse223.quoridor.model.Game.MoveMode;
+
+import java.util.List;
 
 /**
  * Class used to group together common utilities and constants used by the application controller methods.
@@ -22,10 +20,30 @@ public class ControllerUtilities {
 	public static final int TOTAL_NUMBER_OF_TILES = 81;
 	public static final int TOTAL_NUMBER_OF_ROWS = 9;
 	public static final int TOTAL_NUMBER_OF_COLS = 9;
-	public static final int WHITE_TILE_INDEX = 36;
-	public static final int BLACK_TILE_INDEX = 44;
+	public static final int WHITE_TILE_INDEX = 4;
+	public static final int BLACK_TILE_INDEX = 76;
+	public static final int WHITE_INITIAL_ROW = 5;
+	public static final int WHITE_INITIAL_COL = 1;
+	public static final int BLACK_INITIAL_ROW = 5;
+	public static final int BLACK_INITIAL_COL = 9;
+	
 	public static final int TOTAL_WALL_STOCK_AT_START = 10;
 	public static final int TOTAL_NUMBER_OF_WALLS_PER_PLAYER = 10;
+	public static final String CURRENT_BLACK_TIMER_THREAD_NAME = "CurrentBlackPlayerTimerThread";
+	public static final String CURRENT_WHITE_TIMER_THREAD_NAME = "CurrentWhitePlayerTimerThread";
+	
+	public enum DiagonalDirections{
+		upleft,
+		upright,
+		downleft,
+		downright
+	}
+	public enum MoveDirections{
+		up,
+		down,
+		left,
+		right
+	}
 	
 	// ***************************************
 	
@@ -77,18 +95,44 @@ public class ControllerUtilities {
 	 * @param currentBlackPlayer
 	 */
 	public static void initializeWallsInStock(GamePosition initialGamePosition, Player currentWhitePlayer, Player currentBlackPlayer) {
+		clearPlayerWalls(currentWhitePlayer, currentBlackPlayer);
 		for(int i = 0; i < ControllerUtilities.TOTAL_NUMBER_OF_WALLS_PER_PLAYER; i++) {
-			
 			Wall newWhiteWall = new Wall(i, currentWhitePlayer);
-			Wall newBlackWall = new Wall(i + 
-					ControllerUtilities.TOTAL_NUMBER_OF_WALLS_PER_PLAYER, currentBlackPlayer);
+			Wall newBlackWall = new Wall(i + ControllerUtilities.TOTAL_NUMBER_OF_WALLS_PER_PLAYER, currentBlackPlayer);
 			initialGamePosition.addWhiteWallsInStock(newWhiteWall);
 			initialGamePosition.addBlackWallsInStock(newBlackWall);
-			currentBlackPlayer.addWall(newBlackWall);
 			currentWhitePlayer.addWall(newWhiteWall);
+			currentBlackPlayer.addWall(newBlackWall);
 		}
 	}
-
+	
+	/**
+	 * Method used to clear the walls of each player in stock 
+	 * @param currentWhitePlayer
+	 * @param currentBlackPlayer
+	 */
+	private static void clearPlayerWalls(Player currentWhitePlayer, Player currentBlackPlayer) {
+		if(currentWhitePlayer.equals(null) || currentBlackPlayer.equals(null)) {
+			throw new IllegalArgumentException("Players cannot be null!");
+		}
+		for(int i = 0; i < ControllerUtilities.TOTAL_NUMBER_OF_WALLS_PER_PLAYER * 2; i ++) {
+			if(Wall.hasWithId(i)) {
+				Wall tempWall = Wall.getWithId(i);
+				tempWall.delete();	
+			}
+		}
+		Wall currWall;
+		while(currentWhitePlayer.hasWalls()) {
+			currWall = currentWhitePlayer.getWall(0);
+			currWall.delete();
+			currentWhitePlayer.removeWall(currWall);
+		}
+		while(currentBlackPlayer.hasWalls()) {
+			currWall = currentBlackPlayer.getWall(0);
+			currWall.delete();
+			currentBlackPlayer.removeWall(currWall);
+		}
+	}
 	/**
 	 * Method used to remove all player's walls on the board, when initializing the game
 	 * @param gamePosition
@@ -98,10 +142,12 @@ public class ControllerUtilities {
 		Wall tempWall;
 		while(gamePosition.getBlackWallsOnBoard().size() > 0) {
 			tempWall = gamePosition.getBlackWallsOnBoard(0);
+			tempWall.delete();
 			gamePosition.removeBlackWallsOnBoard(tempWall);
 		}
 		while(gamePosition.getWhiteWallsOnBoard().size() > 0) {
 			tempWall = gamePosition.getWhiteWallsOnBoard(0);
+			tempWall.delete();
 			gamePosition.removeWhiteWallsOnBoard(tempWall);
 		}
 	}
@@ -115,5 +161,19 @@ public class ControllerUtilities {
 			}
 		}
 
+	}
+	/**
+	 * Method used to check if username already exists within the list of users
+	 * @param username - String value for checking the given username
+	 * @author Nayem Alam
+	 */
+	public static boolean isDuplicate(String username) {
+		List<User> userList = QuoridorApplication.getQuoridor().getUsers();
+		for (User user : userList) {
+			if (user.getName().equals(username)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
