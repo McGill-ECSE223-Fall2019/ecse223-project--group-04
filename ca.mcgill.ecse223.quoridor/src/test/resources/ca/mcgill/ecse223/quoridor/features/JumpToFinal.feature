@@ -3,7 +3,7 @@ As a player using replay mode, I wish to scroll fast to the very beginning of th
 
 	  Background: 
     Given The game is in replay mode
-
+@JumpToFinal
   Scenario Outline: Jump to final
     Given The following moves have been played in game:
       | mv | rnd | move |
