@@ -2170,6 +2170,11 @@ public class QuoridorController {
 		}
 		return false;
 	}
+	/**
+	 * Method stops game by setting all players timers to 0
+	 * @param game Game gets the current game
+	 * @author Nayem Alam
+	 */
 	public static void stopGame(Game game) {
 //	    game.delete();
 	    Player blackPlayer = QuoridorApplication.getQuoridor().getCurrentGame().getBlackPlayer();
@@ -2180,6 +2185,11 @@ public class QuoridorController {
         game.delete();
     }
 
+	/**
+	 * Method checks which player chooses to resign
+	 * @param player Player is current player
+	 * @author Nayem Alam
+	 */
 	public static void playerInitiatesToResign(Player player) {
 		Player blackPlayer = QuoridorApplication.getQuoridor().getCurrentGame().getBlackPlayer();
 		Player whitePlayer = QuoridorApplication.getQuoridor().getCurrentGame().getWhitePlayer();
@@ -2199,6 +2209,14 @@ public class QuoridorController {
 		QuoridorApplication.getQuoridor().getCurrentGame().setGameStatus(GameStatus.ReadyToStart);
 	}
 
+	/**
+	 * Method verifies that as the clock is counting down
+	 * if a player is taking too long, their timer will eventually reach zero
+	 *
+	 * @param thisPlayer String is current player
+	 * @exception Exception throws exception in case player already has no time left (i.e. clock is not counting down anymore)
+	 * @author Nayem Alam
+	 */
 	public static void checkIfClockCountingDown(String thisPlayer) throws Exception {
         Player blackPlayer = QuoridorApplication.getQuoridor().getCurrentGame().getBlackPlayer();
         Player whitePlayer = QuoridorApplication.getQuoridor().getCurrentGame().getWhitePlayer();

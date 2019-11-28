@@ -55,6 +55,12 @@ public class IdentifyGameWonStepDefinition {
 
 	}
 
+	/**
+	 * Method verifies that the clock is running (i.e. Game is running) and is not zero
+	 *
+	 * @param string String gets current player
+	 * @author Nayem Alam
+	 */
 	@Given("The clock of {string} is more than zero")
 	public void the_clock_of_is_more_than_zero(String string) throws Exception {
 		Player blackPlayer = QuoridorApplication.getQuoridor().getCurrentGame().getBlackPlayer();
@@ -93,6 +99,13 @@ public class IdentifyGameWonStepDefinition {
 
 	}
 
+	/**
+	 * Method checks whether white/black player won or they are still moving (i.e. pending)
+	 *
+	 * @param string String to check if white/black won or pending
+	 * @author Alexander Legouverneur
+	 * @author Nayem Alam
+	 */
 	@Then("Game result shall be {string}")
 	public void game_result_shall_be(String string) {
 		Quoridor q = QuoridorApplication.getQuoridor();
@@ -116,12 +129,24 @@ public class IdentifyGameWonStepDefinition {
 
 	}
 
+	/**
+	 * Method stops the game and sets all timers to 0 (i.e. game is no longer running)
+	 *
+	 * @author Nayem Alam
+	 */
 	@Then("The game shall no longer be running")
 	public void the_game_shall_no_longer_be_running() {
 		// method sets the timers of both players to zero; which marks the end of the game
 		QuoridorController.stopGame(QuoridorApplication.getQuoridor().getCurrentGame());
 	}
 
+	/**
+	 * Method verifies that the clock is counting down to zero
+	 *
+	 * @param thisPlayer String gets current player
+	 * @exception Exception throws exception in case player already has no time left (i.e. clock is not counting down anymore)
+	 * @author Nayem Alam
+	 */
 	@When("The clock of {string} counts down to zero")
 	public void the_clock_of_counts_down_to_zero(String thisPlayer) throws Exception {
 		// logic is handled on the controller method

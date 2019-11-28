@@ -14,7 +14,11 @@ public class ResignGameStepDef {
     /* DONE in SwitchPlayerStepDefinition.java
         > Given The player to move is "<player>"
     */
-
+    /**
+     * Method checks which player chooses to resign
+     * note: also incorporates IdentifyGameWon due to it sharing the same step defs as ResignGame
+     * @author Nayem Alam
+     */
     @When("Player initates to resign")
     public void player_initates_to_resign() {
         IdentifyGameWonStepDefinition.player = QuoridorController.getCurrentPlayer();
