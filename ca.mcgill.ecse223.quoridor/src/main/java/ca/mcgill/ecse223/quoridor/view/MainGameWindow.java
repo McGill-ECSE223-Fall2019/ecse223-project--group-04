@@ -114,6 +114,8 @@ public class MainGameWindow {
 	private MoveCandidate blackPawnMove;
 	private MoveCandidate whitePawnMove;
 	private boolean gameStarted = false;
+	private static BlackWallPanel blackPane;
+	private static WhiteWallPanel whitePane;
 
 	/**
 	 * Launch the application.
@@ -217,8 +219,8 @@ public class MainGameWindow {
 
 		// elements for blackPlayer
 
-		BlackWallPanel blackPane = new BlackWallPanel(panel_11);
-		WhiteWallPanel whitePane = new WhiteWallPanel(panel_10_1);
+		blackPane = new BlackWallPanel(panel_11);
+		whitePane = new WhiteWallPanel(panel_10_1);
 		panel_2.add(panel_10_1);
 
 		// layout
@@ -768,7 +770,11 @@ public class MainGameWindow {
 				if (wallMoveCandidate == null && QuoridorController.grabWall(QuoridorApplication.getQuoridor())) {
 					JButton wallMoveBtn = createWallMoveCandidate();
 					wallMoveCandidate = new MoveCandidate(wallMoveBtn, 0, 0);
-					
+					if(QuoridorController.isWhitePlayer()){
+						whitePane.removeWall();
+					} else {
+						blackPane.removeWall();
+					}
 //					WallMove actualCandidate = new WallMove(1, 1, QuoridorController.getCurrentPlayer(), 
 //															QuoridorController.getTileAtRowCol(1, 1), 
 //															QuoridorApplication.getQuoridor().getCurrentGame(),
@@ -781,6 +787,13 @@ public class MainGameWindow {
 					boardPanel.remove(wallMoveCandidate.wallMoveBtn);
 					wallMoveCandidate = null;
 					grabWall.setText("Grab Wall");
+					if(QuoridorController.isWhitePlayer()){
+						whitePane.cancelWallMove();
+					} else {
+						blackPane.cancelWallMove();
+					}
+					QuoridorApplication.getQuoridor().getCurrentGame().getWallMoveCandidate().delete();
+					QuoridorApplication.getQuoridor().getCurrentGame().setWallMoveCandidate(null);
 				}
 				frmQuoridorPlay.repaint();
 			}

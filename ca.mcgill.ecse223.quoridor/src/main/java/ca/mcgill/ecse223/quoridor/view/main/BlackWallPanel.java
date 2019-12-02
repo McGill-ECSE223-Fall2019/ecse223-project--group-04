@@ -13,7 +13,9 @@ public class BlackWallPanel {
     private static int wallWidthV = 101;
     private static int wallHeight = 10;
     private static JButton[] wallArray = new JButton[10];
+    private static int index;
     private static JPanel wallPane;
+
     public BlackWallPanel(JPanel panel) {
         wallPane = panel;
         wallPane.setLayout(null);
@@ -26,9 +28,23 @@ public class BlackWallPanel {
         }
 
     }
-    public static JPanel getWallPanel(){
+
+    public static JPanel getWallPanel() {
         return wallPane;
     }
 
+    public void removeWall() {
+        if (index < 10) {
+            wallPane.remove(wallArray[index]);
+            index++;
+        }
+
+    }
+    public void cancelWallMove(){
+        if(index > 0){
+            index--;
+            wallPane.add(wallArray[index]);
+        }
+    }
 
 }
