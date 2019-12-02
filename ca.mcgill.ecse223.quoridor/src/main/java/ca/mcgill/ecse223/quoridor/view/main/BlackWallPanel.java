@@ -40,8 +40,9 @@ public class BlackWallPanel {
         }
 
     }
-    public void cancelWallMove(){
-        if(index > 0){
+
+    public void cancelWallMove() {
+        if (index > 0) {
             index--;
             wallPane.add(wallArray[index]);
         }
