@@ -104,7 +104,8 @@ public class SwitchPlayerStepDefinition {
 	@Then("The user interface shall be showing it is {string} turn")
 	public void the_user_interface_shall_be_showing_it_is_turn(String string) {
 		// Write code here that turns the phrase above into concrete actions
-		String curPlayer = QuoridorController.getCurrentPlayer().equals(QuoridorController.getBlackPlayer())? "black": "white";
+		String curPlayer = QuoridorController.getCurrentPlayer().equals(QuoridorController.getBlackPlayer()) ? "black"
+				: "white";
 		// String displayed = MainGameWindow.getCurrentPlayer();
 		if (string.equalsIgnoreCase("black")) {
 
@@ -124,8 +125,10 @@ public class SwitchPlayerStepDefinition {
 	@Then("The clock of {string} shall be stopped")
 	public void the_clock_of_shall_be_stopped(String string) throws Exception {
 		Player blackPlayer = QuoridorController.getBlackPlayer();
-		Player nonCurrentPlayer = QuoridorController.getCurrentPlayer().equals(blackPlayer) ? QuoridorController.getWhitePlayer() : blackPlayer; 
-		
+		Player nonCurrentPlayer = QuoridorController.getCurrentPlayer().equals(blackPlayer)
+				? QuoridorController.getWhitePlayer()
+				: blackPlayer;
+
 		Time nonCurrentPlayerTime = nonCurrentPlayer.getRemainingTime();
 		try {
 			Thread.sleep(2000);
@@ -163,13 +166,13 @@ public class SwitchPlayerStepDefinition {
 	public void the_next_player_to_move_shall_be(String string) {
 		// Write code here that turns the phrase above into concrete actions
 		String curPlayer = "";
-		if(QuoridorController.getCurrentPlayer().equals(QuoridorController.getBlackPlayer())){
+		if (QuoridorController.getCurrentPlayer().equals(QuoridorController.getBlackPlayer())) {
 			curPlayer = "black";
 		} else {
 			curPlayer = "white";
 		}
 		assertEquals(string, curPlayer);
-		//assertTrue(true);
+		// assertTrue(true);
 
 	}
 }
