@@ -92,7 +92,7 @@ public class MainGameWindow {
 	private JButton btnPlaceNewWall;
 	private JButton btnNewButton;
 	private JButton button;
-	private JButton saveGameButton = new JButton();
+	private JButton saveGameButton = new JButton("Save Game");
 	private static int wallWidth = 185;
 	private static int wallWidthV = 11;
 	private static int wallHeight = 102;
@@ -193,6 +193,16 @@ public class MainGameWindow {
 				resignGame(evt);
 			}
 		});
+		JButton replayBtn = new JButton("Replay");
+		frmQuoridorPlay.getContentPane().add(southPanel, BorderLayout.SOUTH);
+		replayBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				ReplayMode rep = new ReplayMode();
+			}
+		});
+		replayBtn.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		southPanel.add(replayBtn);
 		JPanel rightPanel = new JPanel();
 		rightPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		frmQuoridorPlay.getContentPane().add(rightPanel, BorderLayout.EAST);
@@ -794,6 +804,7 @@ public class MainGameWindow {
 					}
 					QuoridorApplication.getQuoridor().getCurrentGame().getWallMoveCandidate().delete();
 					QuoridorApplication.getQuoridor().getCurrentGame().setWallMoveCandidate(null);
+
 				}
 				frmQuoridorPlay.repaint();
 			}
