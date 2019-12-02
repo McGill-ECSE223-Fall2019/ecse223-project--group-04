@@ -214,9 +214,20 @@ public class QuoridorController {
 		return wasRemoved;
 
 	}
-	
+	/**
+	 * 	@author Ousmane Baricisse
+	 */
+
 	public static void cancelGrabbedWall(){
 		Quoridor quoridor = QuoridorApplication.getQuoridor();
+		Wall wall = getWallMoveCandidate();
+		if(isWhitePlayer()){
+			quoridor.getCurrentGame().getCurrentPosition().addWhiteWallsInStock(wall);
+			quoridor.getCurrentGame().setWallMoveCandidate(null);
+		} else {
+			quoridor.getCurrentGame().getCurrentPosition().addBlackWallsInStock(wall);
+			quoridor.getCurrentGame().setWallMoveCandidate(null);
+		}
 	}
 
 	/**
