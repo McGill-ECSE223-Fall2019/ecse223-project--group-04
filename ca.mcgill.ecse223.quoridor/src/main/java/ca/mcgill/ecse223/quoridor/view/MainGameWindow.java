@@ -606,7 +606,7 @@ public class MainGameWindow {
 			}
 		});
 	}
-	
+
 	private void moveUpRightHandler(BasicArrowButton btn) {
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -614,7 +614,7 @@ public class MainGameWindow {
 			}
 		});
 	}
-	
+
 	private void moveDownRightHandler(BasicArrowButton btn) {
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -622,7 +622,7 @@ public class MainGameWindow {
 			}
 		});
 	}
-	
+
 	private void moveUpLeftHandler(BasicArrowButton btn) {
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -630,6 +630,7 @@ public class MainGameWindow {
 			}
 		});
 	}
+
 	private void moveDownLeftHandler(BasicArrowButton btn) {
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -647,13 +648,17 @@ public class MainGameWindow {
 			return;
 		}
 		if (wallMoveCandidate != null) {
-			if (dir == ControllerUtilities.MoveDirections.up && wallMoveIsValidated(wallMoveCandidate.row - 1, wallMoveCandidate.col)) {
+			if (dir.equals(ControllerUtilities.MoveDirections.up)
+					&& wallMoveIsValidated(wallMoveCandidate.row - 1, wallMoveCandidate.col)) {
 				wallMoveCandidate.row -= 1;
-			} else if (dir == ControllerUtilities.MoveDirections.down && wallMoveIsValidated(wallMoveCandidate.row + 1, wallMoveCandidate.col)) {
+			} else if (dir.equals(ControllerUtilities.MoveDirections.down)
+					&& wallMoveIsValidated(wallMoveCandidate.row + 1, wallMoveCandidate.col)) {
 				wallMoveCandidate.row += 1;
-			} else if (dir == ControllerUtilities.MoveDirections.left && wallMoveIsValidated(wallMoveCandidate.row, wallMoveCandidate.col - 1)) {
+			} else if (dir.equals(ControllerUtilities.MoveDirections.left)
+					&& wallMoveIsValidated(wallMoveCandidate.row, wallMoveCandidate.col - 1)) {
 				wallMoveCandidate.col -= 1;
-			} else if (dir == ControllerUtilities.MoveDirections.right && wallMoveIsValidated(wallMoveCandidate.row, wallMoveCandidate.col + 1)) {
+			} else if (dir.equals(ControllerUtilities.MoveDirections.right)
+					&& wallMoveIsValidated(wallMoveCandidate.row, wallMoveCandidate.col + 1)) {
 				wallMoveCandidate.col += 1;
 			}
 
@@ -675,58 +680,62 @@ public class MainGameWindow {
 					: blackPawnMove;
 			targetRow = moveCandidate.row;
 			targetCol = moveCandidate.col;
-			//TODO check this out
+			// TODO check this out
 			if (dir.equals(ControllerUtilities.MoveDirections.up)) {
-				if(validateIfPawnMoveIsPossible(moveCandidate.row - 1, moveCandidate.col)) {
+				if (validateIfPawnMoveIsPossible(moveCandidate.row - 1, moveCandidate.col)) {
 					targetModified = true;
 					targetRow = moveCandidate.row - 1;
-				} else if(validateIfPawnMoveIsPossible(moveCandidate.row - 2, moveCandidate.col)) {
+				} else if (validateIfPawnMoveIsPossible(moveCandidate.row - 2, moveCandidate.col)) {
 					targetModified = true;
 					targetRow = moveCandidate.row - 2;
 				}
 			} else if (dir.equals(ControllerUtilities.MoveDirections.down)) {
-				if(validateIfPawnMoveIsPossible(moveCandidate.row + 1, moveCandidate.col)) {
+				if (validateIfPawnMoveIsPossible(moveCandidate.row + 1, moveCandidate.col)) {
 					targetModified = true;
 					targetRow = moveCandidate.row + 1;
-				} else if(validateIfPawnMoveIsPossible(moveCandidate.row + 2, moveCandidate.col)) {
+				} else if (validateIfPawnMoveIsPossible(moveCandidate.row + 2, moveCandidate.col)) {
 					targetModified = true;
 					targetRow = moveCandidate.row + 2;
 				}
 			} else if (dir.equals(ControllerUtilities.MoveDirections.left)) {
-				if(validateIfPawnMoveIsPossible(moveCandidate.row, moveCandidate.col - 1)) {
+				if (validateIfPawnMoveIsPossible(moveCandidate.row, moveCandidate.col - 1)) {
 					targetModified = true;
 					targetCol = moveCandidate.col - 1;
-				} else if ( validateIfPawnMoveIsPossible(moveCandidate.row, moveCandidate.col - 2)) {
+				} else if (validateIfPawnMoveIsPossible(moveCandidate.row, moveCandidate.col - 2)) {
 					targetModified = true;
 					targetCol = moveCandidate.col - 2;
 				}
 			} else if (dir.equals(ControllerUtilities.MoveDirections.right)) {
-				if(validateIfPawnMoveIsPossible(moveCandidate.row, moveCandidate.col + 1)) {
+				if (validateIfPawnMoveIsPossible(moveCandidate.row, moveCandidate.col + 1)) {
 					targetModified = true;
 					targetCol = moveCandidate.col + 1;
 				} else if (validateIfPawnMoveIsPossible(moveCandidate.row, moveCandidate.col + 2)) {
 					targetModified = true;
 					targetCol = moveCandidate.col + 2;
 				}
-			} else if(dir.equals(ControllerUtilities.MoveDirections.upleft) && validateIfPawnMoveIsPossible(moveCandidate.row - 1, moveCandidate.col - 1)) {
+			} else if (dir.equals(ControllerUtilities.MoveDirections.upleft)
+					&& validateIfPawnMoveIsPossible(moveCandidate.row - 1, moveCandidate.col - 1)) {
 				targetModified = true;
 				targetCol = moveCandidate.col - 1;
 				targetRow = moveCandidate.row - 1;
-			} else if(dir.equals(ControllerUtilities.MoveDirections.downleft) && validateIfPawnMoveIsPossible(moveCandidate.row + 1, moveCandidate.col - 1)) {
+			} else if (dir.equals(ControllerUtilities.MoveDirections.downleft)
+					&& validateIfPawnMoveIsPossible(moveCandidate.row + 1, moveCandidate.col - 1)) {
 				targetModified = true;
 				targetCol = moveCandidate.col - 1;
 				targetRow = moveCandidate.row + 1;
-			} else if(dir.equals(ControllerUtilities.MoveDirections.upright) && validateIfPawnMoveIsPossible(moveCandidate.row - 1, moveCandidate.col + 1)) {
+			} else if (dir.equals(ControllerUtilities.MoveDirections.upright)
+					&& validateIfPawnMoveIsPossible(moveCandidate.row - 1, moveCandidate.col + 1)) {
 				targetModified = true;
 				targetCol = moveCandidate.col + 1;
 				targetRow = moveCandidate.row - 1;
-			} else if(dir.equals(ControllerUtilities.MoveDirections.downright) && validateIfPawnMoveIsPossible(moveCandidate.row + 1, moveCandidate.col + 1)) {
+			} else if (dir.equals(ControllerUtilities.MoveDirections.downright)
+					&& validateIfPawnMoveIsPossible(moveCandidate.row + 1, moveCandidate.col + 1)) {
 				targetModified = true;
 				targetCol = moveCandidate.col + 1;
 				targetRow = moveCandidate.row + 1;
 			}
-			
-			if(targetModified) {
+
+			if (targetModified) {
 				btnArray[moveCandidate.row][moveCandidate.col].remove(moveCandidate.wallMoveBtn);
 				moveCandidate.row = targetRow;
 				moveCandidate.col = targetCol;
@@ -780,24 +789,25 @@ public class MainGameWindow {
 				if (wallMoveCandidate == null && QuoridorController.grabWall(QuoridorApplication.getQuoridor())) {
 					JButton wallMoveBtn = createWallMoveCandidate();
 					wallMoveCandidate = new MoveCandidate(wallMoveBtn, 0, 0);
-					if(QuoridorController.isWhitePlayer()){
+					if (QuoridorController.isWhitePlayer()) {
 						whitePane.removeWall();
 					} else {
 						blackPane.removeWall();
 					}
-//					WallMove actualCandidate = new WallMove(1, 1, QuoridorController.getCurrentPlayer(), 
-//															QuoridorController.getTileAtRowCol(1, 1), 
-//															QuoridorApplication.getQuoridor().getCurrentGame(),
-//															Direction.Horizontal, 
-//															QuoridorController.getNextAvailableWall(QuoridorController.getCurrentPlayer()));
-//					
-					//QuoridorApplication.getQuoridor().getCurrentGame().setWallMoveCandidate(actualCandidate);
+					// WallMove actualCandidate = new WallMove(1, 1,
+					// QuoridorController.getCurrentPlayer(),
+					// QuoridorController.getTileAtRowCol(1, 1),
+					// QuoridorApplication.getQuoridor().getCurrentGame(),
+					// Direction.Horizontal,
+					// QuoridorController.getNextAvailableWall(QuoridorController.getCurrentPlayer()));
+					//
+					// QuoridorApplication.getQuoridor().getCurrentGame().setWallMoveCandidate(actualCandidate);
 					grabWall.setText("Cancel Move");
 				} else {
 					boardPanel.remove(wallMoveCandidate.wallMoveBtn);
 					wallMoveCandidate = null;
 					grabWall.setText("Grab Wall");
-					if(QuoridorController.isWhitePlayer()){
+					if (QuoridorController.isWhitePlayer()) {
 						whitePane.cancelWallMove();
 					} else {
 						blackPane.cancelWallMove();
@@ -883,21 +893,21 @@ public class MainGameWindow {
 
 		centerButtonPanel.add(north, BorderLayout.NORTH); // up
 		centerButtonPanel.add(south, BorderLayout.SOUTH);
-		
+
 		JPanel leftPanel = new JPanel();
 		east.add(leftPanel);
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-		
+
 		BasicArrowButton leftUp = new BasicArrowButton(BasicArrowButton.WEST) {
 			@Override
 			public Dimension getPreferredSize() {
 				return new Dimension(70, 30);
 			}
 		};
-		
+
 		leftPanel.add(leftUp);
 		moveUpLeftHandler(leftUp);
-		
+
 		BasicArrowButton west = new BasicArrowButton(BasicArrowButton.WEST) {
 			@Override
 			public Dimension getPreferredSize() {
@@ -906,17 +916,17 @@ public class MainGameWindow {
 		};
 		leftPanel.add(west);
 		moveLeftHandler(west);
-		
-		BasicArrowButton bottomLeft = new BasicArrowButton(BasicArrowButton.WEST){
+
+		BasicArrowButton bottomLeft = new BasicArrowButton(BasicArrowButton.WEST) {
 			@Override
 			public Dimension getPreferredSize() {
 				return new Dimension(70, 30);
 			}
 		};
-		
+
 		leftPanel.add(bottomLeft);
 		moveDownLeftHandler(bottomLeft);
-		
+
 		east.add(centerButtonPanel, BorderLayout.CENTER);
 		moveUpHandler(north);
 		moveDownHandler(south);
@@ -925,7 +935,7 @@ public class MainGameWindow {
 		east.add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-		BasicArrowButton rightUp = new BasicArrowButton(BasicArrowButton.EAST){
+		BasicArrowButton rightUp = new BasicArrowButton(BasicArrowButton.EAST) {
 			@Override
 			public Dimension getPreferredSize() {
 				return new Dimension(70, 70);

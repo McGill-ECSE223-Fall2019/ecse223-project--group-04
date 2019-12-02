@@ -37,7 +37,8 @@ public class StepBackwardStepDef {
 	@Then("White has <wwallno> on stock")
 	public void whiteHasWWallnoOnStock(int wwall) {
 		// Write code here that turns the phrase above into concrete actions
-		
+		int num = QuoridorApplication.getQuoridor().getCurrentGame().getCurrentPosition().getWhiteWallsInStock().size();
+		assertTrue(num == wwall);
 	}
 
 }
