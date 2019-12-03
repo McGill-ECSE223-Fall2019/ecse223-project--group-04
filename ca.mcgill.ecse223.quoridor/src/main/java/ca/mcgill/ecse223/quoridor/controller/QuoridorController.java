@@ -2000,7 +2000,9 @@ public class QuoridorController {
 		List<Move> listOfMove = getPawnsPosition();
 		Game game = QuoridorApplication.getQuoridor().getCurrentGame();
 		GamePosition gamePosition = game.getCurrentPosition();
-		
+		System.out.println("GAME POSITION : " + game.getCurrentPosition().toString());
+		System.out.println("WHITE TILES : " + gamePosition.getWhitePosition().getTile().toString());
+		System.out.println("WHITE WALLLS ON BOARD" + gamePosition.getWhiteWallsOnBoard().toString().toString());
 		Tile playerTile;
 		Tile newPlayerTile = null;
 
