@@ -42,6 +42,7 @@ import java.util.List;
 
 import ca.mcgill.ecse223.quoridor.QuoridorApplication;
 import ca.mcgill.ecse223.quoridor.controller.QuoridorController;
+import ca.mcgill.ecse223.quoridor.model.Move;
 import ca.mcgill.ecse223.quoridor.model.Player;
 import ca.mcgill.ecse223.quoridor.model.Tile;
 import ca.mcgill.ecse223.quoridor.utilities.ControllerUtilities;
@@ -110,6 +111,8 @@ public class ReplayMode {
 	private MoveCandidate blackPawnMove;
 	private MoveCandidate whitePawnMove;
 	private boolean gameStarted = false;
+
+	private static List<Move> listOfMoves = QuoridorController.getPawnsPosition();
 
 	/**
 	 * Launch the application.
@@ -234,7 +237,7 @@ public class ReplayMode {
 		for (int row = 0; row < TOTAL_ROWS; row++) {
 			for (int col = 0; col < TOTAL_COLS; col++) {
 				errorMessage.setVisible(false);
-				btnArray[row][col] = new JButton(/* new ImageIcon("./tile.png") */);
+				btnArray[row][col] = new JButton( new ImageIcon("./tile.png") );
 				btnArray[row][col].setBackground(Color.GRAY);
 				btnArray[row][col].setVisible(true);
 
@@ -339,8 +342,15 @@ public class ReplayMode {
 			}
 		});
 		northPanel.add(btnStartReplayMode);
+		StepBackHandler();
 	}
 
+	private void StepBackHandler(){
+		System.out.println(listOfMoves.toString().toString());
+	}
+	private void stepForwardHandler(){
+
+	}
 	private void switchCurrentPlayerGuiAndBackend() {
 		// String playerName = "";
 		// try {

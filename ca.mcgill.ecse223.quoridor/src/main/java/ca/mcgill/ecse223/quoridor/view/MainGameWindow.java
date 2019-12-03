@@ -198,7 +198,8 @@ public class MainGameWindow {
 		replayBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				ReplayMode rep = new ReplayMode();
+				// ReplayMode rep = new ReplayMode();
+				StepBackHandler();
 			}
 		});
 		replayBtn.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -363,7 +364,12 @@ public class MainGameWindow {
 		});
 		northPanel.add(btnStartWhiteTimer);
 	}
-
+	private void StepBackHandler(){
+		System.out.println(QuoridorController.getPawnsPosition().toString().toString());
+	}
+	private void resetBackGame(){
+	//	Game 
+	}
 	private void switchCurrentPlayerGuiAndBackend() {
 		String playerName = "";
 		try {

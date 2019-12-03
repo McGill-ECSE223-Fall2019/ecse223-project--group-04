@@ -230,6 +230,10 @@ public class QuoridorController {
 		}
 	}
 
+	public static List<Move> getPawnsPosition(){
+		Game game = QuoridorApplication.getQuoridor().getCurrentGame();
+		return game.getMoves();
+	}
 	/**
 	 * Method: initializeNewGame(Quoridor quoridor)
 	 *
@@ -1993,7 +1997,10 @@ public class QuoridorController {
 	 * @author Tristan Bouchard, Nicolas Buisson
 	 */
 	public static boolean movePawn(Player player, String side) throws IllegalArgumentException {
-
+		List<Move> listOfMove = getPawnsPosition();
+		Game game = QuoridorApplication.getQuoridor().getCurrentGame();
+		GamePosition gamePosition = game.getCurrentPosition();
+		
 		Tile playerTile;
 		Tile newPlayerTile = null;
 
@@ -2134,9 +2141,26 @@ public class QuoridorController {
 			throw new IllegalArgumentException("Illegal move!");
 		}
 		// switchCurrentPlayer();
+		
+		int index = listOfMove.size()-1;
+		int moveNumber = listOfMove.size() > 0 ?  listOfMove.get(index).getMoveNumber() + 1 : 1;
+		int roundNumber = listOfMove.size() > 0 ? listOfMove.get(index).getRoundNumber() + 1 : 1;
+		StepMove newMove = new StepMove(moveNumber, roundNumber, player, newPlayerTile, game);
+		
+		System.out.println("listOfMove :  " + listOfMove.size());
+		if(listOfMove.size() == 0)game.addMove(newMove);
+		else if(listOfMove.size() > 0) {
+			Move pastMove = listOfMove.get(index);
+			pastMove.setNextMove(newMove);
+		}
+		game.addPosition(gamePosition);
 		return true;
 	}
 
+	public static void resetBackGame(Game aGame){
+		Game game = QuoridorApplication.getQuoridor().getCurrentGame();
+		game.setCurrentPosition(aGame.getCurrentPosition());
+	}
 	/**
 	 * helper method made to access a Tile using its row and column coordinates
 	 * 
