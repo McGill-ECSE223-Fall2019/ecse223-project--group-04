@@ -46,6 +46,7 @@ import ca.mcgill.ecse223.quoridor.model.Game.GameStatus;
 import ca.mcgill.ecse223.quoridor.model.Player;
 import ca.mcgill.ecse223.quoridor.model.Tile;
 import ca.mcgill.ecse223.quoridor.utilities.ControllerUtilities;
+import ca.mcgill.ecse223.quoridor.utilities.ControllerUtilities.PathAvailableToPlayers;
 import ca.mcgill.ecse223.quoridor.view.QuoridorPage;
 import java.awt.CardLayout;
 import java.awt.GridBagLayout;
@@ -794,6 +795,9 @@ public class MainGameWindow {
 				if ( wallMoveCandidate != null && QuoridorController.wallMove(wallMoveCandidate.row + 1, wallMoveCandidate.col + 1,
 						QuoridorController.getWallDirection(wallMoveCandidate.isRotated).toString(),
 						QuoridorController.getWallMoveCandidate(), QuoridorController.getCurrentPlayer())) {
+					if(!QuoridorController.checkIfPathExists().equals(PathAvailableToPlayers.both)){
+						return;
+					}
 					wallMoveCandidate.wallMoveBtn.setIcon(new ImageIcon("./dropped.png"));
 					try {
 						QuoridorController.dropWall();
