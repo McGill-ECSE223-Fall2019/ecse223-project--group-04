@@ -43,6 +43,7 @@ import java.util.List;
 import ca.mcgill.ecse223.quoridor.QuoridorApplication;
 import ca.mcgill.ecse223.quoridor.controller.QuoridorController;
 import ca.mcgill.ecse223.quoridor.model.Game.GameStatus;
+import ca.mcgill.ecse223.quoridor.model.Move;
 import ca.mcgill.ecse223.quoridor.model.Player;
 import ca.mcgill.ecse223.quoridor.model.Tile;
 import ca.mcgill.ecse223.quoridor.utilities.ControllerUtilities;
@@ -364,12 +365,36 @@ public class MainGameWindow {
 		});
 		northPanel.add(btnStartWhiteTimer);
 	}
-	private void StepBackHandler(){
-		System.out.println(QuoridorController.getPawnsPosition().toString().toString());
+
+	private void StepBackHandler(MoveCandidate moveCandidate) {
+		List<Move> list = QuoridorController.getPawnsPosition();
+		if (list.size() > 1) {
+			Move prev = list.get(list.size() - 2);
+			//int row = prev.get
+
+		}
+
 	}
-	private void resetBackGame(){
-	//	Game 
+
+	private void resetBackGame() {
+		// Game
+		Player currentPlayer = QuoridorApplication.getQuoridor().getCurrentGame().getCurrentPosition()
+				.getPlayerToMove();
+		MoveCandidate moveCandidate = currentPlayer.equals(QuoridorController.getWhitePlayer()) ? whitePawnMove
+				: blackPawnMove;
+
+		
+		btnArray[moveCandidate.row][moveCandidate.col].remove(moveCandidate.wallMoveBtn);
+
+		btnArray[moveCandidate.row][moveCandidate.col].add(moveCandidate.wallMoveBtn);
+
+		if (currentPlayer.equals(QuoridorController.getWhitePlayer())) {
+			whitePawnMove = moveCandidate;
+		} else {
+			blackPawnMove = moveCandidate;
+		}
 	}
+
 	private void switchCurrentPlayerGuiAndBackend() {
 		String playerName = "";
 		try {
@@ -759,11 +784,11 @@ public class MainGameWindow {
 				}
 			}
 		}
-		if(wallMoveCandidate == null && playerMoved) {
+		if (wallMoveCandidate == null && playerMoved) {
 			QuoridorController.switchCurrentPlayer();
 			QuoridorController.updateGameStatus();
-			GameStatus currentStatus = QuoridorApplication.getQuoridor().getCurrentGame().getGameStatus(); 
-			if(!currentStatus.equals(GameStatus.Running)) {
+			GameStatus currentStatus = QuoridorApplication.getQuoridor().getCurrentGame().getGameStatus();
+			if (!currentStatus.equals(GameStatus.Running)) {
 				// Here, end the game and display the winner! or the draw if that is the case
 				QuoridorController.endGameAndReportResult();
 				gameStarted = false;

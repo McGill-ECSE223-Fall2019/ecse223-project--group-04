@@ -265,8 +265,12 @@ public class QuoridorController {
 		// Set the game to the quoridor object
 		quoridor.setCurrentGame(newGame);
 
+	
+		
 		initializeBoard(quoridor);
-
+		Tile playerTile = new Tile(1, 5, quoridor.getBoard());
+		StepMove newMove = new StepMove(1, 1, whitePlayer, playerTile, newGame);
+		newGame.addMove(newMove);
 		return true;
 	}
 
@@ -1716,7 +1720,37 @@ public class QuoridorController {
 		}
 
 	}
+/**
+	 * Clone the game position
+	 * @author Ousmane Baricisse
+	 * @param oldPosition
+	 * @return a copy of the new position
+	 */
+	private static GamePosition clonePosition(GamePosition oldPosition) {
+		PlayerPosition newWhitePosition = clonePlayerPosition(oldPosition.getWhitePosition());
+		PlayerPosition newBlackPosition = clonePlayerPosition(oldPosition.getBlackPosition());
+		GamePosition newPosition = new GamePosition(oldPosition.getId() + 1, newWhitePosition, newBlackPosition,
+				oldPosition.getPlayerToMove(), oldPosition.getGame());
+		for (Wall wall : oldPosition.getBlackWallsInStock())
+			newPosition.addBlackWallsInStock(wall);
+		for (Wall wall : oldPosition.getWhiteWallsInStock())
+			newPosition.addWhiteWallsInStock(wall);
+		for (Wall wall : oldPosition.getBlackWallsOnBoard())
+			newPosition.addBlackWallsOnBoard(wall);
+		for (Wall wall : oldPosition.getWhiteWallsOnBoard())
+			newPosition.addWhiteWallsOnBoard(wall);
+		return newPosition;
+	}
 
+	/**
+	 * Clone the player position for updating the player position
+	 * @author Ousmane Baricisse
+	 * @param playerPos
+	 * @return the cloned player position
+	 */
+	private static PlayerPosition clonePlayerPosition(PlayerPosition playerPos) {
+		return new PlayerPosition(playerPos.getPlayer(), playerPos.getTile());
+	}
 	/**
 	 * Method used to drop a wall
 	 *
@@ -2000,6 +2034,8 @@ public class QuoridorController {
 		List<Move> listOfMove = getPawnsPosition();
 		Game game = QuoridorApplication.getQuoridor().getCurrentGame();
 		GamePosition gamePosition = game.getCurrentPosition();
+		
+
 		System.out.println("GAME POSITION : " + game.getCurrentPosition().toString());
 		System.out.println("WHITE TILES : " + gamePosition.getWhitePosition().getTile().toString());
 		System.out.println("WHITE WALLLS ON BOARD" + gamePosition.getWhiteWallsOnBoard().toString().toString());
@@ -2147,18 +2183,33 @@ public class QuoridorController {
 		int index = listOfMove.size()-1;
 		int moveNumber = listOfMove.size() > 0 ?  listOfMove.get(index).getMoveNumber() + 1 : 1;
 		int roundNumber = listOfMove.size() > 0 ? listOfMove.get(index).getRoundNumber() + 1 : 1;
-		StepMove newMove = new StepMove(moveNumber, roundNumber, player, newPlayerTile, game);
+
+		
 		
 		System.out.println("listOfMove :  " + listOfMove.size());
-		if(listOfMove.size() == 0)game.addMove(newMove);
-		else if(listOfMove.size() > 0) {
+		
+		if(listOfMove.size() > 0) {
+			StepMove newMove = new StepMove(moveNumber, roundNumber, player, newPlayerTile, game);
 			Move pastMove = listOfMove.get(index);
+			printTiles();
 			pastMove.setNextMove(newMove);
-		}
-		game.addPosition(gamePosition);
+			game.addMove(newMove);
+
+		} 
+		
+		
 		return true;
 	}
 
+	public static void printTiles(){
+		Game game = QuoridorApplication.getQuoridor().getCurrentGame();
+		List<Move> listOfMove = getPawnsPosition();
+		System.out.println("PRINTING LIST OF TARGET TILES ");
+		for(Move move : listOfMove){
+
+			System.out.println("ListOfMove" +  move.getTargetTile().toString());
+		}
+	}
 	public static void resetBackGame(Game aGame){
 		Game game = QuoridorApplication.getQuoridor().getCurrentGame();
 		game.setCurrentPosition(aGame.getCurrentPosition());
