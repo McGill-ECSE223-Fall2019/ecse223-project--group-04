@@ -170,6 +170,7 @@ public class MainGameWindow {
 
 		JPanel southPanel = new JPanel();
 		frmQuoridorPlay.getContentPane().add(southPanel, BorderLayout.SOUTH);
+		saveGameButton.setText("SAVE");
 		saveGameButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -180,6 +181,15 @@ public class MainGameWindow {
 		});
 		saveGameButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		southPanel.add(saveGameButton);
+
+		JButton resignBtn = new JButton("RESIGN");
+		resignBtn.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		southPanel.add(resignBtn);
+		resignBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				resignGame(evt);
+			}
+		});
 		JPanel rightPanel = new JPanel();
 		rightPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		frmQuoridorPlay.getContentPane().add(rightPanel, BorderLayout.EAST);
@@ -975,6 +985,18 @@ public class MainGameWindow {
 			timeRemaining_TextFieldBlack.setText(currPlayer.getRemainingTime().toString());
 		}
 		frmQuoridorPlay.repaint();
+	}
+
+	private void resignGame(ActionEvent evt) {
+		if(QuoridorController.getCurrentPlayer().equals(QuoridorController.getWhitePlayer())) {
+			QuoridorApplication.getQuoridor().getCurrentGame().setGameStatus(GameStatus.BlackWon);
+			GameWonPopup gameWon = new GameWonPopup();
+			gameWon.frame.setVisible(true);
+		} else if(QuoridorController.getCurrentPlayer().equals(QuoridorController.getBlackPlayer())) {
+			QuoridorApplication.getQuoridor().getCurrentGame().setGameStatus(GameStatus.WhiteWon);
+			GameWonPopup gameWon = new GameWonPopup();
+			gameWon.frame.setVisible(true);
+		}
 	}
 
 }
