@@ -391,13 +391,15 @@ public class MainGameWindow {
 			moveCandidate.col = prev.getTargetTile().getColumn() - 1;
 			Game game = QuoridorApplication.getQuoridor().getCurrentGame();
 			switchCurrentPlayerGuiAndBackend();
-
+			System.out.println(" row  + col : " + row + ", " + col);
+			System.out.println(" row  + col : " + moveCandidate.row + ", " + moveCandidate.col);
 			ControllerUtilities.MoveDirections dir = null;
 			if (prev.getTargetTile().getRow() < row) {
 				dir = ControllerUtilities.MoveDirections.up;
 
 			} else if (prev.getTargetTile().getRow() > row) {
 				dir = ControllerUtilities.MoveDirections.up;
+
 			} else if (prev.getTargetTile().getColumn() < col) {
 				dir = ControllerUtilities.MoveDirections.right;
 
@@ -406,17 +408,19 @@ public class MainGameWindow {
 			}
 			Player curPlayer = QuoridorApplication.getQuoridor().getCurrentGame().getCurrentPosition()
 					.getPlayerToMove();
-			btnArray[moveCandidate.row][moveCandidate.col].remove(moveCandidate.wallMoveBtn);
+			
+			btnArray[row-1][col-1].remove(moveCandidate.wallMoveBtn);
 
 			btnArray[moveCandidate.row][moveCandidate.col].add(moveCandidate.wallMoveBtn);
 			// moveHandler(dir);
+			QuoridorController.movePawn(curPlayer, dir.toString());
 
-			if (curPlayer.equals(QuoridorController.getWhitePlayer())) {
+			if (prev.getPlayer().equals(QuoridorController.getWhitePlayer())) {
 				whitePawnMove = moveCandidate;
 			} else {
 				blackPawnMove = moveCandidate;
 			}
-			QuoridorController.movePawn(curPlayer, dir.toString());
+			
 
 			if (wallMoveCandidate == null) {
 				// QuoridorController.switchCurrentPlayer();
@@ -430,12 +434,13 @@ public class MainGameWindow {
 					GameWonPopup gameWon = new GameWonPopup();
 					gameWon.frame.setVisible(true);
 				}
-				frmQuoridorPlay.repaint();
+				
 				return true;
 
 			}
 
 			getAvailableMovesToCurrentPlayer();
+			frmQuoridorPlay.repaint();
 		}
 
 		return false;
