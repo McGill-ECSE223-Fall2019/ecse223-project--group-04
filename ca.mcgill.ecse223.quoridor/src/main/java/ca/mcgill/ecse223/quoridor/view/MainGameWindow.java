@@ -396,15 +396,17 @@ public class MainGameWindow {
 			ControllerUtilities.MoveDirections dir = null;
 			if (prev.getTargetTile().getRow() < row) {
 				dir = ControllerUtilities.MoveDirections.up;
+				System.out.println("UP");
 
 			} else if (prev.getTargetTile().getRow() > row) {
-				dir = ControllerUtilities.MoveDirections.up;
-
+				dir = ControllerUtilities.MoveDirections.down;
+				System.out.println("DOWN");
 			} else if (prev.getTargetTile().getColumn() < col) {
-				dir = ControllerUtilities.MoveDirections.right;
-
-			} else if (prev.getTargetTile().getColumn() > col) {
 				dir = ControllerUtilities.MoveDirections.left;
+				System.out.println("LEFT");
+			} else if (prev.getTargetTile().getColumn() > col) {
+				dir = ControllerUtilities.MoveDirections.right;
+				System.out.println("RIGHT");
 			}
 			Player curPlayer = QuoridorApplication.getQuoridor().getCurrentGame().getCurrentPosition()
 					.getPlayerToMove();
@@ -413,7 +415,7 @@ public class MainGameWindow {
 
 			btnArray[moveCandidate.row][moveCandidate.col].add(moveCandidate.wallMoveBtn);
 			// moveHandler(dir);
-			QuoridorController.movePawn(curPlayer, dir.toString());
+			System.out.println(QuoridorController.movePawn(curPlayer, dir.toString()));
 
 			if (prev.getPlayer().equals(QuoridorController.getWhitePlayer())) {
 				whitePawnMove = moveCandidate;

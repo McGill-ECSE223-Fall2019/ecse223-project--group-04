@@ -2200,7 +2200,10 @@ public class QuoridorController {
 		
 		return true;
 	}
-
+	
+	/**
+	 * Ousmane Baricisse
+	 */
 	public static void printTiles(){
 		Game game = QuoridorApplication.getQuoridor().getCurrentGame();
 		List<Move> listOfMove = getPawnsPosition();
