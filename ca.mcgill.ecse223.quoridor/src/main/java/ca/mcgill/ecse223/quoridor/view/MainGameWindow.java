@@ -1001,6 +1001,12 @@ public class MainGameWindow {
 			GameWonPopup gameWon = new GameWonPopup();
 			gameWon.frame.setVisible(true);
 		}
+		try {
+			QuoridorController.playerInitiatesToResign(QuoridorController.getCurrentPlayer());
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Not calling controller method ... ");
+		}
 	}
 
 }
