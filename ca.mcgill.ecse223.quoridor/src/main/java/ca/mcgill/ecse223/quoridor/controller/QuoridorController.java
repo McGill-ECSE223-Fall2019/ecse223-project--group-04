@@ -262,6 +262,7 @@ public class QuoridorController {
 
 		newGame.setWhitePlayer(whitePlayer);
 		newGame.setBlackPlayer(blackPlayer);
+		
 		// Set the game to the quoridor object
 		quoridor.setCurrentGame(newGame);
 
