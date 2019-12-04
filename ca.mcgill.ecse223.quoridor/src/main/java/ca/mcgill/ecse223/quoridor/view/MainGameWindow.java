@@ -381,11 +381,30 @@ public class MainGameWindow {
 		int row = curPlayerTile.getRow();
 		int col = curPlayerTile.getColumn();
 		int index = list.size() - 1;
-		if (list.size() > 1) {
+		if (list.size() > 2) {
 
 			Move prev;
 			// int row = prev.get
 			prev = list.get(index - 2);
+
+			moveCandidate.row = prev.getTargetTile().getRow() - 1;
+			moveCandidate.col = prev.getTargetTile().getColumn() - 1;
+			replayMove(moveCandidate, prev, row, col);
+
+			getAvailableMovesToCurrentPlayer();
+			frmQuoridorPlay.repaint();
+		} else if(list.size() > 0){
+			Move prev =list.get(index - 1);
+			moveCandidate.row = prev.getTargetTile().getRow() - 1;
+			moveCandidate.col = prev.getTargetTile().getColumn() - 1;
+			replayMove(moveCandidate, prev, row, col);
+		}
+
+		return false;
+	} 
+
+	private void replayMove(MoveCandidate moveCandidate, Move prev, int row, int col){
+
 
 			moveCandidate.row = prev.getTargetTile().getRow() - 1;
 			moveCandidate.col = prev.getTargetTile().getColumn() - 1;
@@ -415,7 +434,12 @@ public class MainGameWindow {
 
 			btnArray[moveCandidate.row][moveCandidate.col].add(moveCandidate.wallMoveBtn);
 			// moveHandler(dir);
-			System.out.println(QuoridorController.movePawn(curPlayer, dir.toString()));
+			//System.out.println(QuoridorController.movePawn(curPlayer, dir.toString()));
+			if(QuoridorController.isWhitePlayer()){
+				game.getCurrentPosition().getWhitePosition().setTile(new Tile(moveCandidate.row+1, moveCandidate.col+1, QuoridorApplication.getQuoridor().getBoard()));
+			} else {
+				game.getCurrentPosition().getBlackPosition().setTile(new Tile(moveCandidate.row+1, moveCandidate.col+1, QuoridorApplication.getQuoridor().getBoard()));
+			}
 
 			if (prev.getPlayer().equals(QuoridorController.getWhitePlayer())) {
 				whitePawnMove = moveCandidate;
@@ -437,17 +461,10 @@ public class MainGameWindow {
 					gameWon.frame.setVisible(true);
 				}
 				
-				return true;
+				
 
 			}
-
-			getAvailableMovesToCurrentPlayer();
-			frmQuoridorPlay.repaint();
-		}
-
-		return false;
 	}
-
 	private void resetBackGame() {
 		// Game
 		Player currentPlayer = QuoridorApplication.getQuoridor().getCurrentGame().getCurrentPosition()
