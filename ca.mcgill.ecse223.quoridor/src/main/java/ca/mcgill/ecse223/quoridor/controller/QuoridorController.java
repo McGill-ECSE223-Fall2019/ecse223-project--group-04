@@ -2198,7 +2198,7 @@ public class QuoridorController {
 		
 		System.out.println("listOfMove :  " + listOfMove.size());
 		
-		if(listOfMove.size() > 0) {
+		if(listOfMove.size() >= 0) {
 			StepMove newMove = new StepMove(moveNumber, roundNumber, player, newPlayerTile, game);
 			Move pastMove = listOfMove.get(index);
 			printTiles();

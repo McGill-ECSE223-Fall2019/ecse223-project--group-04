@@ -216,7 +216,7 @@ public class MainGameWindow {
 			public void mouseReleased(MouseEvent e) {
 				// ReplayMode rep = new ReplayMode();
 				moveBackward();
-				
+
 			}
 		});
 
@@ -239,13 +239,17 @@ public class MainGameWindow {
 				Game game = QuoridorApplication.getQuoridor().getCurrentGame();
 				if (replayBtn.getText().equalsIgnoreCase("Resume from replay mode")) {
 					game.setGameStatus(GameStatus.Running);
-					
+
 					Player curPlayer = game.getCurrentPosition().getPlayerToMove();
-					if(curPlayer.equals(game.getWhitePlayer())){
-						PlayerPosition playerPosition = new PlayerPosition(game.getWhitePlayer(), new Tile(whitePawnMove.row + 1, whitePawnMove.col + 1, QuoridorApplication.getQuoridor().getBoard()));
+					if (curPlayer.equals(game.getWhitePlayer())) {
+						PlayerPosition playerPosition = new PlayerPosition(game.getWhitePlayer(),
+								new Tile(whitePawnMove.row + 1, whitePawnMove.col + 1,
+										QuoridorApplication.getQuoridor().getBoard()));
 						game.getCurrentPosition().setWhitePosition(playerPosition);
 					} else {
-						PlayerPosition playerPosition = new PlayerPosition(game.getBlackPlayer(), new Tile(blackPawnMove.row + 1, blackPawnMove.col + 1, QuoridorApplication.getQuoridor().getBoard()));
+						PlayerPosition playerPosition = new PlayerPosition(game.getBlackPlayer(),
+								new Tile(blackPawnMove.row + 1, blackPawnMove.col + 1,
+										QuoridorApplication.getQuoridor().getBoard()));
 						game.getCurrentPosition().setBlackPosition(playerPosition);
 
 						getAvailableMovesToCurrentPlayer();
@@ -447,8 +451,8 @@ public class MainGameWindow {
 					? new MoveCandidate(blackPawnMove.wallMoveBtn, blackPawnMove.row, blackPawnMove.col)
 					: new MoveCandidate(whitePawnMove.wallMoveBtn, whitePawnMove.row, whitePawnMove.col);
 			;
-			while (move.getTargetTile().getRow() == mvCandidate.row +1
-					&& move.getTargetTile().getColumn() == mvCandidate.col +1) {
+			while (move.getTargetTile().getRow() == mvCandidate.row + 1
+					&& move.getTargetTile().getColumn() == mvCandidate.col + 1) {
 				move = (Move) iterator.next();
 				mvCandidate = move.getPlayer().equals(game.getBlackPlayer())
 						? new MoveCandidate(blackPawnMove.wallMoveBtn, blackPawnMove.row, blackPawnMove.col)
@@ -480,27 +484,44 @@ public class MainGameWindow {
 				// move.getTargetTile().getColumn() - 1 : 0;
 				// btnArray[whitePawnMove.row][whitePawnMove.col].add(whitePawnMove.wallMoveBtn);
 
-			} 
-		} 
-		
+			}
+		} else {
+			JOptionPane.showMessageDialog(frmQuoridorPlay, "Sorry Cannot step back Allready at initial Position.",
+					"Warning", JOptionPane.WARNING_MESSAGE);
+
+			Move move = (Move) iterator.next();
+			MoveCandidate mvCandidate = move.getPlayer().equals(game.getBlackPlayer())
+					? new MoveCandidate(blackPawnMove.wallMoveBtn, blackPawnMove.row, blackPawnMove.col)
+					: new MoveCandidate(whitePawnMove.wallMoveBtn, whitePawnMove.row, whitePawnMove.col);
+			;
+			while (iterator.hasNext() && move.getTargetTile().getRow() != mvCandidate.row + 1
+					&& move.getTargetTile().getColumn() != mvCandidate.col + 1) {
+				move = (Move) iterator.next();
+				mvCandidate = move.getPlayer().equals(game.getBlackPlayer())
+						? new MoveCandidate(blackPawnMove.wallMoveBtn, blackPawnMove.row, blackPawnMove.col)
+						: new MoveCandidate(whitePawnMove.wallMoveBtn, whitePawnMove.row, whitePawnMove.col);
+				;
+			}
+		}
+
 		// switchCurrentPlayerGuiAndBackend();
 		frmQuoridorPlay.repaint();
+
 	}
 
-	
 	private void moveForward() {
 		Player currentPlayer = QuoridorApplication.getQuoridor().getCurrentGame().getCurrentPosition()
 				.getPlayerToMove();
 		Game game = QuoridorApplication.getQuoridor().getCurrentGame();
-		
+
 		if (iterator.hasNext()) {
 			Move move = (Move) iterator.next();
 			MoveCandidate mvCandidate = move.getPlayer().equals(game.getBlackPlayer())
 					? new MoveCandidate(blackPawnMove.wallMoveBtn, blackPawnMove.row, blackPawnMove.col)
 					: new MoveCandidate(whitePawnMove.wallMoveBtn, whitePawnMove.row, whitePawnMove.col);
 			;
-			while (move.getTargetTile().getRow() == mvCandidate.row +1
-					&& move.getTargetTile().getColumn() == mvCandidate.col +1) {
+			while (iterator.hasNext() && move.getTargetTile().getRow() == mvCandidate.row + 1
+					&& move.getTargetTile().getColumn() == mvCandidate.col + 1) {
 				move = (Move) iterator.next();
 				mvCandidate = move.getPlayer().equals(game.getBlackPlayer())
 						? new MoveCandidate(blackPawnMove.wallMoveBtn, blackPawnMove.row, blackPawnMove.col)
@@ -509,21 +530,34 @@ public class MainGameWindow {
 			}
 			if (move.getPlayer().equals(game.getBlackPlayer())) {
 				btnArray[blackPawnMove.row][blackPawnMove.col].setIcon(new ImageIcon("./tile.png"));
-				
 
 				replayMove(mvCandidate, move, blackPawnMove.row, blackPawnMove.col);
-				
+
 			} else if (move.getPlayer().equals(game.getWhitePlayer())) {
 
 				btnArray[whitePawnMove.row][whitePawnMove.col].setIcon(new ImageIcon("./tile.png"));
 
 				replayMove(mvCandidate, move, whitePawnMove.row, whitePawnMove.col);
 
-				
-
 			}
 
-		} 
+		} else {
+			JOptionPane.showMessageDialog(frmQuoridorPlay, "Sorry Cannot step Forward. Already at End Position.",
+					"Warning", JOptionPane.WARNING_MESSAGE);
+			Move move = (Move) iterator.next();
+			MoveCandidate mvCandidate = move.getPlayer().equals(game.getBlackPlayer())
+					? new MoveCandidate(blackPawnMove.wallMoveBtn, blackPawnMove.row, blackPawnMove.col)
+					: new MoveCandidate(whitePawnMove.wallMoveBtn, whitePawnMove.row, whitePawnMove.col);
+			;
+			while (iterator.hasNext() && move.getTargetTile().getRow() != mvCandidate.row + 1
+					&& move.getTargetTile().getColumn() != mvCandidate.col + 1) {
+				move = (Move) iterator.next();
+				mvCandidate = move.getPlayer().equals(game.getBlackPlayer())
+						? new MoveCandidate(blackPawnMove.wallMoveBtn, blackPawnMove.row, blackPawnMove.col)
+						: new MoveCandidate(whitePawnMove.wallMoveBtn, whitePawnMove.row, whitePawnMove.col);
+				;
+			}
+		}
 
 		frmQuoridorPlay.repaint();
 	}
@@ -581,24 +615,23 @@ public class MainGameWindow {
 
 			return true;
 		} else {
-			JOptionPane.showMessageDialog(frmQuoridorPlay, "Sorry Cannot step back Allready at initial Position.",
-					"Warning", JOptionPane.WARNING_MESSAGE);
+
 		}
 
 		return false;
 	}
 
 	private void replayMove(MoveCandidate moveCandidate, Move prev, int row, int col) {
-		if(row <= 0 || col <= 0 || moveCandidate.col <= 0 || moveCandidate.row <= 0 ){
+		if (moveCandidate.row <= 0 || moveCandidate.col <= 0 || row <= 0 || col <= 0 || prev.getTargetTile().getRow() <=0 || prev.getTargetTile().getColumn() <= 0) {
 			return;
 		}
-		moveCandidate.row =  prev.getTargetTile().getRow() - 1 ;
-		moveCandidate.col = prev.getTargetTile().getColumn()  - 1 ;
+		moveCandidate.row = prev.getTargetTile().getRow() - 1;
+		moveCandidate.col = prev.getTargetTile().getColumn() - 1;
 		Game game = QuoridorApplication.getQuoridor().getCurrentGame();
 		switchCurrentPlayerGuiAndBackend();
 		System.out.println(" row  + col : " + row + ", " + col);
 		System.out.println(" row  + col : " + moveCandidate.row + ", " + moveCandidate.col);
-		
+
 		Player curPlayer = QuoridorApplication.getQuoridor().getCurrentGame().getCurrentPosition().getPlayerToMove();
 
 		btnArray[row][col].remove(moveCandidate.wallMoveBtn);
@@ -618,11 +651,11 @@ public class MainGameWindow {
 		// }
 
 		if (prev.getPlayer().equals(QuoridorController.getWhitePlayer())) {
-			whitePawnMove.row = prev.getTargetTile().getRow() - 1 ;
+			whitePawnMove.row = prev.getTargetTile().getRow() - 1;
 			whitePawnMove.col = prev.getTargetTile().getColumn() - 1;
 		} else {
-			blackPawnMove.row = prev.getTargetTile().getRow() - 1 ;
-			blackPawnMove.col =  prev.getTargetTile().getColumn() - 1 ;
+			blackPawnMove.row = prev.getTargetTile().getRow() - 1;
+			blackPawnMove.col = prev.getTargetTile().getColumn() - 1;
 		}
 
 		frmQuoridorPlay.repaint();
