@@ -35,6 +35,7 @@ public class QuoridorController {
 	private static int ReplayModeMoveNum;
 	private static int ReplayModeRoundNum;
 	public static boolean testing = false;
+	public static List<ListNode> gamePositions = new ArrayList<>();
 
 	/**
 	 * @author Ousmane Baricisse
@@ -1759,7 +1760,9 @@ public class QuoridorController {
 	 */
 	public static void dropWall() throws Exception {
 		// check wall in hand
-
+		List<Move> listOfMove = getPawnsPosition();
+		Game game = QuoridorApplication.getQuoridor().getCurrentGame();
+		
 		Quoridor q = QuoridorApplication.getQuoridor();
 		WallMove wallMoveCandidate = q.getCurrentGame().getWallMoveCandidate();
 		int x = wallMoveCandidate.getTargetTile().getRow();
@@ -1777,7 +1780,13 @@ public class QuoridorController {
 			throw new Exception("Not a valid position");
 		}
 
-		q.getCurrentGame().setGameStatus(GameStatus.Replay);
+		ListNode newNode = new ListNode(null, wallMoveCandidate, false);
+		gamePositions.add(newNode);
+
+		
+		
+		
+		q.getCurrentGame().setGameStatus(GameStatus.Running);
 	}
 
 	/**
@@ -2195,13 +2204,23 @@ public class QuoridorController {
 			printTiles();
 			pastMove.setNextMove(newMove);
 			game.addMove(newMove);
+			ListNode newNode = new ListNode(cloneMove(newMove), null, true);
 
-		} 
+			gamePositions.add(newNode);
+			System.out.println("SIZE : "+  gamePositions.size());
+		}
 		
 		
 		return true;
 	}
 	
+	public static StepMove cloneMove(StepMove st){
+		Quoridor q = new Quoridor();
+		Game game = new Game(st.getGame().getGameStatus(), MoveMode.PlayerMove, q);
+		StepMove move = new StepMove(st.getMoveNumber(), st.getRoundNumber(), st.getPlayer(), st.getTargetTile(), game);
+
+		return move;
+	}
 	/**
 	 * Ousmane Baricisse
 	 */
@@ -2209,8 +2228,8 @@ public class QuoridorController {
 		Game game = QuoridorApplication.getQuoridor().getCurrentGame();
 		List<Move> listOfMove = getPawnsPosition();
 		System.out.println("PRINTING LIST OF TARGET TILES ");
-		for(Move move : listOfMove){
-
+		for(ListNode node : gamePositions){
+			Move move = node.playerMove;
 			System.out.println("ListOfMove" +  move.getTargetTile().toString());
 		}
 	}

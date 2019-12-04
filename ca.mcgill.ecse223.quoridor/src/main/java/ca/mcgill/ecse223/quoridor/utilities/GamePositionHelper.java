@@ -13,6 +13,7 @@ public class GamePositionHelper {
         head = new ListNode(gp);
         gamePositions = new ArrayList<>();
         gamePositions.add(head);
+        
     }
   
 }
